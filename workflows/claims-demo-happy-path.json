@@ -236,8 +236,8 @@
     }
    },
    "retryOnFail": true,
-   "maxTries": 5,
-   "waitBetweenTries": 15000
+   "maxTries": 3,
+   "waitBetweenTries": 45000
   },
   {
    "id": "parse-ai-output",

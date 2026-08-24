@@ -56,7 +56,7 @@
       {
        "id": "e4",
        "name": "run_started_at",
-       "value": "={{ $now.toISO() }}",
+       "value": "={{ $json.body?.run_started_at || new Date().toISOString() }}",
        "type": "string"
       }
      ]
@@ -194,7 +194,7 @@
     0
    ],
    "parameters": {
-    "jsCode": "const runStart = $('Eval config').first().json.run_started_at;\nconst expRows = $('Build expected map').first().json.rows;\nconst resRows = $('Parse results').first().json.rows;\nconst expMap = Object.fromEntries(expRows.map(r => [r.id, r]));\nconst fresh = {};\nlet stale = 0;\nfor (const r of resRows) {\n  if (r.decided_at && r.decided_at < runStart) { stale += 1; continue; }\n  fresh[r.case_id] = r;\n}\nconst out = [];\nfor (const e of expRows) {\n  const r = fresh[e.id];\n  if (!r) {\n    out.push({ case_id: e.id, group: e.group, category: e.category,\n      expected: e.expected_decision, got: 'MISSING', decision_ok: false,\n      human_path_ok: (e.expected_decision === 'HUMAN_REVIEW') === e.requires_human,\n      confidence: null, gate_reason: 'brak swiezego wyniku (stale/brak pliku)',\n      evidence_count: 0, policy_refs_ok: false });\n    continue;\n  }\n  const decision_ok = r.final_decision === e.expected_decision;\n  const human_ok = r.final_decision === 'TECHNICAL_FAIL' ? false :\n    ((r.final_decision === 'HUMAN_REVIEW') === e.requires_human);\n  out.push({\n    case_id: r.case_id, group: e.group, category: e.category,\n    expected: e.expected_decision, got: r.final_decision,\n    decision_ok, human_path_ok: human_ok,\n    confidence: r.confidence, gate_reason: r.gate_reason,\n    evidence_count: Array.isArray(r.evidence) ? r.evidence.length : 0,\n    policy_refs_ok: Array.isArray(e.expected_policy_refs) && e.expected_policy_refs.length > 0 &&\n      Array.isArray(r.evidence) && e.expected_policy_refs.some(p => r.evidence.includes(p))\n  });\n}\nout.sort((a, b) => a.case_id.localeCompare(b.case_id));\nreturn [{ json: { rows: out, total: out.length, stale_results: stale } }];"
+    "jsCode": "const runStart = $('Eval config').first().json.run_started_at;\nconst expRows = $('Build expected map').first().json.rows;\nconst resRows = $('Parse results').first().json.rows;\nconst expMap = Object.fromEntries(expRows.map(r => [r.id, r]));\nconst fresh = {};\nlet stale = 0;\nfor (const r of resRows) {\n  if (r.decided_at && new Date(r.decided_at).getTime() < new Date(runStart).getTime()) { stale += 1; continue; }\n  fresh[r.case_id] = r;\n}\nconst out = [];\nfor (const e of expRows) {\n  const r = fresh[e.id];\n  if (!r) {\n    out.push({ case_id: e.id, group: e.group, category: e.category,\n      expected: e.expected_decision, got: 'MISSING', decision_ok: false,\n      human_path_ok: (e.expected_decision === 'HUMAN_REVIEW') === e.requires_human,\n      confidence: null, gate_reason: 'brak swiezego wyniku (stale/brak pliku)',\n      evidence_count: 0, policy_refs_ok: false });\n    continue;\n  }\n  const decision_ok = r.final_decision === e.expected_decision;\n  const human_ok = r.final_decision === 'TECHNICAL_FAIL' ? false :\n    ((r.final_decision === 'HUMAN_REVIEW') === e.requires_human);\n  out.push({\n    case_id: r.case_id, group: e.group, category: e.category,\n    expected: e.expected_decision, got: r.final_decision,\n    decision_ok, human_path_ok: human_ok,\n    confidence: r.confidence, gate_reason: r.gate_reason,\n    evidence_count: Array.isArray(r.evidence) ? r.evidence.length : 0,\n    policy_refs_ok: Array.isArray(e.expected_policy_refs) && e.expected_policy_refs.length > 0 &&\n      Array.isArray(r.evidence) && e.expected_policy_refs.some(p => r.evidence.includes(p))\n  });\n}\nout.sort((a, b) => a.case_id.localeCompare(b.case_id));\nreturn [{ json: { rows: out, total: out.length, stale_results: stale } }];"
    }
   },
   {
@@ -207,7 +207,7 @@
     0
    ],
    "parameters": {
-    "jsCode": "const meta = $input.first().json;\nconst rows = meta.rows;\nconst total = rows.length;\nconst okCount = rows.filter(r => r.decision_ok).length;\nconst humanOkCount = rows.filter(r => r.human_path_ok).length;\nconst groups = {};\nfor (const r of rows) {\n  if (!groups[r.group]) groups[r.group] = { total: 0, ok: 0 };\n  groups[r.group].total += 1;\n  if (r.decision_ok) groups[r.group].ok += 1;\n}\nconst mismatches = rows.filter(r => !r.decision_ok).map(r => ({\n  case_id: r.case_id, group: r.group, category: r.category,\n  expected: r.expected, got: r.got, confidence: r.confidence,\n  gate_reason: r.gate_reason\n}));\nconst round1 = x => Math.round(x * 1000) / 10;\nreturn [{ json: { report: {\n  generated_at: new Date().toISOString(),\n  total_cases: total,\n  decision_accuracy: round1((okCount / total) * 100),\n  human_path_accuracy: round1((humanOkCount / total) * 100),\n  stale_results: meta.stale_results || 0,\n  per_group: groups,\n  mismatches,\n  notes: {\n    decision_ok_definition: 'final_decision == expected_decision',\n    human_path_definition: '(HUMAN_REVIEW == requires_human)',\n    stale_definition: 'wynik z pliku starszy niz start runu'\n  }\n} } }];"
+    "jsCode": "const meta = $input.first().json;\nconst rows = meta.rows;\nconst total = rows.length;\nconst okCount = rows.filter(r => r.decision_ok).length;\nconst humanOkCount = rows.filter(r => r.human_path_ok).length;\nconst groups = {};\nfor (const r of rows) {\n  if (!groups[r.group]) groups[r.group] = { total: 0, ok: 0 };\n  groups[r.group].total += 1;\n  if (r.decision_ok) groups[r.group].ok += 1;\n}\nconst mismatches = rows.filter(r => !r.decision_ok).map(r => ({\n  case_id: r.case_id, group: r.group, category: r.category,\n  expected: r.expected, got: r.got, confidence: r.confidence,\n  gate_reason: r.gate_reason\n}));\nconst round1 = x => Math.round(x * 10) / 10;\nreturn [{ json: { report: {\n  generated_at: new Date().toISOString(),\n  total_cases: total,\n  decision_accuracy: round1((okCount / total) * 100),\n  human_path_accuracy: round1((humanOkCount / total) * 100),\n  stale_results: meta.stale_results || 0,\n  per_group: groups,\n  mismatches,\n  notes: {\n    decision_ok_definition: 'final_decision == expected_decision',\n    human_path_definition: '(HUMAN_REVIEW == requires_human)',\n    stale_definition: 'wynik z pliku starszy niz start runu'\n  }\n} } }];"
    }
   },
   {
@@ -296,6 +296,86 @@
     "operation": "fromJson",
     "options": {}
    }
+  },
+  {
+   "id": "cabddcd9-2463-4c11-b232-b832b783926c",
+   "name": "Pace",
+   "type": "n8n-nodes-base.wait",
+   "typeVersion": 1.1,
+   "position": [
+    1300,
+    200
+   ],
+   "parameters": {
+    "resume": "timeInterval",
+    "amount": 10,
+    "unit": "seconds"
+   },
+   "webhookId": "d09e467e-60a1-4644-937a-d8c99e73925e"
+  },
+  {
+   "id": "f1e13b6a-8454-4d9e-b0ce-31ae792e511f",
+   "name": "Read existing",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    1500,
+    320
+   ],
+   "parameters": {
+    "fileSelector": "={{ $('Eval config').first().json.outbox_dir }}/{{ $json.case_id }}-result.json",
+    "options": {}
+   },
+   "onError": "continueRegularOutput",
+   "alwaysOutputData": true
+  },
+  {
+   "id": "b86b50fd-96eb-4281-986d-ad03e29700f4",
+   "name": "Extract existing",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    1650,
+    320
+   ],
+   "parameters": {
+    "operation": "fromJson",
+    "options": {}
+   },
+   "onError": "continueRegularOutput",
+   "alwaysOutputData": true
+  },
+  {
+   "id": "3be2ddc4-4c69-49c9-b65e-84cd9ac0bccb",
+   "name": "Fresh?",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2,
+   "position": [
+    1800,
+    320
+   ],
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "loose"
+     },
+     "conditions": [
+      {
+       "id": "fresh-check",
+       "leftValue": "={{ new Date(($json.data || $json).decided_at || 0).getTime() >= new Date($('Eval config').first().json.run_started_at).getTime() }}",
+       "rightValue": "",
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      }
+     ],
+     "combinator": "and"
+    }
+   }
   }
  ],
  "connections": {
@@ -354,18 +434,7 @@
     ],
     [
      {
-      "node": "Prepare input",
-      "type": "main",
-      "index": 0
-     }
-    ]
-   ]
-  },
-  "Prepare input": {
-   "main": [
-    [
-     {
-      "node": "Run happy path",
+      "node": "Pace",
       "type": "main",
       "index": 0
      }
@@ -487,6 +556,68 @@
     [
      {
       "node": "Parse results",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Pace": {
+   "main": [
+    [
+     {
+      "node": "Prepare input",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Prepare input": {
+   "main": [
+    [
+     {
+      "node": "Read existing",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Read existing": {
+   "main": [
+    [
+     {
+      "node": "Extract existing",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extract existing": {
+   "main": [
+    [
+     {
+      "node": "Fresh?",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Fresh?": {
+   "main": [
+    [
+     {
+      "node": "Strip feedback",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Run happy path",
       "type": "main",
       "index": 0
      }

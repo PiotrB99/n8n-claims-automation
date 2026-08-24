@@ -83,14 +83,27 @@ Wnioski:
    chunkless RAG — retriewal po ustrukturyzowanych polach (kategoria, wartość,
    termin) zamiast podobieństwa tekstu.
 
-### Run #6+: porównanie modeli LLM
+### Run #6: oficjalny pełny run po naprawie harnessu (85%)
 
-*(sekcja uzupniana w toku eksperymentu)*
+Po serii napraw harnessu (migracja na Extract from File, parser płaskich wyników,
+retry z backoffem na 429 OpenRouter, pacing pętli, wznawialność po crashu, poprawki
+strefy czasowej i zaokrągleń) uruchomiono pełny flow end-to-end: webhook → 40 spraw →
+raport wygenerowany przez sam workflow (`eval-report.json`), zero ręcznego liczenia.
 
-Plan: ten sam pipeline i dataset, różne modele w nodzie Config — model
-chmurowy przez OpenRouter vs model lokalny (Ollama, qwen3:14b). Kryteria:
-decision accuracy, liczba TECHNICAL_FAIL, stabilność (powtarzalność decyzji
-na przypadkach brzegowych).
+Wynik: **decision accuracy 85% (34/40)**, human-path accuracy 85%, 0 przeterminowanych
+wyników. 6 niezgodności: 2× TECHNICAL_FAIL (awaria dostawcy LLM w trakcie dnia
+testowego — liczone jako błąd), 4 rzeczywiste różnice decyzji, w tym powtarzające się
+CASE-0018 i CASE-0034/0037.
+
+Porównanie #5 vs #6 (identyczna konfiguracja top-10): 82,5% vs 85% — rozrzut ±2,5 p.p.
+potwierdza, że pojedynczy run mierzy wynik z tolerancją wariancji modelu, a wnioski
+należy wyciągać z powtarzających się wzorców przypadków, nie z pojedynczej liczby.
+
+### Porównanie modeli LLM
+
+*(zaplanowane: ten sam pipeline i dataset, model chmurowy przez OpenRouter vs lokalny
+qwen3:14b na Ollamie; kryteria — decision accuracy, liczba TECHNICAL_FAIL, koszt
+i opóźnienie)*
 
 ## Regresja
 

@@ -1,0 +1,104 @@
+﻿{
+ "report": {
+  "generated_at": "2026-08-24T18:59:07.886Z",
+  "total_cases": 40,
+  "decision_accuracy": 85,
+  "human_path_accuracy": 85,
+  "stale_results": 0,
+  "per_group": {
+   "A": {
+    "total": 5,
+    "ok": 4
+   },
+   "B": {
+    "total": 5,
+    "ok": 4
+   },
+   "C": {
+    "total": 5,
+    "ok": 5
+   },
+   "D": {
+    "total": 5,
+    "ok": 4
+   },
+   "E": {
+    "total": 5,
+    "ok": 4
+   },
+   "F": {
+    "total": 5,
+    "ok": 5
+   },
+   "G": {
+    "total": 5,
+    "ok": 4
+   },
+   "H": {
+    "total": 5,
+    "ok": 4
+   }
+  },
+  "mismatches": [
+   {
+    "case_id": "CASE-0003",
+    "group": "A",
+    "category": "MISSING_ITEM",
+    "expected": "ACCEPT",
+    "got": "TECHNICAL_FAIL",
+    "confidence": null,
+    "gate_reason": "invalid structured output"
+   },
+   {
+    "case_id": "CASE-0010",
+    "group": "B",
+    "category": "REFUND_REQUEST",
+    "expected": "REJECT",
+    "got": "HUMAN_REVIEW",
+    "confidence": 0.8,
+    "gate_reason": "rekomendacja AI: HUMAN_REVIEW"
+   },
+   {
+    "case_id": "CASE-0018",
+    "group": "D",
+    "category": "MISSING_ITEM",
+    "expected": "HUMAN_REVIEW",
+    "got": "ACCEPT",
+    "confidence": 0.95,
+    "gate_reason": "wystarczajace dowody i confidence >= prog"
+   },
+   {
+    "case_id": "CASE-0022",
+    "group": "E",
+    "category": "WRONG_DELIVERY_PLACE",
+    "expected": "HUMAN_REVIEW",
+    "got": "TECHNICAL_FAIL",
+    "confidence": null,
+    "gate_reason": "invalid structured output"
+   },
+   {
+    "case_id": "CASE-0034",
+    "group": "G",
+    "category": "DAMAGED_PACKAGE",
+    "expected": "ACCEPT",
+    "got": "HUMAN_REVIEW",
+    "confidence": 0.72,
+    "gate_reason": "rekomendacja AI: HUMAN_REVIEW"
+   },
+   {
+    "case_id": "CASE-0037",
+    "group": "H",
+    "category": "DAMAGED_PACKAGE",
+    "expected": "ACCEPT",
+    "got": "HUMAN_REVIEW",
+    "confidence": 0.82,
+    "gate_reason": "rekomendacja AI: HUMAN_REVIEW"
+   }
+  ],
+  "notes": {
+   "decision_ok_definition": "final_decision == expected_decision",
+   "human_path_definition": "(HUMAN_REVIEW == requires_human)",
+   "stale_definition": "wynik z pliku starszy niz start runu"
+  }
+ }
+}

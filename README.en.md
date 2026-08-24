@@ -20,23 +20,26 @@ Case history, human review, follow-ups, RAG) → evaluation → experiments.
 | #3 | final baseline: full knowledge base | batch-eval | **95%** (38/40, 0 TECHNICAL_FAIL) |
 | #4 | classical RAG, top-6 | n8n native Evaluations | 82.5% |
 | #5 | classical RAG, top-10 | batch-eval | 82.5% |
+| #6 | classical RAG, top-10 — full run after harness fixes | batch-eval | **85%** (34/40, report generated end-to-end by the workflow) |
 
 Run artifacts: [`datasets/outbox/`](datasets/outbox/) (`eval-run-*.json`),
 change log: [`datasets/CHANGES.md`](datasets/CHANGES.md) (Polish).
 
 ### Experiment takeaways
 
-- **Classical RAG costs ~12 p.p. of accuracy vs the full knowledge base**
-  (95% → 82.5%) — on a knowledge base small enough to fit entirely in the
+- **Classical RAG costs ~10–12 p.p. of accuracy vs the full knowledge base**
+  (95% → 82.5–85%) — on a knowledge base small enough to fit entirely in the
   context window.
-- **Widening retrieval from top-6 to top-10 changed nothing** (82.5% → 82.5%).
-  Context width was not the bottleneck; recurring mistakes affect the same
-  borderline cases (model variance), not missing rules in the prompt.
+- **Widening retrieval from top-6 to top-10 did not meaningfully change the
+  result** (82.5% → 82.5%, 85% on repeat). The ±2.5 p.p. spread between identical
+  configurations is model variance — recurring mistakes affect the same borderline
+  cases (0018: HR→ACCEPT, 0034/0037: ACCEPT→HR), not missing rules in the prompt.
 - Evaluation also surfaced a dataset defect (run #1): ground truth assumed facts
   the customer never provided. The fix was architectural — an order-system mock
   enriching each case before LLM reasoning — not patching expected decisions.
 
-Detailed analysis: [`docs/EKSPERYMENTY.md`](docs/EKSPERYMENTY.md) (Polish).
+Detailed analysis: [`docs/EKSPERYMENTY.en.md`](docs/EKSPERYMENTY.en.md)
+([polska wersja](docs/EKSPERYMENTY.md)).
 
 ## Architecture
 
@@ -90,8 +93,9 @@ Key design decisions:
 │   ├── precedent-cases.json  # 10 precedent cases (PREC-01..10)
 │   └── embeddings.json       # bge-m3 vectors (1024d) for RAG
 ├── docs/
-│   ├── EKSPERYMENTY.md # experiment methodology & results (Polish)
-│   └── MODELE.md       # LLM selection notes
+│   ├── EKSPERYMENTY.en.md # experiment methodology & results
+│   ├── EKSPERYMENTY.md    # same, Polish
+│   └── MODELE.md       # LLM selection notes (Polish)
 └── narzedzia/          # helper scripts (result export, MCP client)
 ```
 

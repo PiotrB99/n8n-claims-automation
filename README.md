@@ -20,22 +20,25 @@ RAG) → ewaluacja → eksperymenty → regresja.
 | #3 | finalny baseline: pełna baza wiedzy | batch-eval | **95%** (38/40, 0 TECHNICAL_FAIL) |
 | #4 | klasyczny RAG, top-6 | eval-native (n8n Evaluations) | 82,5% |
 | #5 | klasyczny RAG, top-10 | batch-eval | 82,5% |
+| #6 | klasyczny RAG, top-10 — pełny run po naprawie harnessu | batch-eval | **85%** (34/40, raport wygenerowany workflowem end-to-end) |
 
 Artefakty runów: [`datasets/outbox/`](datasets/outbox/) (`eval-run-*.json`),
 dziennik zmian: [`datasets/CHANGES.md`](datasets/CHANGES.md).
 
 ### Wnioski z eksperymentów
 
-- **RAG kosztuje ~12 p.p. accuracy wobec pełnej bazy wiedzy** (95% → 82,5%) przy bazie
+- **RAG kosztuje ~10–12 p.p. accuracy wobec pełnej bazy wiedzy** (95% → 82,5–85%) przy bazie
   tak małej, że mieści się w całości w oknie kontekstowym.
-- **Zwiększenie okna retrievalu z top-6 do top-10 nie zmieniło nic** (82,5% → 82,5%).
-  Szerokość kontekstu nie była wąskim gardłem — powtarzające się błędy dotyczą tych samych
-  przypadków brzegowych (model raz ostrożny, raz nie), a nie braku reguł w promptcie.
+- **Zwiększenie okna retrievalu z top-6 do top-10 nie zmieniło istotnie wyniku** (82,5% → 82,5%,
+  w powtórce 85%). Różnica ±2,5 p.p. między identycznymi konfiguracjami to wariancja modelu —
+  powtarzające się błędy dotyczą tych samych przypadków brzegowych (0018: HR→ACCEPT,
+  0034/0037: ACCEPT→HR), a nie braku reguł w promptcie.
 - Ewaluacja ujawniła też defekt datasetu (run #1): ground truth zakładał dane, których
   klient nie podał. Naprawa była architektoniczna — mock systemu zamówień wzbogacający
   sprawę przed rozumowaniem LLM — a nie łatanie oczekiwanych decyzji.
 
-Szczegółowa analiza: [`docs/EKSPERYMENTY.md`](docs/EKSPERYMENTY.md).
+Szczegółowa analiza: [`docs/EKSPERYMENTY.md`](docs/EKSPERYMENTY.md)
+([English](docs/EKSPERYMENTY.en.md)).
 
 ## Architektura
 
@@ -90,6 +93,7 @@ Kluczowe elementy:
 │   └── embeddings.json       # wektory bge-m3 (1024d) dla RAG
 ├── docs/
 │   ├── EKSPERYMENTY.md # metodologia i wyniki eksperymentów
+│   ├── EKSPERYMENTY.en.md # to samo po angielsku
 │   └── MODELE.md       # notatki dot. wyboru modeli LLM
 └── narzedzia/          # skrypty pomocnicze (eksport wyników, MCP client)
 ```
