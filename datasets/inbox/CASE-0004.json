@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0004",
+  "received_at": "2026-06-24T20:15:00+02:00",
+  "channel": "email",
+  "from_name": "Tomasz Lewandowski",
+  "from_email": "tomasz.lewandowski@example.com",
+  "subject": "Paczka nie dotarła – zaginięcie przesyłki ORD-2026-10298",
+  "body": "Dzień dobry,\n\npiszę w sprawie zamówienia ORD-2026-10298 (słuchawki douszne, 389 zł) z numerem przesyłki DPD5200118874502.\n\nPlanowana data doręczenia to 5 czerwca. Niestety paczka nigdy do mnie nie dotarła — śledzenie przesyłki pokazuje, że od 3 czerwca status nie zmienił się ani raz i przesyłka „wisi” w sortowni Wrocław. Dzwoniłem na infolinię kuriera dwa razy, ale bez rezultatu; drugi konsultant obiecał oddzwonić i nie zadzwonił.\n\nMinęło już prawie trzy tygodnie, więc proszę o uznanie przesyłki za zagubioną i zwrot pieniędzy albo wysyłkę nowej pary słuchawek.\n\nZ poważaniem,\nTomasz Lewandowski",
+  "attachments": [
+    { "filename": "status_przesylki.png", "type": "image/png", "note": "Zrzut ekranu ze strony śledzenia DPD: ostatni status z 3 czerwca, sortownia Wrocław, brak dalszych zdarzeń." }
+  ]
+}

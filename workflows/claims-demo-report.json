@@ -1,0 +1,375 @@
+{
+ "name": "claims-demo-report",
+ "id": "SQLrd9Lp74409R0A",
+ "active": false,
+ "settings": {
+  "executionOrder": "v1",
+  "timezone": "Europe/Warsaw",
+  "saveManualExecutions": true,
+  "callerPolicy": "workflowsFromSameOwner",
+  "availableInMCP": false
+ },
+ "nodes": [
+  {
+   "id": "trig",
+   "name": "Build report",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "wh",
+   "name": "Report webhook",
+   "type": "n8n-nodes-base.webhook",
+   "typeVersion": 2,
+   "position": [
+    0,
+    200
+   ],
+   "parameters": {
+    "httpMethod": "POST",
+    "path": "claims-demo-report",
+    "responseMode": "lastNode",
+    "options": {}
+   },
+   "webhookId": "claims-demo-report"
+  },
+  {
+   "id": "cfg",
+   "name": "Report config",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    250,
+    100
+   ],
+   "parameters": {
+    "mode": "manual",
+    "options": {},
+    "assignments": {
+     "assignments": [
+      {
+       "id": "r1",
+       "name": "outbox_dir",
+       "value": "/home/node/claims/outbox",
+       "type": "string"
+      },
+      {
+       "id": "r2",
+       "name": "expected_dir",
+       "value": "/home/node/claims/expected",
+       "type": "string"
+      },
+      {
+       "id": "r3",
+       "name": "run_started_at",
+       "value": "={{ $json.run_started_at || \"1970-01-01\" }}",
+       "type": "string"
+      },
+      {
+       "id": "r4",
+       "name": "baseline_accuracy",
+       "value": "95",
+       "type": "number"
+      },
+      {
+       "id": "r5",
+       "name": "warn_drop_pct",
+       "value": "3",
+       "type": "number"
+      },
+      {
+       "id": "r6",
+       "name": "fail_drop_pct",
+       "value": "5",
+       "type": "number"
+      },
+      {
+       "id": "r7",
+       "name": "max_technical_failures",
+       "value": "0",
+       "type": "number"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "build-expected-map",
+   "name": "Build expected map",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    650,
+    100
+   ],
+   "parameters": {
+    "jsCode": "const rowsIn = $json.data.rows;\nconst rows = rowsIn.map(e => ({ id: e.id, group: e.group, category: e.category,\n  expected_decision: e.expected_decision,\n  requires_human: Boolean(e.requires_human),\n  expected_policy_refs: e.expected_policy_refs || [] }));\nreturn [{ json: { rows } }];"
+   }
+  },
+  {
+   "id": "parse-results",
+   "name": "Parse results",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1050,
+    100
+   ],
+   "parameters": {
+    "jsCode": "const rows = [];\nfor (const item of $input.all()) {\n  const r = item.json && item.json.data ? item.json.data : null;\n  if (r && r.case_id) rows.push(r);\n}\nif (!rows.length) throw new Error('Brak wynikow do porownania');\nrows.sort((a, b) => a.case_id.localeCompare(b.case_id));\nreturn [{ json: { rows } }];"
+   }
+  },
+  {
+   "id": "compare-results",
+   "name": "Compare results",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1250,
+    100
+   ],
+   "parameters": {
+    "jsCode": "const expRows = $('Build expected map').first().json.rows;\nconst resRows = $('Parse results').first().json.rows;\nconst expMap = Object.fromEntries(expRows.map(r => [r.id, r]));\nconst fresh = {};\nlet stale = 0;\nfor (const r of resRows) {\n  if (r.decided_at && r.decided_at < $('Report config').first().json.run_started_at) { stale += 1; continue; }\n  fresh[r.case_id] = r;\n}\nconst out = [];\nfor (const e of expRows) {\n  const r = fresh[e.id];\n  if (!r) {\n    out.push({ case_id: e.id, group: e.group, category: e.category,\n      expected: e.expected_decision, got: 'MISSING', decision_ok: false,\n      human_path_ok: false, confidence: null,\n      gate_reason: 'brak swiezego wyniku', evidence_count: 0, policy_refs_ok: false });\n    continue;\n  }\n  const decision_ok = r.final_decision === e.expected_decision;\n  const human_ok = r.final_decision === 'TECHNICAL_FAIL' ? false :\n    ((r.final_decision === 'HUMAN_REVIEW') === e.requires_human);\n  out.push({\n    case_id: r.case_id, group: e.group, category: e.category,\n    expected: e.expected_decision, got: r.final_decision,\n    decision_ok, human_path_ok: human_ok,\n    confidence: r.confidence, gate_reason: r.gate_reason,\n    evidence_count: Array.isArray(r.evidence) ? r.evidence.length : 0,\n    policy_refs_ok: Array.isArray(e.expected_policy_refs) && e.expected_policy_refs.length > 0 &&\n      Array.isArray(r.evidence) && e.expected_policy_refs.some(p => r.evidence.includes(p))\n  });\n}\nout.sort((a, b) => a.case_id.localeCompare(b.case_id));\nreturn [{ json: { rows: out, total: out.length, stale_results: stale } }];"
+   }
+  },
+  {
+   "id": "summary",
+   "name": "Summary",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1450,
+    100
+   ],
+   "parameters": {
+    "jsCode": "const meta = $input.first().json;\nconst rows = meta.rows;\nconst total = rows.length;\nconst okCount = rows.filter(r => r.decision_ok).length;\nconst humanOkCount = rows.filter(r => r.human_path_ok).length;\nconst tfCount = rows.filter(r => r.got === 'TECHNICAL_FAIL').length;\nconst groups = {};\nfor (const r of rows) {\n  if (!groups[r.group]) groups[r.group] = { total: 0, ok: 0 };\n  groups[r.group].total += 1;\n  if (r.decision_ok) groups[r.group].ok += 1;\n}\nconst mismatches = rows.filter(r => !r.decision_ok).map(r => ({\n  case_id: r.case_id, group: r.group, category: r.category,\n  expected: r.expected, got: r.got, confidence: r.confidence,\n  gate_reason: r.gate_reason\n}));\nconst round1 = x => Math.round(x * 10) / 10;\nconst cfgC = $('Report config').first().json;\nconst baseAcc = Number(cfgC.baseline_accuracy);\nconst warnDrop = Number(cfgC.warn_drop_pct);\nconst failDrop = Number(cfgC.fail_drop_pct);\nconst maxTf = Number(cfgC.max_technical_failures);\nconst accPct = round1((okCount / total) * 100);\nlet verdict = 'PASS';\nlet verdict_reasons = [];\nif ((baseAcc - accPct) > failDrop) {\n  verdict = 'FAIL';\n  verdict_reasons.push('accuracy spadla o ' + Math.round((baseAcc - accPct) * 10) / 10 + ' p.p. (> ' + failDrop + ' p.p.)');\n} else if ((baseAcc - accPct) > warnDrop) {\n  verdict = 'WARNING';\n  verdict_reasons.push('accuracy spadla o ' + Math.round((baseAcc - accPct) * 10) / 10 + ' p.p. (> ' + warnDrop + ' p.p.)');\n}\nif (tfCount > maxTf) {\n  verdict = 'FAIL';\n  verdict_reasons.push('technical failures: ' + tfCount + ' > ' + maxTf);\n}\n\nreturn [{ json: { report: {\n  generated_at: new Date().toISOString(),\n  regression_verdict: verdict,\n  regression_reasons: verdict_reasons,\n  baseline_accuracy_pct: baseAcc,\n  total_cases: total,\n  decision_accuracy_pct: accPct,\n  human_path_accuracy_pct: round1((humanOkCount / total) * 100),\n  technical_failures: tfCount,\n  stale_results: meta.stale_results || 0,\n  per_group: groups,\n  mismatches,\n  notes: {\n    decision_ok_definition: 'final_decision == expected_decision',\n    human_path_definition: '(HUMAN_REVIEW == requires_human); TECHNICAL_FAIL nie liczy sie jako ok',\n    stale_definition: 'wynik starszy niz Report config.run_started_at'\n  }\n} } }];"
+   }
+  },
+  {
+   "id": "report-to-binary",
+   "name": "Report to binary",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1650,
+    100
+   ],
+   "parameters": {
+    "jsCode": "const payload = $json.report !== undefined ? $json.report : $json;\nconst buf = Buffer.from(JSON.stringify(payload, null, 1), 'utf8');\nconst bin = await this.helpers.prepareBinaryData(buf, 'eval-report.json', 'application/json');\nreturn [{ json: { filename: 'eval-report.json' }, binary: { data: bin } }];"
+   }
+  },
+  {
+   "id": "write-report",
+   "name": "Write report",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    1850,
+    100
+   ],
+   "parameters": {
+    "operation": "write",
+    "options": {},
+    "fileName": "={{ $('Report config').first().json.outbox_dir }}/eval-report.json",
+    "dataPropertyName": "data"
+   }
+  },
+  {
+   "id": "d4fb381d-a297-4d7a-92ee-2bb5a73cf0c9",
+   "name": "Extract expected",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    450,
+    100
+   ],
+   "parameters": {
+    "operation": "fromJson",
+    "options": {}
+   }
+  },
+  {
+   "id": "153e6a61-1339-4a96-b357-3da4b2e7c362",
+   "name": "Extract results",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    850,
+    100
+   ],
+   "parameters": {
+    "operation": "fromJson",
+    "options": {}
+   }
+  },
+  {
+   "id": "read-expected",
+   "name": "Read expected files",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    250,
+    100
+   ],
+   "parameters": {
+    "operation": "read",
+    "fileSelector": "={{ $('Report config').first().json.expected_dir }}/all.json",
+    "options": {}
+   }
+  },
+  {
+   "id": "read-results",
+   "name": "Read result files",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    650,
+    100
+   ],
+   "parameters": {
+    "operation": "read",
+    "fileSelector": "={{ $('Report config').first().json.outbox_dir }}/CASE-*-result.json",
+    "options": {}
+   }
+  }
+ ],
+ "connections": {
+  "Build report": {
+   "main": [
+    [
+     {
+      "node": "Report config",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Report config": {
+   "main": [
+    [
+     {
+      "node": "Read expected files",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Build expected map": {
+   "main": [
+    [
+     {
+      "node": "Read result files",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Parse results": {
+   "main": [
+    [
+     {
+      "node": "Compare results",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Compare results": {
+   "main": [
+    [
+     {
+      "node": "Summary",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Summary": {
+   "main": [
+    [
+     {
+      "node": "Report to binary",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Report to binary": {
+   "main": [
+    [
+     {
+      "node": "Write report",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Report webhook": {
+   "main": [
+    [
+     {
+      "node": "Report config",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Read expected files": {
+   "main": [
+    [
+     {
+      "node": "Extract expected",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extract expected": {
+   "main": [
+    [
+     {
+      "node": "Build expected map",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Read result files": {
+   "main": [
+    [
+     {
+      "node": "Extract results",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extract results": {
+   "main": [
+    [
+     {
+      "node": "Parse results",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

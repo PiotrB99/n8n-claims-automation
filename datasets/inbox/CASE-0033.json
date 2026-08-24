@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0033",
+  "received_at": "2026-06-18T14:05:00+02:00",
+  "channel": "email",
+  "from_name": "Aleksandra Cieślak",
+  "from_email": "ola.cieslak@example.com",
+  "subject": "Brak pilota do soundbara – ORD-2026-10947",
+  "body": "Dzień dobry,\n\nw dniu 16 czerwca o 14:05 dostałam SMS z potwierdzeniem doręczenia zamówienia ORD-2026-10947 (soundbar TV). Piszę dokładnie 48 godzin później, bo dopiero dziś po południu rozpakowałam sprzęt i okazało się, że w pudełku nie ma pilota zdalnego sterowania — jest sam soundbar, kabel optyczny i instrukcja.\n\nZdjęcie zawartości paczki załączam. Pilot ma według sklepu wartość 149 zł.\n\nProszę o dosyłkę.\n\nAleksandra Cieślak",
+  "attachments": [
+    { "filename": "zawartosc_soundbar.jpg", "type": "image/jpeg", "note": "Zawartość paczki: soundbar, kabel optyczny, instrukcja — pilota brak." }
+  ]
+}

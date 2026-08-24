@@ -1,0 +1,14 @@
+{
+  "id": "CASE-0001",
+  "received_at": "2026-06-11T09:23:00+02:00",
+  "channel": "email",
+  "from_name": "Anna Kowalska",
+  "from_email": "anna.kowalska@example.com",
+  "subject": "Reklamacja uszkodzonej przesyłki – zamówienie ORD-2026-10427",
+  "body": "Dzień dobry,\n\n9 czerwca kurier DPD doręczył mi przesyłkę z zamówienia ORD-2026-10427 (czajnik elektryczny, 149 zł). Niestety już przy odbiorze zauważyłam, że lewy górny róg kartonu jest mocno wgnieciony, a po otwarciu okazało się, że obudowa czajnika również ma wyraźne wgniecenie przy podstawie.\n\nDołączam trzy zdjęcia: karton widziany od przodu, bok z wgnieceniem oraz zbliżenie na uszkodzoną obudowę urządzenia.\n\nBardzo proszę o wymianę na nowy egzemplarz albo zwrot płatności — jak będzie wygodniej po Pańskiej stronie.\n\nZ góry dziękuję za pomoc.\n\nZ poważaniem,\nAnna Kowalska",
+  "attachments": [
+    { "filename": "karton_przod.jpg", "type": "image/jpeg", "note": "Karton z zamówieniem widziany od przodu, wgnieciony lewy górny róg." },
+    { "filename": "karton_bok.jpg", "type": "image/jpeg", "note": "Bok kartonu z długim wgnieceniem i rozedrganą taśmą." },
+    { "filename": "czajnik_uszkodzony.jpg", "type": "image/jpeg", "note": "Zbliżenie na obudowę czajnika z wgnieceniem przy podstawie." }
+  ]
+}

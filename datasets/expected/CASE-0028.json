@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0028",
+  "group": "F",
+  "category": "MISSING_ITEM",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10", "POL-05"],
+  "notes": "Treść zgłasza brak blendera, ale załączone zdjęcie pokazuje kompletny zestaw z blenderem — sprzeczność treść vs dowód wg POL-10; automatyczna akceptacja z POL-05 jest niemożliwa, dopóki fakt nie zostanie wyjaśniony."
+}

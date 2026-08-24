@@ -1,0 +1,67 @@
+{
+ "generated_at": "2026-08-22T13:39:08.109Z",
+ "total_cases": 40,
+ "decision_accuracy_pct": 95,
+ "human_path_accuracy_pct": 95,
+ "technical_failures": 0,
+ "stale_results": 0,
+ "per_group": {
+  "A": {
+   "total": 5,
+   "ok": 5
+  },
+  "B": {
+   "total": 5,
+   "ok": 4
+  },
+  "C": {
+   "total": 5,
+   "ok": 5
+  },
+  "D": {
+   "total": 5,
+   "ok": 5
+  },
+  "E": {
+   "total": 5,
+   "ok": 4
+  },
+  "F": {
+   "total": 5,
+   "ok": 5
+  },
+  "G": {
+   "total": 5,
+   "ok": 5
+  },
+  "H": {
+   "total": 5,
+   "ok": 5
+  }
+ },
+ "mismatches": [
+  {
+   "case_id": "CASE-0007",
+   "group": "B",
+   "category": "DAMAGED_PACKAGE",
+   "expected": "REJECT",
+   "got": "HUMAN_REVIEW",
+   "confidence": 0.95,
+   "gate_reason": "AI zglosilo brakujace informacje"
+  },
+  {
+   "case_id": "CASE-0023",
+   "group": "E",
+   "category": "THIRD_PARTY_CLAIM",
+   "expected": "HUMAN_REVIEW",
+   "got": "REJECT",
+   "confidence": 0.9,
+   "gate_reason": "wystarczajace dowody i confidence >= prog"
+  }
+ ],
+ "notes": {
+  "decision_ok_definition": "final_decision == expected_decision",
+  "human_path_definition": "(HUMAN_REVIEW == requires_human); TECHNICAL_FAIL nie liczy sie jako ok",
+  "stale_definition": "wynik starszy niz Report config.run_started_at"
+ }
+}

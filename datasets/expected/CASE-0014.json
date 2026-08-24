@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0014",
+  "group": "C",
+  "category": "MISSING_ITEM",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10", "POL-05"],
+  "notes": "Klient sam nie wie, czy element brakuje („może w woreczku, którego nie otwierałem”) — opis nie pozwala potwierdzić faktu braku, więc wg POL-10 sprawa wymaga człowieka; zdjęcie zawartości nie rozstrzyga wątpliwości."
+}

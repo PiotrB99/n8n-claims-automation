@@ -1,0 +1,13 @@
+{
+  "id": "CASE-0031",
+  "received_at": "2026-06-15T13:15:00+02:00",
+  "channel": "email",
+  "from_name": "Justyna Fijałek",
+  "from_email": "justyna.fijalek@example.com",
+  "subject": "Uszkodzony wazon – zgłoszenie w ostatnim terminie ORD-2026-10940",
+  "body": "Dzień dobry,\n\n8 czerwca o godzinie 13:15 kurier doręczył mi zamówienie ORD-2026-10940 (wazon ceramiczny, 220 zł). Przy odbiorze karton wyglądał na lekko przygnieciony, a po otwarciu okazało się, że wazon ma pęknięcie biegnące od rantu do podstawy.\n\nZdjęcia kartonu i wazonu załączam. Wiem, że piszę dokładnie na styk — dziś mija tydzień od dostawy — dlatego proszę o pilne potraktowanie sprawy.\n\nPozdrawiam,\nJustyna Fijałek",
+  "attachments": [
+    { "filename": "karton_wazon2.jpg", "type": "image/jpeg", "note": "Karton z przygniecionym górnym rogiem." },
+    { "filename": "wazon_pekniecie.jpg", "type": "image/jpeg", "note": "Wazon z długim pęknięciem od rantu w dół." }
+  ]
+}

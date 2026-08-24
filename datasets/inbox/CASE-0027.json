@@ -1,0 +1,14 @@
+{
+  "id": "CASE-0027",
+  "received_at": "2026-06-24T10:40:00+02:00",
+  "channel": "email",
+  "from_name": "Monika Lis",
+  "from_email": "monika.lis@example.com",
+  "subject": "Uszkodzona lampa – pilna reklamacja ORD-2026-10877",
+  "body": "Dzień dobry,\n\nzamówienie ORD-2026-10777... przepraszam, ORD-2026-10877 (lampa wisząca) zostało dostarczone we wtorek 16 czerwca. Po rozpakowaniu okazało się, że klosz jest pęknięty w dwóch miejscach — zdjęcia klosza i kartonu załączam.\n\nZdaję sobie sprawę, że trochę minęło od doręczenia, ale dopiero wczoraj wzięliśmy się za montaż oświetlenia. W załączniku przesyłam też skan potwierdzenia doręczenia, które dostałam mailem od kuriera.\n\nProszę o zwrot lub wymianę klosza.\n\nMonika Lis",
+  "attachments": [
+    { "filename": "klosz_pekniecia.jpg", "type": "image/jpeg", "note": "Klosz lampy z dwiema wyraźnymi pęknięciami." },
+    { "filename": "karton_lampa.jpg", "type": "image/jpeg", "note": "Karton lampy z wgniecionym rogiem." },
+    { "filename": "potwierdzenie_doreczenia.pdf", "type": "application/pdf", "note": "Potwierdzenie doręczenia kuriera z datą 2026-06-19 (piątek) — niezgodne z datą podaną w treści maila (wtorek 16 czerwca)." }
+  ]
+}

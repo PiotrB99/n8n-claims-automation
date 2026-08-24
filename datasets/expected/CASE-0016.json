@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0016",
+  "group": "D",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-06", "POL-01", "POL-02"],
+  "notes": "Zgłoszenie terminowe (2 dni) i z kompletem dowodów (4 zdjęcia + protokół), ale wartość 4299 zł przekracza próg 2000 zł z POL-06, więc niezależnie od poprawności formalnej decyzję musi podjąć człowiek."
+}

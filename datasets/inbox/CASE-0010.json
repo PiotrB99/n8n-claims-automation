@@ -1,0 +1,10 @@
+{
+  "id": "CASE-0010",
+  "received_at": "2026-06-15T13:37:00+02:00",
+  "channel": "email",
+  "from_name": "Michał Jankowski",
+  "from_email": "mjankowski88@example.net",
+  "subject": "zwrot kasy za buty",
+  "body": "hej,\n\nzamawialem jakis czas temu (numer zamowienia ORD-2026-10540) sneakersy za 219 zl, przyszly chyba z 3 tygodnie temu. noszlem je kilka razy ale troche mi nie leza i zmienilem zdanie. nic im nie jest, sa w dobrym stanie.\n\nczy moge zwrocic i dostac kase na konto? jak tak to dawajcie numer konta gdzie przeslac\n\npozdro\nMichał",
+  "attachments": []
+}

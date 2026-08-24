@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0024",
+  "group": "E",
+  "category": "COMPENSATION_REQUEST",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-07", "POL-12"],
+  "notes": "Samo spóźnienie (3 dni) spełnia POL-07 i daje kupon 10%, jednak klient żąda dodatkowo 250 zł gotówką za straty niematerialne — roszczeń odszkodowawczych ponad kupon baza wiedzy nie reguluje → człowiek. MISSING_KNOWLEDGE"
+}

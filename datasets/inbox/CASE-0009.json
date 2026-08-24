@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0009",
+  "received_at": "2026-06-15T19:10:00+02:00",
+  "channel": "email",
+  "from_name": "Joanna Kozłowska",
+  "from_email": "joanna.kozlowska@example.com",
+  "subject": "Nie ten model butów – ORD-2026-10073",
+  "body": "Dzień dobry,\n\n28 maja otrzymałam przesyłkę z zamówieniem ORD-2026-10073. Zamawiałam sneakersy modelu „Trail Lite 2” w rozmiarze 38, a w pudełku znalazłam model „Trail Lite 1” — metka na bucie to potwierdza.\n\nPrzyznaję, że dopiero teraz piszę — buty leżały odstawione, bo byłam na urlopie, i dopiero przy okazji sprzątania je sprawdziłam. Zdjęcie metki z nazwą modelu dołączam.\n\nCzy jest jeszcze szansa na wymianę? Byłabym bardzo wdzięczna.\n\nPozdrawiam serdecznie,\nJoanna Kozłowska",
+  "attachments": [
+    { "filename": "metka_but.jpg", "type": "image/jpeg", "note": "Metka w bucie z napisem „Trail Lite 1” i rozmiarem 38." }
+  ]
+}

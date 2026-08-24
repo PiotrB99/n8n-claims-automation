@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0024",
+  "received_at": "2026-06-10T12:30:00+02:00",
+  "channel": "email",
+  "from_name": "Robert Dusza",
+  "from_email": "robert.dusza@example.com",
+  "subject": "Rocznica zrujnowana – żądam odszkodowania ORD-2026-10771",
+  "body": "Witam,\n\nzamówiłem prezent na dziesiątą rocznicę ślubu (biżuteria, ORD-2026-10771) z obiecywaną dostawą 5 czerwca. Paczka dotarła dopiero 8 czerwca — trzy dni po naszej uroczystej kolacji, na którą nie miałem czego wręczyć. Moja żona była zawiedziona, a ja razem z nią.\n\nRozumiem, że przysługuje mi jakiś kupon, ale to za mało. Żądam dodatkowo 250 zł odszkodowania za zepsutą uroczystość i zmarnowany wieczór — zapłaciłem za dostawę na konkretny dzień i tego dnia jej nie dostałem.\n\nProszę o odpowiedź.\n\nRobert Dusza",
+  "attachments": [
+    { "filename": "potwierdzenie_terminu.png", "type": "image/png", "note": "Zrzut ekranu z podsumowania zamówienia: „dostawa gwarantowana: 5 czerwca 2026”." }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "CASE-0039",
+  "received_at": "2026-06-19T16:20:00+02:00",
+  "channel": "email",
+  "from_name": "Cezary Pakuła",
+  "from_email": "cezary.pakula@example.org",
+  "subject": "Dwie sprawy: uszkodzona lampa i brakująca paczka",
+  "body": "Witam,\n\nmam dwie sprawy do załatwienia w jednej wiadomości, bo obie dotyczą zeszłego tygodnia.\n\nPierwsza: zamówienie ORD-2026-10981 (lampa stołowa). Dostawa była 17 czerwca, karton przygnieciony, abażur ma dziurę i wygięty stelaż. Zdjęcia kartonu i lampy załączam — dwa.\n\nDruga: druga paczka z Waszego sklepu, którą też miałam dostać w zeszłym tygodniu, NIE dotarła do dziś. Nie pamiętam numeru zamówienia, bo zamawiałem przez aplikację na koncie żony, ale chodzi o filtr do odkurzacza. Może znajdą Państwo to po moim adresie?\n\nProszę o załatwienie obu spraw.\n\nCezary Pakuła",
+  "attachments": [
+    { "filename": "karton_lampa.jpg", "type": "image/jpeg", "note": "Przygnieciony karton lampy stołowej." },
+    { "filename": "abazur_dziura.jpg", "type": "image/jpeg", "note": "Abażur z dziurą i wygiętym stelażem." }
+  ]
+}

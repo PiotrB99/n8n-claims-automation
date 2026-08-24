@@ -1,0 +1,98 @@
+{
+ "generated_at": "2026-08-24 07:27:39.688",
+ "path": "n8n-native-evaluation",
+ "workflow": "claims-demo-eval-native",
+ "total_cases": 40,
+ "decision_accuracy_pct": 82.5,
+ "technical_failures": 3,
+ "per_group": {
+  "A": {
+   "total": 5,
+   "ok": 5
+  },
+  "B": {
+   "total": 5,
+   "ok": 5
+  },
+  "C": {
+   "total": 5,
+   "ok": 5
+  },
+  "D": {
+   "total": 5,
+   "ok": 4
+  },
+  "E": {
+   "total": 5,
+   "ok": 4
+  },
+  "F": {
+   "total": 5,
+   "ok": 4
+  },
+  "G": {
+   "total": 5,
+   "ok": 4
+  },
+  "H": {
+   "total": 5,
+   "ok": 2
+  }
+ },
+ "technical_fail_cases": [
+  {
+   "case_id": "CASE-0029",
+   "group": "F",
+   "category": "WRONG_ITEM",
+   "expected": "HUMAN_REVIEW"
+  },
+  {
+   "case_id": "CASE-0036",
+   "group": "H",
+   "category": "DAMAGED_PACKAGE",
+   "expected": "ACCEPT"
+  },
+  {
+   "case_id": "CASE-0040",
+   "group": "H",
+   "category": "DAMAGED_PACKAGE",
+   "expected": "HUMAN_REVIEW"
+  }
+ ],
+ "mismatches": [
+  {
+   "case_id": "CASE-0018",
+   "group": "D",
+   "category": "MISSING_ITEM",
+   "expected": "HUMAN_REVIEW",
+   "got": "ACCEPT"
+  },
+  {
+   "case_id": "CASE-0023",
+   "group": "E",
+   "category": "THIRD_PARTY_CLAIM",
+   "expected": "HUMAN_REVIEW",
+   "got": "REJECT"
+  },
+  {
+   "case_id": "CASE-0034",
+   "group": "G",
+   "category": "DAMAGED_PACKAGE",
+   "expected": "ACCEPT",
+   "got": "HUMAN_REVIEW"
+  },
+  {
+   "case_id": "CASE-0037",
+   "group": "H",
+   "category": "DAMAGED_PACKAGE",
+   "expected": "ACCEPT",
+   "got": "HUMAN_REVIEW"
+  }
+ ],
+ "notes": {
+  "decision_ok_definition": "final_decision == expected_decision",
+  "rag_context": "top-6 (happy path z RAG), nie pelna baza wiedzy",
+  "baseline_comparison": "run #3 (pelna baza): 95% / 0 TECHNICAL_FAIL",
+  "exported_from": "Data Table eval_dataset_v0 (sqlite read-only)"
+ }
+}

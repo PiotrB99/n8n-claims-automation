@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0018",
+  "received_at": "2026-06-16T10:10:00+02:00",
+  "channel": "email",
+  "from_name": "Łukasz Olejnik",
+  "from_email": "lukasz.olejnik@example.net",
+  "subject": "Znowu brak elementu – pilot ORD-2026-10746",
+  "body": "Witam,\n\nwczoraj o 13:00 doręczono mi głośnik z zamówieniem ORD-2026-10746 i po raz kolejny w paczce czegoś brakuje — tym razem pilota zdalnego, którego nie ma na zdjęciu zawartości (załączam). Wartość pilota to według karty produktu 79 zł.\n\nDla porządku dodam: to jest moja SZÓSTA reklamacja w ciągu ostatniego pół roku. Za każdym razem coś: brak kabla, brak śrubek, raz uszkodzona obudowa. Sam już nie wiem, czy to pech, czy tak u Was wygląda magazyn.\n\nPoproszę o dosyłkę pilota.\n\nPozdrawiam,\nŁukasz Olejnik",
+  "attachments": [
+    { "filename": "zawartosc_glosnik.jpg", "type": "image/jpeg", "note": "Zawartość paczki: głośnik, kabel USB-C, instrukcja — pilota brak." }
+  ]
+}

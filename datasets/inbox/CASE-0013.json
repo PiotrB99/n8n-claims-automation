@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0013",
+  "received_at": "2026-06-12T14:55:00+02:00",
+  "channel": "email",
+  "from_name": "Ewa Piotrowska",
+  "from_email": "ewa.piotrowska@example.org",
+  "subject": "Bluza w złym kolorze? ORD-2026-10585",
+  "body": "Dzień dobry,\n\n10 czerwca dostałam bluzy z zamówienia ORD-2026-10585. Zamawiałam kolor czarny („Black”), a ta która przyszła wygląda na ciemnogranatową — chociaż przy sztucznym świetle bywa, że myli mi się z czernią, szczerze mówiąc sami nie jestem pewna na sto procent.\n\nZdjęcie etykiety robiłam telefonem, wyszło trochę rozmazane, kolory też mogą być przekłamane przez aparat. Nie wiem, czy to błąd magazynu, czy tak ma być.\n\nProszę o pomoc w ustaleniu, co dostałam.\n\nEwa Piotrowska",
+  "attachments": [
+    { "filename": "etykieta_bluza.jpg", "type": "image/jpeg", "note": "Etykieta bluzy — rozmazana, kod produktu nieczytelny, pole koloru niewidoczne." }
+  ]
+}

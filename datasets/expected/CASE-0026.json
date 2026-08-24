@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0026",
+  "group": "F",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10", "POL-08"],
+  "notes": "Załącznik pokazuje nienaruszoną butelkę i karton, a treść twierdzi rozbicie — sprzeczność dowodów (POL-10). Dodatkowo olej to żywność, kategoria wyłączona z obsługi mailowej (POL-08), więc sprawa i tak trafia do człowieka."
+}

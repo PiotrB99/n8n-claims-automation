@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0027",
+  "group": "F",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10", "POL-01"],
+  "notes": "Data doręczenia w potwierdzeniu kuriera (19 czerwca) przeczy dacie podanej w treści (16 czerwca) — a od niej zależy terminowość wg POL-01 (zgłoszenie 24 czerwca to odpowiednio 8 albo 5 dni). Sprzeczność dowodów → człowiek."
+}

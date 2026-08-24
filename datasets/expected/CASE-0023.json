@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0023",
+  "group": "E",
+  "category": "THIRD_PARTY_CLAIM",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-12"],
+  "notes": "Reklamację składa osoba obdarowana, a nie kupujący; zgoda brata jest tylko ustna. Baza wiedzy nie reguluje legitymacji do składania reklamacji przez osoby trzecie → sprawa wymaga człowieka. MISSING_KNOWLEDGE"
+}

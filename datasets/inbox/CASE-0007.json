@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0007",
+  "received_at": "2026-06-12T21:30:00+02:00",
+  "channel": "email",
+  "from_name": "Beata Dąbrowska",
+  "from_email": "beata.d@example.org",
+  "subject": "kubek rozbita reklamacja",
+  "body": "witam,\ndostalam wczoraj zamowienie ORD-2026-10601 z kubkiem i kubek jest popękany, widać to dobrze na zdjęciu. prosze o nowy kubek albo zwrot kasy.\npozdrawiam\nBeata Dąbrowska",
+  "attachments": [
+    { "filename": "kubek.jpg", "type": "image/jpeg", "note": "Jedyne zdjęcie: zbliżenie na popękany kubek ceramiczny. Brak jakiegokolwiek ujęcia opakowania/kartona." }
+  ]
+}

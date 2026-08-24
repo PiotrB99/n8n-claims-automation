@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0039",
+  "group": "H",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-12", "POL-01", "POL-03"],
+  "notes": "Zgłoszenie wielodowodowe z dwoma zamówieniami naraz: pierwsze (uszkodzona lampa) jest kompletne i terminowe, ale o drugiej paczce klient nie podaje numeru ORD — brak identyfikatora wymaganego przez POL-12 kieruje całą sprawę do człowieka."
+}

@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0030",
+  "received_at": "2026-06-16T14:45:00+02:00",
+  "channel": "email",
+  "from_name": "Waldemar Kot",
+  "from_email": "waldemar.kot@example.org",
+  "subject": "Zwrot środków – ORD-2026-10928",
+  "body": "Dzień dobry,\n\npiszę w sprawie zamówienia ORD-2026-10928 (lustro podłogowe). Paczka dotarła 15 czerwca, wszystko przebiegło sprawnie i nie mam żadnych zastrzeżeń do przesyłki.\n\nZmieniłem natomiast zdanie co do zakupu — proszę o zwrot pieniędzy na konto, z którego płaciłem. Zdjęcie produktu załączam dla porządku.\n\nPozdrawiam,\nWaldemar Kot",
+  "attachments": [
+    { "filename": "lustro.jpg", "type": "image/jpeg", "note": "Podłogowe lustro leżące na dywanie POTŁUCZONE — szkło rozsypane wokół ramy w wielu odłamkach." }
+  ]
+}

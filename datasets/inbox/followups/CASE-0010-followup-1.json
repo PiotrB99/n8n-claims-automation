@@ -1,0 +1,14 @@
+{
+  "id": "CASE-0010-FU1",
+  "received_at": "2026-06-18T20:15:00+02:00",
+  "channel": "email",
+  "thread_case_id": "CASE-0010",
+  "from_name": "Tomasz Wróbel",
+  "from_email": "t.wrobel@example.com",
+  "subject": "Re: Zwrot pieniędzy za buty – ORD-2026-10540 – odwołanie",
+  "body": "Dzień dobry,\n\ndzwoniłem w sprawie mojej prośby o zwrot za buty (ORD-2026-10540). Rozumiem, że odmawiacie, bo pisałem, że buty „nic im nie jest”. Muszę jednak sprostować: po dokładniejszym obejrzeniu przed sprzedażą znalazłem PĘKNIĘTĄ podeszwę przy pięcie – zdjęcia z liną pomiarową dołączam w tej wiadomości. Wczoraj byłem pewny siebie i przesądziłem sprawę zbyt szybko, przepraszam za zamieszanie.\n\nButy nosiłem tylko w mieszkaniu, jak pisałem wcześniej.\n\nProszę o ponowne rozpatrzenie zgłoszenia.\n\nTomasz Wróbel",
+  "attachments": [
+    {"filename": "podeszwa_pekniecie_1.jpg", "type": "image/jpeg", "note": "Zbliżenie na podeszwę buta: widoczne pęknięcie przy pięcie, obok linijka dla skali."},
+    {"filename": "podeszwa_pekniecie_2.jpg", "type": "image/jpeg", "note": "Drugi kąt pęknięcia podeszwy, but na jasnym tle."}
+  ]
+}

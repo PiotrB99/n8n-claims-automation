@@ -1,0 +1,13 @@
+{
+  "id": "CASE-0006",
+  "received_at": "2026-06-13T10:05:00+02:00",
+  "channel": "email",
+  "from_name": "Rafał Szymański",
+  "from_email": "rafal.szymanski@example.com",
+  "subject": "Pęknięty toster – reklamacja ORD-2026-10152",
+  "body": "Dzień dobry,\n\ntoster z zamówienia ORD-2026-10152 doręczono mi 1 czerwca. Zdążyłem go dopiero teraz rozpakować, bo wyjazd służbowy, i okazało się, że obudowa ma pęknięcie od strony przycisków oraz wgnieciony bok kartonu — zdjęcia dołączam, są czytelne.\n\nRozumiem, że minęło już trochę dni od doręczenia, ale przecież nie mogłem wiedzieć, co jest w środku. Proszę o wymianę tostera.\n\nPozdrawiam,\nRafał Szymański",
+  "attachments": [
+    { "filename": "karton_toster.jpg", "type": "image/jpeg", "note": "Karton po tosterze z wgniecionym bokiem." },
+    { "filename": "toster_pekniecie.jpg", "type": "image/jpeg", "note": "Pęknięcie w obudowie tostera przy panelu przycisków." }
+  ]
+}

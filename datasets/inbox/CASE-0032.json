@@ -1,0 +1,13 @@
+{
+  "id": "CASE-0032",
+  "received_at": "2026-06-15T10:00:00+02:00",
+  "channel": "email",
+  "from_name": "Daniel Korecki",
+  "from_email": "d.korecki@example.com",
+  "subject": "Zły wariant słuchawek – ORD-2026-10933",
+  "body": "Dzień dobry,\n\n12 czerwca otrzymałem przesyłkę z zamówieniem ORD-2026-10933. Zamawiałem słuchawki w wariancie „czarne”, a dostałem wariant „czarno-złoty”, który jest o 50 zł droższy od tego z mojego zamówienia. Na pudełku widać oznaczenie koloru — zdjęcie etykiety załączam.\n\nProszę o wymianę na zamówiony wariant.\n\nDaniel Korecki",
+  "attachments": [
+    { "filename": "etykieta_sluchawki.jpg", "type": "image/jpeg", "note": "Etykieta pudełka z kodem EAN i oznaczeniem koloru „czarno-złoty”." },
+    { "filename": "sluchawki.jpg", "type": "image/jpeg", "note": "Słuchawki nauszne z widocznymi złotymi akcentami na czarnych nausznikach." }
+  ]
+}

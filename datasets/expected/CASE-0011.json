@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0011",
+  "group": "C",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10", "POL-02"],
+  "notes": "Opis stanu jest niejednoznaczny („chyba cały, ale uchwyt jakiś luźny”), a jedyne zdjęcie jest nieostre i nie pokazuje pełnego opakowania — nie da się ustalić faktów, więc wg POL-10 sprawa trafia do człowieka; dodatkowo dowody nie spełniają jeszcze POL-02."
+}

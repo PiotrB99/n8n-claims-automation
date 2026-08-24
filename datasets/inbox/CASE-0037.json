@@ -1,0 +1,17 @@
+{
+  "id": "CASE-0037",
+  "received_at": "2026-06-16T19:45:00+02:00",
+  "channel": "email",
+  "from_name": "Wojciech Kalinowski",
+  "from_email": "wojciech.kalinowski@example.com",
+  "subject": "Zniszczony karton z monitorem + spóźnienie – ORD-2026-10962",
+  "body": "Dzień dobry,\n\npiszę w sprawie zamówienia ORD-2026-10963... przepraszam, ORD-2026-10962 (monitor 27\", 890 zł).\n\nDwie rzeczy. Po pierwsze: sklep obiecywał dostawę na 11 czerwca, a paczka dotarła dopiero 14 czerwca — trzy dni spóźnienia. Po drugie: karton był w opłakanym stanie, rozedrgany z dwóch stron i przygnieciony; kurier sam sporządził protokół szkody. Na szczęście monitor po podłączeniu działa poprawnie, ale obudowa ma otarcia.\n\nZałączam cztery zdjęcia opakowania, zdjęcie otarć oraz skan protokołu. Proszę o rekompensatę za spóźnienie oraz wymianę uszkodzonej obudowy albo zwrot częściowy.\n\nPozdrawiam,\nWojciech Kalinowski",
+  "attachments": [
+    { "filename": "karton_monitor_1.jpg", "type": "image/jpeg", "note": "Karton monitora — rozedrgany bok." },
+    { "filename": "karton_monitor_2.jpg", "type": "image/jpeg", "note": "Druga strona kartona z rozedraniem i wgnieceniem." },
+    { "filename": "karton_monitor_3.jpg", "type": "image/jpeg", "note": "Przygnieciony górny narożnik kartona." },
+    { "filename": "karton_monitor_4.jpg", "type": "image/jpeg", "note": "Dolna część kartona z przetarciami." },
+    { "filename": "obudowa_otarcia.jpg", "type": "image/jpeg", "note": "Otarcia na plastikowej obudowie monitora przy podstawie." },
+    { "filename": "protokol_kurier.pdf", "type": "application/pdf", "note": "Protokół szkody sporządzony przez kuriera przy doręczeniu, z opisem naruszenia opakowania." }
+  ]
+}

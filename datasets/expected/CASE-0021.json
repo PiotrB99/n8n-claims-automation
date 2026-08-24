@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0021",
+  "group": "E",
+  "category": "PRODUCT_MALFUNCTION",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-12"],
+  "notes": "Awaria towaru po tygodniach normalnego użytkowania (rękojmia/jakość produktu) nie jest uregulowana w żadnej regule bazy — regulamin obejmuje tylko uszkodzenia transportowe, zły towar, braki, spóźnienia i zaginięcia. Sprawa nieuregulowana → człowiek. MISSING_KNOWLEDGE"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "CASE-0034",
+  "received_at": "2026-06-15T09:00:00+02:00",
+  "channel": "email",
+  "from_name": "Zbigniew Adamczyk",
+  "from_email": "zbigniew.adamczyk@example.net",
+  "subject": "Ekspres z wgnieceniem – ORD-2026-10951",
+  "body": "Dzień dobry,\n\n12 czerwca doręczono mi ekspres ciśnieniowy z zamówienia ORD-2026-10951. Wartość urządzenia to dokładnie 2000 zł. Niestety lewy bok kartonu był mocno wgnieciony, a po rozpakowaniu widzę wgniecenie i otarcia na obudowie ekspresu od strony zbiornika.\n\nTrzy zdjęcia załączam: karton z boku, karton od góry oraz uszkodzoną obudowę.\n\nProszę o wymianę urządzenia.\n\nZ poważaniem,\nZbigniew Adamczyk",
+  "attachments": [
+    { "filename": "karton_bok.jpg", "type": "image/jpeg", "note": "Lewy bok kartonu z głębokim wgnieceniem." },
+    { "filename": "karton_gora.jpg", "type": "image/jpeg", "note": "Widok góry kartona z rozerwanym narożnikiem." },
+    { "filename": "ekspres_obudowa.jpg", "type": "image/jpeg", "note": "Wgniecenie i otarcia na metalowej obudowie ekspresu." }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0035",
+  "group": "G",
+  "category": "LOST_PACKAGE",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-03"],
+  "notes": "Przypadek brzegowy dolnej granicy okna z POL-03: planowane doręczenie w poniedziałek 15 czerwca, trzy pełne dni robocze (wt–czw) upłynęły w czwartek do końca dnia, więc piątek 19 czerwca o 9:00 to pierwsza możliwa chwila zgłoszenia. Okno 30 dni oczywiście zachowane; wartość 96 zł."
+}

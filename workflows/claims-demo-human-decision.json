@@ -1,0 +1,221 @@
+{
+ "name": "claims-demo-human-decision",
+ "id": "63xoEEqfc8YiujgN",
+ "active": false,
+ "settings": {
+  "executionOrder": "v1",
+  "timezone": "Europe/Warsaw",
+  "saveManualExecutions": true,
+  "callerPolicy": "workflowsFromSameOwner",
+  "availableInMCP": false
+ },
+ "nodes": [
+  {
+   "id": "wh",
+   "name": "Decision webhook",
+   "type": "n8n-nodes-base.webhook",
+   "typeVersion": 2,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {
+    "httpMethod": "POST",
+    "path": "claims-demo-decision",
+    "responseMode": "lastNode",
+    "options": {}
+   },
+   "webhookId": "claims-demo-decision"
+  },
+  {
+   "id": "validate",
+   "name": "Validate",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    250,
+    0
+   ],
+   "parameters": {
+    "jsCode": "const b = $json.body || {};\nconst allowed = ['ACCEPT', 'REJECT', 'REQUEST_MORE_INFORMATION'];\nconst caseId = String(b.case_id || '').match(/CASE-\\d{4}/);\nif (!caseId) throw new Error('Brak lub zly case_id w body');\nif (!allowed.includes(b.decision)) throw new Error('decision musi byc jednym z: ' + allowed.join(', '));\nreturn [{ json: {\n  case_id: caseId[0],\n  decision: b.decision,\n  note: String(b.note || ''),\n  decided_at: new Date().toISOString()\n} }];"
+   }
+  },
+  {
+   "id": "save",
+   "name": "Save human decision",
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1.1,
+   "position": [
+    500,
+    0
+   ],
+   "parameters": {
+    "resource": "row",
+    "operation": "insert",
+    "dataTableId": {
+     "__rl": true,
+     "mode": "id",
+     "value": "5c1ec41e-5b0a-46cf-af27-3afd29a4945a"
+    },
+    "columns": {
+     "mappingMode": "defineBelow",
+     "value": {
+      "case_id": "={{ $json.case_id }}",
+      "status": "={{ $json.decision === 'REQUEST_MORE_INFORMATION' ? 'WAITING_CUSTOMER' : 'RESOLVED_HUMAN' }}",
+      "final_decision": "={{ $json.decision }}",
+      "gate_reason": "={{ 'decyzja czlowieka' + ($json.note ? ': ' + $json.note : '') }}",
+      "model": "human",
+      "decided_at": "={{ $json.decided_at }}"
+     },
+     "matchingColumns": [],
+     "schema": [
+      {
+       "id": "case_id",
+       "displayName": "case_id",
+       "required": false,
+       "defaultMatch": true,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "status",
+       "displayName": "status",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "final_decision",
+       "displayName": "final_decision",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "gate_reason",
+       "displayName": "gate_reason",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "model",
+       "displayName": "model",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "decided_at",
+       "displayName": "decided_at",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      }
+     ],
+     "attemptToConvertTypes": false,
+     "convertFieldsToString": false
+    },
+    "options": {}
+   }
+  },
+  {
+   "id": "tobin",
+   "name": "Final to binary",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    750,
+    0
+   ],
+   "parameters": {
+    "jsCode": "const payload = $('Validate').first().json;\nconst buf = Buffer.from(JSON.stringify(payload, null, 1), 'utf8');\nconst bin = await this.helpers.prepareBinaryData(buf, payload.case_id + '-final.json', 'application/json');\nreturn [{ json: { filename: payload.case_id + '-final.json' }, binary: { data: bin } }];"
+   }
+  },
+  {
+   "id": "write",
+   "name": "Write final response",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    1000,
+    0
+   ],
+   "parameters": {
+    "operation": "write",
+    "fileName": "=/home/node/claims/outbox/{{ $('Validate').first().json.case_id }}-final.json",
+    "dataPropertyName": "data",
+    "options": {}
+   }
+  }
+ ],
+ "connections": {
+  "Decision webhook": {
+   "main": [
+    [
+     {
+      "node": "Validate",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Validate": {
+   "main": [
+    [
+     {
+      "node": "Save human decision",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Save human decision": {
+   "main": [
+    [
+     {
+      "node": "Final to binary",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Final to binary": {
+   "main": [
+    [
+     {
+      "node": "Write final response",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

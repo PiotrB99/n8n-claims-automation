@@ -1,0 +1,16 @@
+{
+  "id": "CASE-0016",
+  "received_at": "2026-06-19T08:30:00+02:00",
+  "channel": "email",
+  "from_name": "Andrzej Zając",
+  "from_email": "a.zajac@example.com",
+  "subject": "Uszkodzony telewizor w dostawie – ORD-2026-10811",
+  "body": "Dzień dobry,\n\n17 czerwca doręczono mi telewizor 55\" z zamówienia ORD-2026-10811 (wartość 4299 zł). Karton był wyraźnie naruszony — rozedrgany od dołu, a po otwarciu okazało się, że rama ekranu ma wgniecenie w prawym górnym roku i ekran nie włącza się poprawnie.\n\nKurier przy odbiorze sporządził protokół szkody, który również załączam. Dokumentacja: cztery zdjęcia kartonu z różnych stron, zdjęcie uszkodzenia ramy oraz wspomniany protokół.\n\nProszę o zwrot pieniędzy w całości albo wymianę na nowy egzemplarz. Czekam na informację.\n\nZ poważaniem,\nAndrzej Zając",
+  "attachments": [
+    { "filename": "karton_1.jpg", "type": "image/jpeg", "note": "Karton TV widok ogólny, rozedrgane dno." },
+    { "filename": "karton_2.jpg", "type": "image/jpeg", "note": "Narożnik kartonu z rozdarciami." },
+    { "filename": "ekran_wgniecenie.jpg", "type": "image/jpeg", "note": "Wgniecenie ramy ekranu w prawym górnym roku." },
+    { "filename": "ekran_uszkodzenie2.jpg", "type": "image/jpeg", "note": "Widok z bliska na uszkodzoną krawędź." },
+    { "filename": "protokol_szkody.pdf", "type": "application/pdf", "note": "Protokół szkody sporządzony przez kuriera przy odbiorze przesyłki." }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0033",
+  "group": "G",
+  "category": "MISSING_ITEM",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-05"],
+  "notes": "Przypadek brzegowy terminu 48 h: potwierdzenie doręczenia 16 czerwca 14:05, zgłoszenie dokładnie po 48 godzinach (18 czerwca, 14:05). POL-05 mówi „w ciągu 48 godzin”, więc ostatnia możliwa chwila jest jeszcze terminowa. Zdjęcie zawartości jest; pilot 149 zł poniżej limitu 300 zł."
+}

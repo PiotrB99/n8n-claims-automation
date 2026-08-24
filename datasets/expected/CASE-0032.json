@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0032",
+  "group": "G",
+  "category": "WRONG_ITEM",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-04"],
+  "notes": "Przypadek brzegowy progu: wartość towaru to dokładnie 500 zł — POL-04 mówi „do 500 zł włącznie”, więc ścieżka automatyczna obowiązuje mimo równości z limitem. Zgłoszenie po 3 dniach (limit 14), zdjęcie etykiety z kodem jest."
+}

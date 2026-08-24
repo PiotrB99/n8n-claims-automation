@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0029",
+  "received_at": "2026-06-16T21:05:00+02:00",
+  "channel": "email",
+  "from_name": "Patrycja Gołąb",
+  "from_email": "patrycja.golab@example.com",
+  "subject": "Zły rozmiar butów! ORD-2026-10886",
+  "body": "Dzień dobry,\n\n14 czerwca dostałam zamówienie ORD-2026-10886. Zamawiałam trampki w rozmiarze 42, a w pudełku siedzi rozmiar 43 — za duży o cały rozmiar, nie da się w tym chodzić.\n\nZdjęcie metki załączam. Proszę o wymianę na właściwy rozmiar.\n\nPozdrawiam,\nPatrycja Gołąb",
+  "attachments": [
+    { "filename": "metka_trampki.jpg", "type": "image/jpeg", "note": "Metka na języku trampków: wyraźny nadruk „EU 42” — czyli zgodny z rozmiarem zamówionym, co podważa twierdzenie z treści maila o otrzymaniu 43." }
+  ]
+}

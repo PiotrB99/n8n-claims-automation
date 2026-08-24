@@ -1,0 +1,13 @@
+{
+  "id": "CASE-0012",
+  "received_at": "2026-06-16T16:05:00+02:00",
+  "channel": "email",
+  "from_name": "Grzegorz Krawczyk",
+  "from_email": "g.krawczyk@example.com",
+  "subject": "Lampa rozbita w środku – ORD-2026-10733",
+  "body": "Witam serdecznie,\n\n14 czerwca doręczono mi lampę z zamówienia ORD-2026-10733. Sprawa wygląda dziwnie i sam nie wiem, jak to opisać: karton był idealny — całe opakowanie nietknięte, żadnych wgnieceń, taśmy wszystkie na miejscu, a po otwarciu lampa leżała w środku ROZBITA na kawałki. Szkło abażura potłuczone, metal wygięty.\n\nJak to możliwe, że pudełko jest całe, a produkt nie? Zdjęcia załączam: dwa — karton w stanie nienaruszonym oraz rozbita lampa.\n\nProszę o informację, co dalej.\n\nZ poważaniem,\nGrzegorz Krawczyk",
+  "attachments": [
+    { "filename": "karton_caly.jpg", "type": "image/jpeg", "note": "Karton lampy całkowicie nienaruszony, bez wgnieceń i rozerwań." },
+    { "filename": "lampa_rozbita.jpg", "type": "image/jpeg", "note": "Lampa ze stłuczonym szklanym abażurem i wygiętym metalowym stelażem." }
+  ]
+}

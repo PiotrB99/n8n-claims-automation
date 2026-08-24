@@ -1,0 +1,12 @@
+{
+ "id": "CASE-0015",
+ "group": "C",
+ "category": "DAMAGED_PACKAGE",
+ "expected_decision": "ACCEPT",
+ "requires_human": false,
+ "expected_policy_refs": [
+  "POL-01",
+  "POL-10"
+ ],
+ "notes": "Zaktualizowano po eval run #2: pierwotnie HUMAN_REVIEW, bo klient nie pamietal daty doręczenia. Po dodaniu mock systemu zamówień (orders.json) system zna potwierdzone doręczenie 9.06 14:00 (delivery_confirmed_at), więc niejednoznaczność znika: zgłoszenie 16.06 = 7 dni od doręczenia, w limicie POL-01; wartość 89 zł poniżej progów. ACCEPT jest teraz wyprowadzalne z danych."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0029",
+  "group": "F",
+  "category": "WRONG_ITEM",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10", "POL-04"],
+  "notes": "Klient twierdzi, że dostał rozmiar 43 zamiast zamówionego 42, ale zdjęcie metki pokazuje rozmiar 43 zgodny z zamówieniem — dowód podważa tezę zgłoszenia (sprzeczność wg POL-10), więc automatyczna decyzja z POL-04 jest niemożliwa."
+}

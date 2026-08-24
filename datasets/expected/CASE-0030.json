@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0030",
+  "group": "F",
+  "category": "REFUND_REQUEST",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10"],
+  "notes": "Treść deklaruje, że wszystko jest w porządku i prosi tylko o zwrot, a załączone zdjęcie pokazuje potłuczone lustro — sprzeczność treść vs dowód (POL-10) blokuje automatyczną klasyfikację (zwrot bez podstawy wg POL-11 czy uszkodzenie?)."
+}

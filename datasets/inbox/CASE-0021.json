@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0021",
+  "received_at": "2026-06-16T18:00:00+02:00",
+  "channel": "email",
+  "from_name": "Jakub Górski",
+  "from_email": "jakub.gorski@example.com",
+  "subject": "Młynek do kawy przestał działać – ORD-2026-10675",
+  "body": "Dzień dobry,\n\n20 maja kupiłem w Państwa sklepie młynek do kawy (zamówienie ORD-2026-10675, 159 zł). Przez pierwsze tygodnie działał bez zarzutu, a w niedzielę — po mniej więcej czterech tygodniach normalnego użytkowania — po prostu przestał się włączać. Silnik nie reaguje, dioda nie świeci, gniazdo i kabel wyglądają na całe.\n\nNie było żadnego upadku ani zalania. Dołączam zdjęcie urządzenia. Paczka przy dostawie była idealna, więc to raczej nie kwestia transportu — coś się zepsuło w środku.\n\nCo w takiej sytuacji robić? Proszę o informację.\n\nPozdrawiam,\nJakub Górski",
+  "attachments": [
+    { "filename": "mlynek.jpg", "type": "image/jpeg", "note": "Młynek do kawy stojący na kuchennym blacie, widoczny włączony wskaźnik gniazda — brak śladów uszkodzeń mechanicznych." }
+  ]
+}

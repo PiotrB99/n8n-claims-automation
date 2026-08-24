@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0010",
+  "group": "B",
+  "category": "REFUND_REQUEST",
+  "expected_decision": "REJECT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-11"],
+  "notes": "Klient nie wskazuje żadnej wady towaru („zmieniłem zdanie”, buty noszone), nie deklaruje odstąpienia od umowy, a od doręczenia minęło ok. 25 dni — zwrot bez podstawy reklamacyjnej podlega odmowie zgodnie z POL-11."
+}

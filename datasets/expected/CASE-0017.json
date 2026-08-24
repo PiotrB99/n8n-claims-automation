@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0017",
+  "group": "D",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10"],
+  "notes": "Groźby prawne i agresywny język („adwokat”, „sąd”, obelgi) aktywują POL-10 lit. d niezależnie od drobnej kwoty 89 zł i poprawnych formalnie zdjęć — eskalacja wymaga człowieka."
+}

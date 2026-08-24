@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0022",
+  "received_at": "2026-06-19T07:55:00+02:00",
+  "channel": "email",
+  "from_name": "Renata Socha",
+  "from_email": "renata.socha@example.net",
+  "subject": "Status „doręczono”, a paczki nie mam – ORD-2026-10840",
+  "body": "Dzień dobry,\n\n17 czerwca o 10:12 kurier miał dostarczyć moją paczkę (zamówienie ORD-2026-10840, ekspres do kawy przelewowy, przesyłka DPD5200119145788). Byłam cały ranek w domu i NIKT nie pukał, dzwonek też nie zadziałał. Po południu status w śledzeniu zmienił się na „doręczono”.\n\nSąsiadka z numeru 12 twierdzi, że niczego za mnie nie odbierała, choć kurierzy czasem jej zostawiają. Nie wiem, gdzie jest moja paczka — może ktoś ją zabrał z klatki?\n\nProszę o wyjaśnienie i o tę paczkę.\n\nRenata Socha",
+  "attachments": [
+    { "filename": "sledzenie_doreczono.png", "type": "image/png", "note": "Zrzut ekranu ze śledzenia przesyłki: status „doręczono 2026-06-17 10:12”." }
+  ]
+}

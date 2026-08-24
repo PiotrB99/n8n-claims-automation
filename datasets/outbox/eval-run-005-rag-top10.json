@@ -1,0 +1,103 @@
+{
+ "generated_at": "2026-08-24T10:03:57.605Z",
+ "path": "batch-eval (harness) — wyniki z plikow outbox",
+ "config": {
+  "rag_top_k": 10,
+  "model": "stealth/ox-alpha"
+ },
+ "run_started_at": "2026-08-24T09:24:52.516Z",
+ "total_cases": 40,
+ "decision_accuracy_pct": 82.5,
+ "human_path_accuracy_pct": 85.0,
+ "technical_failures": 2,
+ "technical_fail_cases": [
+  "CASE-0009",
+  "CASE-0023"
+ ],
+ "per_group": {
+  "A": {
+   "total": 5,
+   "ok": 4
+  },
+  "B": {
+   "total": 5,
+   "ok": 3
+  },
+  "C": {
+   "total": 5,
+   "ok": 5
+  },
+  "D": {
+   "total": 5,
+   "ok": 4
+  },
+  "E": {
+   "total": 5,
+   "ok": 4
+  },
+  "F": {
+   "total": 5,
+   "ok": 5
+  },
+  "G": {
+   "total": 5,
+   "ok": 4
+  },
+  "H": {
+   "total": 5,
+   "ok": 4
+  }
+ },
+ "mismatches": [
+  {
+   "case_id": "CASE-0004",
+   "group": "A",
+   "category": "LOST_PACKAGE",
+   "expected": "ACCEPT",
+   "got": "HUMAN_REVIEW",
+   "confidence": 0.72,
+   "gate_reason": "rekomendacja AI: HUMAN_REVIEW"
+  },
+  {
+   "case_id": "CASE-0007",
+   "group": "B",
+   "category": "DAMAGED_PACKAGE",
+   "expected": "REJECT",
+   "got": "HUMAN_REVIEW",
+   "confidence": 0.95,
+   "gate_reason": "AI zglosilo brakujace informacje"
+  },
+  {
+   "case_id": "CASE-0018",
+   "group": "D",
+   "category": "MISSING_ITEM",
+   "expected": "HUMAN_REVIEW",
+   "got": "ACCEPT",
+   "confidence": 0.94,
+   "gate_reason": "wystarczajace dowody i confidence >= prog"
+  },
+  {
+   "case_id": "CASE-0034",
+   "group": "G",
+   "category": "DAMAGED_PACKAGE",
+   "expected": "ACCEPT",
+   "got": "HUMAN_REVIEW",
+   "confidence": 0.85,
+   "gate_reason": "rekomendacja AI: HUMAN_REVIEW"
+  },
+  {
+   "case_id": "CASE-0037",
+   "group": "H",
+   "category": "DAMAGED_PACKAGE",
+   "expected": "ACCEPT",
+   "got": "HUMAN_REVIEW",
+   "confidence": 0.85,
+   "gate_reason": "rekomendacja AI: HUMAN_REVIEW"
+  }
+ ],
+ "comparison": {
+  "run3_full_kb_batch_harness": 95.0,
+  "run4_rag_top6_native_harness": 82.5,
+  "run5_rag_top10_batch_harness": 82.5
+ }
+}

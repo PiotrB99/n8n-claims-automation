@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0008",
+  "received_at": "2026-06-15T08:45:00+02:00",
+  "channel": "email",
+  "from_name": "Krzysztof Woźniak",
+  "from_email": "krzysztof.wozniak@example.com",
+  "subject": "Żądam zwrotu kosztów wysyłki – spóźniona paczka ORD-2026-10488",
+  "body": "Dzień dobry,\n\nprzy zamówieniu ORD-2026-10488 sklep obiecywał dostawę w piątek 12 czerwca, a kurier przyjechał dopiero w sobotę 13 czerwca. Zapłaciłem za przesyłkę 24,99 zł i żądam zwrotu tej kwoty — za darmo miała być dopiero od 199 zł, a nie zapłaciłem po to, żeby czekać dłużej niż obiecano.\n\nProszę o pilne zwrot środków na moje konto.\n\nKrzysztof Woźniak",
+  "attachments": [
+    { "filename": "podsumowanie_zamowienia.png", "type": "image/png", "note": "Zrzut ekranu podsumowania zamówienia z widoczną datą obiecywanej dostawy: piątek, 12 czerwca 2026." }
+  ]
+}

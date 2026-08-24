@@ -1,0 +1,324 @@
+{
+ "orders": [
+  {
+   "order_id": "ORD-2026-10427",
+   "case_id": "CASE-0001",
+   "item_name": "czajnik elektryczny",
+   "item_value_pln": 149,
+   "category": "AGD",
+   "delivery_confirmed_at": "2026-06-09T11:30:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10593",
+   "case_id": "CASE-0002",
+   "item_name": "mysz bezprzewodowa",
+   "item_value_pln": 129,
+   "category": "elektronika",
+   "delivery_confirmed_at": "2026-06-15T10:20:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10644",
+   "case_id": "CASE-0003",
+   "item_name": "zasilacz sieciowy do lampy",
+   "item_value_pln": 59,
+   "category": "elektronika",
+   "delivery_confirmed_at": "2026-06-18T11:05:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10298",
+   "case_id": "CASE-0004",
+   "item_name": "słuchawki douszne",
+   "item_value_pln": 389,
+   "category": "elektronika",
+   "delivery_confirmed_at": null
+  },
+  {
+   "order_id": "ORD-2026-10376",
+   "case_id": "CASE-0005",
+   "item_name": "kieliszki do szampana",
+   "item_value_pln": 159,
+   "category": "dom",
+   "delivery_confirmed_at": "2026-06-06T12:45:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10152",
+   "case_id": "CASE-0006",
+   "item_name": "toster",
+   "item_value_pln": 189,
+   "category": "AGD",
+   "delivery_confirmed_at": "2026-06-01T14:10:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10601",
+   "case_id": "CASE-0007",
+   "item_name": "kubek ceramiczny",
+   "item_value_pln": 39,
+   "category": "dom",
+   "delivery_confirmed_at": "2026-06-11T16:45:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10488",
+   "case_id": "CASE-0008",
+   "item_name": "towary różne",
+   "item_value_pln": 165,
+   "category": "inne",
+   "delivery_confirmed_at": "2026-06-13T11:20:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10073",
+   "case_id": "CASE-0009",
+   "item_name": "sneakersy Trail Lite 2",
+   "item_value_pln": 299,
+   "category": "obuwie",
+   "delivery_confirmed_at": "2026-05-28T15:40:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10540",
+   "case_id": "CASE-0010",
+   "item_name": "sneakersy",
+   "item_value_pln": 219,
+   "category": "obuwie",
+   "delivery_confirmed_at": "2026-05-21T12:30:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10667",
+   "case_id": "CASE-0011",
+   "item_name": "blender kielichowy",
+   "item_value_pln": 149,
+   "category": "AGD",
+   "delivery_confirmed_at": "2026-06-09T16:30:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10733",
+   "case_id": "CASE-0012",
+   "item_name": "lampa ze szklanym abażurem",
+   "item_value_pln": 219,
+   "category": "dom",
+   "delivery_confirmed_at": "2026-06-14T13:05:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10585",
+   "case_id": "CASE-0013",
+   "item_name": "bluza",
+   "item_value_pln": 139,
+   "category": "odzież",
+   "delivery_confirmed_at": "2026-06-10T17:20:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10690",
+   "case_id": "CASE-0014",
+   "item_name": "szafa pokojowa",
+   "item_value_pln": 749,
+   "category": "meble",
+   "delivery_confirmed_at": "2026-06-18T09:35:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10702",
+   "case_id": "CASE-0015",
+   "item_name": "wazon ceramiczny",
+   "item_value_pln": 89,
+   "category": "dom",
+   "delivery_confirmed_at": "2026-06-09T14:00:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10811",
+   "case_id": "CASE-0016",
+   "item_name": "telewizor 55 cali",
+   "item_value_pln": 4299,
+   "category": "elektronika",
+   "delivery_confirmed_at": "2026-06-17T12:15:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10557",
+   "case_id": "CASE-0017",
+   "item_name": "etui na telefon",
+   "item_value_pln": 89,
+   "category": "akcesoria",
+   "delivery_confirmed_at": "2026-06-11T10:50:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10746",
+   "case_id": "CASE-0018",
+   "item_name": "pilot zdalny do głośnika",
+   "item_value_pln": 79,
+   "category": "elektronika",
+   "delivery_confirmed_at": "2026-06-15T13:00:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10758",
+   "case_id": "CASE-0019",
+   "item_name": "karta graficzna",
+   "item_value_pln": 1899,
+   "category": "elektronika",
+   "delivery_confirmed_at": "2026-06-17T14:32:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10822",
+   "case_id": "CASE-0020",
+   "item_name": "zestaw ogrodowy",
+   "item_value_pln": 2600,
+   "category": "ogród",
+   "delivery_confirmed_at": "2026-06-18T10:05:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10675",
+   "case_id": "CASE-0021",
+   "item_name": "młynek do kawy",
+   "item_value_pln": 159,
+   "category": "AGD",
+   "delivery_confirmed_at": "2026-05-22T11:00:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10840",
+   "case_id": "CASE-0022",
+   "item_name": "ekspres do kawy przelewowy",
+   "item_value_pln": 649,
+   "category": "AGD",
+   "delivery_confirmed_at": "2026-06-17T10:12:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10853",
+   "case_id": "CASE-0023",
+   "item_name": "lampa podłogowa",
+   "item_value_pln": 349,
+   "category": "dom",
+   "delivery_confirmed_at": "2026-06-13T15:25:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10771",
+   "case_id": "CASE-0024",
+   "item_name": "biżuteria",
+   "item_value_pln": 289,
+   "category": "biżuteria",
+   "delivery_confirmed_at": "2026-06-08T12:40:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10864",
+   "case_id": "CASE-0025",
+   "item_name": "czajnik elektryczny",
+   "item_value_pln": 145,
+   "category": "AGD",
+   "delivery_confirmed_at": "2026-05-07T10:15:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10901",
+   "case_id": "CASE-0026",
+   "item_name": "olej rzepakowy tłoczony na zimno",
+   "item_value_pln": 18,
+   "category": "żywność",
+   "delivery_confirmed_at": "2026-06-16T13:45:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10877",
+   "case_id": "CASE-0027",
+   "item_name": "lampa wisząca",
+   "item_value_pln": 279,
+   "category": "dom",
+   "delivery_confirmed_at": "2026-06-16T11:30:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10915",
+   "case_id": "CASE-0028",
+   "item_name": "blender kuchenny",
+   "item_value_pln": 189,
+   "category": "AGD",
+   "delivery_confirmed_at": "2026-06-15T12:10:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10886",
+   "case_id": "CASE-0029",
+   "item_name": "trampki",
+   "item_value_pln": 159,
+   "category": "obuwie",
+   "delivery_confirmed_at": "2026-06-14T14:55:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10928",
+   "case_id": "CASE-0030",
+   "item_name": "lustro podłogowe",
+   "item_value_pln": 320,
+   "category": "dom",
+   "delivery_confirmed_at": "2026-06-15T16:20:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10940",
+   "case_id": "CASE-0031",
+   "item_name": "wazon ceramiczny",
+   "item_value_pln": 220,
+   "category": "dom",
+   "delivery_confirmed_at": "2026-06-08T13:15:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10933",
+   "case_id": "CASE-0032",
+   "item_name": "słuchawki nauszne",
+   "item_value_pln": 500,
+   "category": "elektronika",
+   "delivery_confirmed_at": "2026-06-12T15:30:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10947",
+   "case_id": "CASE-0033",
+   "item_name": "pilot do soundbara",
+   "item_value_pln": 149,
+   "category": "elektronika",
+   "delivery_confirmed_at": "2026-06-16T14:05:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10951",
+   "case_id": "CASE-0034",
+   "item_name": "ekspres ciśnieniowy",
+   "item_value_pln": 2000,
+   "category": "AGD",
+   "delivery_confirmed_at": "2026-06-12T09:50:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10958",
+   "case_id": "CASE-0035",
+   "item_name": "książki (4 egzemplarze)",
+   "item_value_pln": 96,
+   "category": "książki",
+   "delivery_confirmed_at": null
+  },
+  {
+   "order_id": "ORD-2026-10970",
+   "case_id": "CASE-0036",
+   "item_name": "regał pokojowy z akcesoriami",
+   "item_value_pln": 180,
+   "category": "meble",
+   "delivery_confirmed_at": "2026-06-11T13:15:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10962",
+   "case_id": "CASE-0037",
+   "item_name": "monitor 27 cali",
+   "item_value_pln": 890,
+   "category": "elektronika",
+   "delivery_confirmed_at": "2026-06-14T10:40:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10974",
+   "case_id": "CASE-0038",
+   "item_name": "hulajnoga",
+   "item_value_pln": 240,
+   "category": "sport",
+   "delivery_confirmed_at": "2026-06-16T14:05:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10981",
+   "case_id": "CASE-0039",
+   "item_name": "lampa stołowa",
+   "item_value_pln": 119,
+   "category": "dom",
+   "delivery_confirmed_at": "2026-06-17T14:20:00+02:00"
+  },
+  {
+   "order_id": "ORD-2026-10990",
+   "case_id": "CASE-0040",
+   "item_name": "ekspres kolbowy",
+   "item_value_pln": 2350,
+   "category": "AGD",
+   "delivery_confirmed_at": "2026-06-17T11:05:00+02:00"
+  }
+ ]
+}

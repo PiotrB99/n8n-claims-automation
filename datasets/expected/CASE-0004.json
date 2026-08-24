@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0004",
+  "group": "A",
+  "category": "LOST_PACKAGE",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-03"],
+  "notes": "Zgłoszenie 19 dni po planowanej dacie doręczenia mieści się w oknie POL-03 (po 3 dniach roboczych, przed upływem 30 dni); wartość 389 zł poniżej progu decyzji człowieka."
+}

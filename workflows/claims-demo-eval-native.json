@@ -1,0 +1,193 @@
+{
+ "name": "claims-demo-eval-native",
+ "id": "bO6br9QIwBHD7yqa",
+ "active": false,
+ "settings": {
+  "executionOrder": "v1",
+  "timezone": "Europe/Warsaw",
+  "saveManualExecutions": true,
+  "callerPolicy": "workflowsFromSameOwner",
+  "availableInMCP": false,
+  "binaryMode": "separate"
+ },
+ "nodes": [
+  {
+   "parameters": {
+    "dataTableId": {
+     "__rl": true,
+     "mode": "id",
+     "value": "859293e8-c7ac-4a04-9ab0-3f08d4ca9b80"
+    }
+   },
+   "id": "eval-trigger",
+   "name": "Eval Trigger",
+   "type": "n8n-nodes-base.evaluationTrigger",
+   "typeVersion": 4.7,
+   "position": [
+    0,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "workflowId": {
+     "__rl": true,
+     "mode": "id",
+     "value": "OWs5lIJXjYxBuLwg"
+    },
+    "workflowInputs": {
+     "mappingMode": "defineBelow",
+     "value": {},
+     "matchingColumns": [],
+     "schema": [],
+     "attemptToConvertTypes": false,
+     "convertFieldsToString": true
+    },
+    "options": {}
+   },
+   "id": "run-happy",
+   "name": "Run happy path",
+   "type": "n8n-nodes-base.executeWorkflow",
+   "typeVersion": 1.3,
+   "position": [
+    224,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "fileSelector": "=/home/node/claims/outbox/{{ $('Eval Trigger').first().json.case_id }}-result.json",
+    "options": {}
+   },
+   "id": "read-res",
+   "name": "Read result file",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    448,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "jsCode": "const src = $json.data || $json;\nconst got = src.final_decision !== undefined ? src.final_decision : (src.got_decision !== undefined ? src.got_decision : null);\nconst expected = src.expected_decision !== undefined ? src.expected_decision : $('Eval Trigger').first().json.expected_decision;\nreturn [{ json: {\n  case_id: src.case_id !== undefined ? src.case_id : $('Eval Trigger').first().json.case_id,\n  expected_decision: expected,\n  requires_human: src.requires_human !== undefined ? src.requires_human : $('Eval Trigger').first().json.requires_human,\n  got_decision: got,\n  decision_ok: got !== null && got === expected,\n  confidence: src.confidence !== undefined ? src.confidence : null,\n  gate_reason: src.gate_reason !== undefined ? src.gate_reason : null\n} }];"
+   },
+   "id": "parse-res",
+   "name": "Parse result",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    896,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "dataTableId": {
+     "__rl": true,
+     "mode": "id",
+     "value": "859293e8-c7ac-4a04-9ab0-3f08d4ca9b80"
+    },
+     "outputs": {
+      "values": [
+       {
+        "outputName": "got_decision",
+        "outputValue": "={{ $json.got_decision }}"
+       },
+       {
+        "outputName": "decision_ok",
+        "outputValue": "={{ $json.decision_ok }}"
+       },
+       {
+        "outputName": "confidence",
+        "outputValue": "={{ $json.confidence }}"
+       },
+       {
+        "outputName": "gate_reason",
+        "outputValue": "={{ $json.gate_reason }}"
+       }
+      ]
+     }
+   },
+   "id": "eval-out",
+   "name": "Evaluation",
+   "type": "n8n-nodes-base.evaluation",
+   "typeVersion": 4.8,
+   "position": [
+    1120,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "operation": "fromJson",
+    "options": {}
+   },
+   "id": "0cb2d7a9-d15e-4ac7-b11d-5c85ba10fd9f",
+   "name": "Extract result",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    672,
+    0
+   ]
+  }
+ ],
+ "connections": {
+  "Eval Trigger": {
+   "main": [
+    [
+     {
+      "node": "Run happy path",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Run happy path": {
+   "main": [
+    [
+     {
+      "node": "Read result file",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Read result file": {
+   "main": [
+    [
+     {
+      "node": "Extract result",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Parse result": {
+   "main": [
+    [
+     {
+      "node": "Evaluation",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extract result": {
+   "main": [
+    [
+     {
+      "node": "Parse result",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "CASE-0020",
+  "received_at": "2026-06-20T11:15:00+02:00",
+  "channel": "email",
+  "from_name": "Karolina Malinowska",
+  "from_email": "k.malinowska@example.org",
+  "subject": "Zniszczony zestaw ogrodowy za 2600 zł – żądam natychmiastowej reakcji",
+  "body": "Dzień dobry,\n\n18 czerwca doręczono mi zestaw ogrodowy (fotel + sofa + stół) z zamówienia ORD-2026-10822, wartość 2600 zł. Stół ma rozbity blat — szkło wewnątrz kartonu jest potłuczone na drobne kawałki, słyszałam to już przy odbiorze i odmówiłam podpisania protokołu bez adnotacji. Zdjęcia dołączam (trzy).\n\nOczekuję pełnego zwrotu 2600 zł w ciągu 7 dni. Jeżeli sprawa nie zostanie pozytywnie rozpatrzona, zgłaszam ją do UOKiK, Rzecznika Konsumentów i rozważam drogę sądową — mam zapisane wszystkie rozmowy.\n\nKarolina Malinowska",
+  "attachments": [
+    { "filename": "karton_stol.jpg", "type": "image/jpeg", "note": "Karton ze stołem z rozerwaną taśmą i widocznymi odłamkami szkła." },
+    { "filename": "blat_potluczony.jpg", "type": "image/jpeg", "note": "Blat szklany stołu potłuczony wewnątrz opakowania." },
+    { "filename": "szklo_odlamki.jpg", "type": "image/jpeg", "note": "Zbliżenie na odłamki szkła wewnątrz kartonu." }
+  ]
+}

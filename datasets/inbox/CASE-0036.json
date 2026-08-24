@@ -1,0 +1,15 @@
+{
+  "id": "CASE-0036",
+  "received_at": "2026-06-12T10:30:00+02:00",
+  "channel": "email",
+  "from_name": "Edyta Maj",
+  "from_email": "edyta.maj@example.com",
+  "subject": "Regał: karton naruszony, brak śrubek i spóźniona dostawa – ORD-2026-10970",
+  "body": "Dzień dobry,\n\nskładam reklamację do zamówienia ORD-2026-10970 (regał pokojowy, łącznie z akcesoriami ok. 180 zł). Sprawa jest trojaka:\n\n1. Sklep obiecywał montaż „na weekend”, czyli dostawę do 8 czerwca — paczka dotarła dopiero wczoraj (11 czerwca), trzy dni po terminie.\n\n2. Karton był przygnieciony i rozedrgany od spodu; robiłam zdjęcia od razu po doręczeniu.\n\n3. Po rozpakowaniu zabrakło woreczka ze śrubami łączącymi i kołkami meblowymi (wartość ok. 40 zł) — jest zdjęcie tego, co faktycznie było w pudełku.\n\nProszę o dosyłkę akcesoriów, wymianę uszkodzonej płyty bocznej oraz rekompensatę za opóźnienie.\n\nZ poważaniem,\nEdyta Maj",
+  "attachments": [
+    { "filename": "karton_regal_1.jpg", "type": "image/jpeg", "note": "Karton regału — rozedrgane dno i przetarcia." },
+    { "filename": "karton_regal_2.jpg", "type": "image/jpeg", "note": "Przygnieciony bok kartona." },
+    { "filename": "karton_regal_3.jpg", "type": "image/jpeg", "note": "Uszkodzona płyta boczna regału widoczna w otwarciu kartona." },
+    { "filename": "zawartosc_akcesoria.jpg", "type": "image/jpeg", "note": "Zawartość paczki: płyty i pojedynczy woreczek tylko z kluczem imbusowym — śruby i kołki meblowe nieobecne." }
+  ]
+}

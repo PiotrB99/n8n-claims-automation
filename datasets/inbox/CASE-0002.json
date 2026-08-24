@@ -1,0 +1,13 @@
+{
+  "id": "CASE-0002",
+  "received_at": "2026-06-17T18:40:00+02:00",
+  "channel": "email",
+  "from_name": "Marek Zieliński",
+  "from_email": "marekz@example.net",
+  "subject": "Zły kolor myszki ORD-2026-10593",
+  "body": "Dzień dobry,\n\n15 czerwca otrzymałem zamówienie ORD-2026-10593. Zamawiałem mysz bezprzewodową w kolorze CZARNYM, a przyszła BIAŁA. W załączniku zdjęcie etykiety z kodem produktu oraz zdjęcie samej myszki.\n\nPoproszę o wymianę na czarną.\n\nMarek Zieliński",
+  "attachments": [
+    { "filename": "etykieta_produktu.png", "type": "image/png", "note": "Etykieta na pudełku myszy z widocznym kodem EAN i opisem „wireless mouse, white”." },
+    { "filename": "mysz_biala.jpg", "type": "image/jpeg", "note": "Biała myszka bezprzewodowa na biurku." }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "CASE-0038",
+  "received_at": "2026-06-18T12:10:00+02:00",
+  "channel": "email",
+  "from_name": "Kinga Sobczyk",
+  "from_email": "kinga.sobczyk@example.net",
+  "subject": "Hulajnoga: zły kolor i brakująca część – ORD-2026-10974",
+  "body": "Witam,\n\n16 czerwca doręczono hulajnogę dla syna (zamówienie ORD-2026-10974, 240 zł). Niestety są dwa problemy naraz:\n\n— zamawialiśmy wersję niebieską, a przyszła pomarańczowa; na etykiecie widać kod produktu, zdjęcie załączam;\n— w pudełku brakuje obejmy mocującej kierownicę — jest sama kierownica i śruby, ale obejmy nie ma, więc sprzętu nie da się złożyć. Zdjęcie zawartości też załączam.\n\nProszę o wymianę na niebieską albo zwrot oraz koniecznie o przesłanie brakującej obejmy.\n\nKinga Sobczyk",
+  "attachments": [
+    { "filename": "etykieta_hulajnoga.jpg", "type": "image/jpeg", "note": "Etykieta z kodem EAN i opisem koloru „orange”." },
+    { "filename": "hulajnoga_pomaranczowa.jpg", "type": "image/jpeg", "note": "Hulajnoga z pomarańczową deską." },
+    { "filename": "zawartosc_hulajnoga.jpg", "type": "image/jpeg", "note": "Zawartość pudełka: deska, kierownica, śruby, instrukcja — obejmy mocującej brak." }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0028",
+  "received_at": "2026-06-16T08:20:00+02:00",
+  "channel": "email",
+  "from_name": "Sebastian Rzepka",
+  "from_email": "s.rzepka@example.com",
+  "subject": "Brak blendera w paczce – ORD-2026-10915",
+  "body": "Witam,\n\nwczoraj około południa dostałem paczkę z zamówieniem ORD-2026-10915. W środku miały być: blender, miska i deska. Blendera NIE MA — jest tylko miska i deska, reszta pustych przestrzeni wypełniona papierem.\n\nZdjęcie tego, co faktycznie było w paczce, dołączam.\n\nProszę o dosyłkę blendera.\n\nSebastian Rzepka",
+  "attachments": [
+    { "filename": "zestaw_kuchenny.jpg", "type": "image/jpeg", "note": "Na zdjęciu rozłożony ZESTAW: blender, miska i deska leżą razem na blacie kuchennym — kompletny komplet, blender widoczny." }
+  ]
+}

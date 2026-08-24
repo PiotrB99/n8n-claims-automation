@@ -1,0 +1,74 @@
+{
+  "precedent_cases": [
+    {
+      "id": "PREC-01",
+      "category": "DAMAGED_PACKAGE",
+      "claim": "Czajnik 179 zł doręczony 2 marca; klient zgłosił uszkodzenie obudowy 4 marca, dołączając zdjęcie wgniecionego kartonu i zdjęcie wgnieceń na obudowie.",
+      "decision": "ACCEPT",
+      "reasoning": "Zgłoszenie w 2. dobie mieści się w limicie 7 dni (POL-01), komplet zdjęć opakowania i towaru (POL-02), kwota poniżej progów automatyzacji (POL-06)."
+    },
+    {
+      "id": "PREC-02",
+      "category": "DAMAGED_PACKAGE",
+      "claim": "Mikser 249 zł doręczony 10 kwietnia; uszkodzenie misy zgłoszone 22 kwietnia z kompletem zdjęć.",
+      "decision": "REJECT",
+      "reasoning": "Zgłoszenie po 12 dniach od doręczenia przekracza termin 7 dni z POL-01; kompletność dowodów nie ratuje spóźnionego zgłoszenia."
+    },
+    {
+      "id": "PREC-03",
+      "category": "DAMAGED_PACKAGE",
+      "claim": "Lampka nocna 89 zł, klient zgłosił pęknięte kloszczyki dzień po doręczeniu, ale dołączył wyłącznie zdjęcie towaru.",
+      "decision": "REJECT",
+      "reasoning": "Brak zdjęcia opakowania zewnętrznego narusza wymóg dwóch fotografii z POL-02."
+    },
+    {
+      "id": "PREC-04",
+      "category": "WRONG_ITEM",
+      "claim": "Klient otrzymał czarną klawiaturę zamiast białej (349 zł), zgłoszenie 3 dni od doręczenia wraz ze zdjęciem etykiety z kodem EAN.",
+      "decision": "ACCEPT",
+      "reasoning": "Termin 14 dni zachowany, zdjęcie etykiety dostarczone, kwota do 500 zł — automatyczna wymiana (POL-04), wartość poniżej progu człowieka (POL-06)."
+    },
+    {
+      "id": "PREC-05",
+      "category": "WRONG_ITEM",
+      "claim": "Zamiast spodni w rozmiarze 32 przesłano rozmiar 30; klient zgłosił to 20 dni po doręczeniu ze zdjęciem metki.",
+      "decision": "REJECT",
+      "reasoning": "Zgłoszenie po terminie 14 dni określonym w POL-04."
+    },
+    {
+      "id": "PREC-06",
+      "category": "LOST_PACKAGE",
+      "claim": "Przesyłka o planowanej dostawie 10 maja nie dotarła; klient zgłosił zaginięcie 5 czerwca (26 dni po planowanej dacie), wcześniej bezskutecznie kontaktując się z kurierem.",
+      "decision": "ACCEPT",
+      "reasoning": "Zgłoszenie po 3 pełnych dniach roboczych i w oknie 30 dni (POL-03); wartość poniżej progu człowieka (POL-06) — pełny zwrot lub ponowna wysyłka."
+    },
+    {
+      "id": "PREC-07",
+      "category": "LATE_DELIVERY",
+      "claim": "Dostawa spóźniona o jeden dzień względem obietnicy; klient zażądał zwrotu kosztu wysyłki.",
+      "decision": "REJECT",
+      "reasoning": "Opóźnienie 1 doba jest poniżej progu 2 dni z POL-07, a polityka w ogóle nie przewiduje zwrotu kosztów wysyłki za spóźnienie."
+    },
+    {
+      "id": "PREC-08",
+      "category": "MISSING_ITEM",
+      "claim": "W zestawie garnków zabrakło pokrywy do średniego garnka (89 zł); klient zgłosił brak w ciągu doby od doręczenia, dołączając zdjęcie zawartości paczki.",
+      "decision": "ACCEPT",
+      "reasoning": "Termin 48 h zachowany, zdjęcie zawartości dostarczone, kwota do 300 zł (POL-05), poniżej progu człowieka (POL-06)."
+    },
+    {
+      "id": "PREC-09",
+      "category": "MISSING_ITEM",
+      "claim": "Klient zgłosił brak pilota do telewizora, ale nie dołączył żadnego zdjęcia zawartości paczki.",
+      "decision": "REJECT",
+      "reasoning": "Brak wymaganego zdjęcia zawartości paczki narusza warunki POL-05."
+    },
+    {
+      "id": "PREC-10",
+      "category": "REFUND_REQUEST",
+      "claim": "Klient po dwóch tygodniach zażądał zwrotu pieniędzy za sprawdzacz ciśnienia, nie podając żadnej wady towaru ani chęci odstąpienia od umowy.",
+      "decision": "REJECT",
+      "reasoning": "Zwrot bez podstawy reklamacyjnej podlega odmowie wg POL-11, z pouczeniem o 14-dniowym prawie odstąpienia od umowy."
+    }
+  ]
+}

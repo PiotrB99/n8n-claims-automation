@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0018",
+  "group": "D",
+  "category": "MISSING_ITEM",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10"],
+  "notes": "Klient wprost deklaruje szóstą reklamację w ciągu ostatniego pół roku — próg 5 reklamacji/6 miesięcy z POL-10 wymusza ścieżkę ludzką, mimo że samo zgłoszenie wygląda formalnie poprawnie (termin, zdjęcie, kwota 79 zł)."
+}

@@ -1,0 +1,10 @@
+{
+  "id": "CASE-0025",
+  "received_at": "2026-06-15T20:20:00+02:00",
+  "channel": "email",
+  "from_name": "Halina Mrugała",
+  "from_email": "halina.mrugala@example.org",
+  "subject": "Zmiana koloru czajnika ORD-2026-10864",
+  "body": "Dzień dobry,\n\n5 czerwca kupiłam czajnik w kolorze czerwonym (zamówienie ORD-2026-10864). Czajnik jest w pełni sprawny i niczym nie uszkodzony, ale po postawieniu w kuchni wyszło, że czerwony zupełnie nie pasuje do reszty sprzętów.\n\nCzy mogłabym go wymienić na identyczny model w kolorze stalowym? Różnicę w cenie dopłacę, jeśli będzie trzeba. Towar jest nienaruszony, mam oryginalne pudełko.\n\nZ poważaniem,\nHalina Mrugała",
+  "attachments": []
+}

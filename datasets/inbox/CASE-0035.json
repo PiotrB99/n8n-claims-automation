@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0035",
+  "received_at": "2026-06-19T09:00:00+02:00",
+  "channel": "email",
+  "from_name": "Bogdan Wróbel",
+  "from_email": "bogdan.wrobel@example.org",
+  "subject": "Paczka z książkami nie dotarła – ORD-2026-10958",
+  "body": "Dzień dobry,\n\nzamówienie ORD-2026-10958 (cztery książki, łącznie 96 zł) miało zostać dostarczone w poniedziałek 15 czerwca (przesyłka DPD5200119307765). Dziś jest już piątek, a paczki nadal nie ma — śledzenie pokazuje ostatni skan „w drodze do oddziału doręczeniowego” sprzed trzech dni.\n\nRozumiem, że od planowanej daty minęły dopiero trzy pełne dni robocze, dlatego zgłaszam się dopiero dziś rano. Czy możemy uznać przesyłkę za zaginioną?\n\nBogdan Wróbel",
+  "attachments": [
+    { "filename": "status_dpd.png", "type": "image/png", "note": "Zrzut ekranu śledzenia: ostatni status „przesyłka w drodze do oddziału doręczeniowego” z wtorku 16 czerwca." }
+  ]
+}

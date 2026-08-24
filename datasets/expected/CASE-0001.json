@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0001",
+  "group": "A",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-01", "POL-02"],
+  "notes": "Uszkodzenie zgłoszone 2 dni po doręczeniu (limit 7 dni z POL-01), komplet zdjęć opakowania i towaru zgodnie z POL-02, kwota 149 zł poniżej wszystkich progów automatyzacji. Prosta akceptacja."
+}

@@ -1,0 +1,1168 @@
+{
+ "name": "claims-demo-happy-path",
+ "id": "OWs5lIJXjYxBuLwg",
+ "active": true,
+ "settings": {
+  "executionOrder": "v1",
+  "timezone": "Europe/Warsaw",
+  "saveManualExecutions": true,
+  "callerPolicy": "workflowsFromSameOwner",
+  "availableInMCP": false
+ },
+ "nodes": [
+  {
+   "id": "trigger",
+   "name": "Run demo",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {},
+   "disabled": true
+  },
+  {
+   "id": "config",
+   "name": "Config",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    200,
+    0
+   ],
+   "parameters": {
+    "mode": "manual",
+    "options": {},
+    "assignments": {
+     "assignments": [
+      {
+       "id": "a1",
+       "name": "input_file",
+       "value": "={{ $json.input_file || '/home/node/claims/inbox/CASE-0001.json' }}",
+       "type": "string"
+      },
+      {
+       "id": "a2",
+       "name": "policies_file",
+       "value": "/home/node/claims/knowledge/policies.json",
+       "type": "string"
+      },
+      {
+       "id": "a3",
+       "name": "precedents_file",
+       "value": "/home/node/claims/knowledge/precedent-cases.json",
+       "type": "string"
+      },
+      {
+       "id": "a4",
+       "name": "outbox_dir",
+       "value": "/home/node/claims/outbox",
+       "type": "string"
+      },
+      {
+       "id": "a5",
+       "name": "api_url",
+       "value": "https://openrouter.ai/api/v1/chat/completions",
+       "type": "string"
+      },
+      {
+       "id": "a6",
+       "name": "model",
+       "value": "={{ $json.model || 'stealth/ox-alpha' }}",
+       "type": "string"
+      },
+      {
+       "id": "a7",
+       "name": "temperature",
+       "value": 0.2,
+       "type": "number"
+      },
+      {
+       "id": "a8",
+       "name": "confidence_threshold",
+       "value": 0.75,
+       "type": "number"
+      },
+      {
+       "id": "a9",
+       "name": "orders_file",
+       "value": "/home/node/claims/knowledge/orders.json",
+       "type": "string"
+      },
+      {
+       "id": "a10",
+       "name": "review_dir",
+       "value": "/home/node/claims/review",
+       "type": "string"
+      },
+      {
+       "id": "a11",
+       "name": "embeddings_file",
+       "value": "/home/node/claims/knowledge/embeddings.json",
+       "type": "string"
+      },
+      {
+       "id": "a12",
+       "name": "ollama_url",
+       "value": "http://192.168.10.166:11434",
+       "type": "string"
+      },
+      {
+       "id": "a13",
+       "name": "embed_model",
+       "value": "bge-m3",
+       "type": "string"
+      },
+      {
+       "id": "a14",
+       "name": "rag_top_k",
+       "value": 10,
+       "type": "number"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "read-case-file",
+   "name": "Read case file",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    400,
+    0
+   ],
+   "parameters": {
+    "operation": "read",
+    "options": {},
+    "fileSelector": "={{ $('Config').first().json.input_file }}"
+   }
+  },
+  {
+   "id": "parse-case",
+   "name": "Parse case",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    600,
+    0
+   ],
+   "parameters": {
+    "jsCode": "const c = $json.data;\nreturn [{ json: { case: c, thread_case_id: c.thread_case_id || null } }];"
+   }
+  },
+  {
+   "id": "read-policies",
+   "name": "Read policies",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    800,
+    0
+   ],
+   "parameters": {
+    "operation": "read",
+    "options": {},
+    "fileSelector": "={{ $('Config').first().json.policies_file }}"
+   }
+  },
+  {
+   "id": "read-precedents",
+   "name": "Read precedents",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    1000,
+    0
+   ],
+   "parameters": {
+    "operation": "read",
+    "options": {},
+    "fileSelector": "={{ $('Config').first().json.precedents_file }}"
+   }
+  },
+  {
+   "id": "parse-knowledge",
+   "name": "Parse knowledge",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1200,
+    0
+   ],
+   "parameters": {
+    "jsCode": "const pol = $('Extract policies').first().json.data;\nconst pre = $('Extract precedents').first().json.data;\nreturn [{ json: { policies: pol.policies ?? pol, precedents: pre.precedent_cases ?? pre } }];"
+   }
+  },
+  {
+   "id": "build-request",
+   "name": "Build request",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1400,
+    0
+   ],
+   "parameters": {
+    "jsCode": "const cfg = $('Config').first().json;\nconst ragSel = $('RAG retrieve').first().json.selected;\nconst lk = $('Assemble context').first().json;\nconst c = lk.case;\nconst system = [\n  'Jestes analitykiem reklamacji w firmie e-commerce.',\n  'Oceniasz wiadomosc klienta WYLACZNIE na podstawie ponizszego regulaminu i precedensow.',\n  'Odpowiedz wylacznie jednym obiektem JSON o polach:',\n  '{\"recommendation\":\"ACCEPT|REJECT|HUMAN_REVIEW\",\"confidence\":<0-1>,\"evidence\":[\"POL-XX\"],\"missing_information\":[],\"reasoning\":\"uzasadnienie po polsku\"}',\n  'ACCEPT lub REJECT tylko przy wystarczajacych dowodach i duzej pewnosci; w przeciwnym razie HUMAN_REVIEW.',\n  'Jesli wartosc badz termin jest dokladnie rowny progowi z regulaminu, prog obowiazuje (rownosc spelnia warunek typu \"do X wlacznie\") - sama rownosc nie jest powodem do HUMAN_REVIEW.',\n  'Jesli sprawa zawiera wiecej niz jedno roszczenie, ocen kazde osobno wedlug regulaminu; jesli wszystkie spelniaja kryteria sciezki automatycznej, decyzja dla calej sprawy tez jest automatyczna.',\n  'Jesli fakty sa ustalone i regula jest jednoznaczna, decyduj automatycznie - nie deleguj do czlowieka.',\n  'Jesli opis sytuacji jest wewnetrznie sprzeczny, niejasny albo wymaga interpretacji wykraczajacej poza regulamin - HUMAN_REVIEW.',\n  'Zwroc uwage na reguly o naduzyciu i sytuacjach niejednoznacznych (POL-10): jesli opis klienta lub zalaczone dowody sa ze soba wewnetrznie sprzeczne (np. opakowanie nienaruszone, a towar zniszczony), faktow nie da sie ustalic - HUMAN_REVIEW.',\n  'Nie powoluj sie na reguly spoza regulaminu - jesli regulamin nie obejmuje sytuacji, daj HUMAN_REVIEW i opisz brak w missing_information.',\n  '',\n  'WYBRANE FRAGMENTY BAZY WIEDZY (retrieval, top-' + ragSel.length + '):',\n  JSON.stringify(ragSel.map(s => ({ id: s.id, typ: s.type, trafnosc: s.score, tresc: s.text })))\n].join('\\n');\nlet user = 'Wiadomosc klienta (JSON):\\n' + JSON.stringify(c) +\n  '\\n\\nDANE Z SYSTEMU ZAMOWIEN (wiarygodne, nadpisuja dane od klienta):\\n' + JSON.stringify(lk.order);\nreturn [{ json: { body: { model: cfg.model, temperature: cfg.temperature, max_tokens: 4000, response_format: { type: 'json_object' }, messages: [ { role: 'system', content: system }, { role: 'user', content: user } ] } } }];\nif (lk.prior) {\n  user += '\\n\\nHISTORIA SPRAWY (poprzednie rozstrzygniecia - ta wiadomosc jest zazwyczaj odwo┼éaniem lub dopelneniem):\\n' + JSON.stringify(lk.prior);\n}"
+   }
+  },
+  {
+   "id": "openrouter",
+   "name": "OpenRouter chat",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    1600,
+    0
+   ],
+   "parameters": {
+    "method": "POST",
+    "url": "={{ $('Config').first().json.api_url }}",
+    "authentication": "genericCredentialType",
+    "genericAuthType": "httpHeaderAuth",
+    "sendBody": true,
+    "specifyBody": "json",
+    "jsonBody": "={{ JSON.stringify($json.body) }}",
+    "options": {
+     "timeout": 120000
+    }
+   },
+   "credentials": {
+    "httpHeaderAuth": {
+     "id": "m3CBdYIqWt7BnTlJ",
+     "name": "OpenRouter API (claims-demo)"
+    }
+   },
+   "retryOnFail": true,
+   "maxTries": 5,
+   "waitBetweenTries": 15000
+  },
+  {
+   "id": "parse-ai-output",
+   "name": "Parse AI output",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1800,
+    0
+   ],
+   "parameters": {
+    "jsCode": "const item = $input.first().json;\nconst raw = (item.choices && item.choices[0] && item.choices[0].message && item.choices[0].message.content) || '';\nlet parsed = null;\ntry { parsed = JSON.parse(String(raw)); } catch (e) {}\nif (!parsed) {\n  const matches = String(raw).match(/\\{[^{}]*\\}/g) || [];\n  for (const cand of matches.reverse()) {\n    try { parsed = JSON.parse(cand); break; } catch (e) {}\n  }\n}\nif (!parsed || !parsed.recommendation) {\n  return [{ json: { ok: false, error: 'invalid structured output', raw: String(raw).slice(0, 500) } }];\n}\nconst conf = Number(parsed.confidence);\nparsed.confidence = Number.isFinite(conf) ? conf : 0;\nif (!Array.isArray(parsed.evidence)) parsed.evidence = [];\nif (!Array.isArray(parsed.missing_information)) parsed.missing_information = [];\nconst cfg = $('Config').first().json;\nreturn [{ json: { ok: true, ai: parsed, threshold: cfg.confidence_threshold } }];"
+   }
+  },
+  {
+   "id": "decision-router",
+   "name": "Decision router",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    2000,
+    0
+   ],
+   "parameters": {
+    "jsCode": "const cfg = $('Config').first().json;\nconst caseData = $('Parse case').first().json.case;\nconst ord = $('Assemble context').first().json.order;\nconst orderValue = ord ? ord.order_value_pln : null;\nconst r = $input.first().json;\nconst base = {\n  case_id: caseData.id,\n  ai_recommendation: r.ai ? r.ai.recommendation : null,\n  confidence: r.ai ? r.ai.confidence : null,\n  evidence: r.ai ? r.ai.evidence : [],\n  missing_information: r.ai ? r.ai.missing_information : [],\n  reasoning: r.ai ? r.ai.reasoning : null\n};\nlet final, why;\nif (!r.ok) { final = 'TECHNICAL_FAIL'; why = r.error; }\nelse if (orderValue !== null && orderValue > 2000) { final = 'HUMAN_REVIEW'; why = 'wartosc zamowienia ' + orderValue + ' zl ponad prog globalny 2000 zl (POL-06) - bramka determinystyczna'; }\nelse if (!['ACCEPT', 'REJECT', 'HUMAN_REVIEW'].includes(r.ai.recommendation)) { final = 'HUMAN_REVIEW'; why = 'AI zwrocilo nieznany typ rekomendacji'; }\nelse if (r.ai.recommendation === 'HUMAN_REVIEW') { final = 'HUMAN_REVIEW'; why = 'rekomendacja AI: HUMAN_REVIEW'; }\nelse if (r.ai.confidence < r.threshold) { final = 'HUMAN_REVIEW'; why = 'confidence ' + r.ai.confidence + ' < prog ' + r.threshold; }\nelse if (!r.ai.evidence.length) { final = 'HUMAN_REVIEW'; why = 'brak dowodow (evidence)'; }\nelse if (r.ai.missing_information.length) { final = 'HUMAN_REVIEW'; why = 'AI zglosilo brakujace informacje'; }\nelse { final = r.ai.recommendation; why = 'wystarczajace dowody i confidence >= prog'; }\nbase.order_value_pln = orderValue;\nbase.final_decision = final;\nif (!r.ok) base.raw_snippet = String(r.raw || '').slice(0, 500);\nbase.gate_reason = why;\nbase.model = cfg.model;\nbase.decided_at = new Date().toISOString();\nreturn [{ json: { result: base } }];"
+   }
+  },
+  {
+   "id": "write-result-file",
+   "name": "Write result file",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    2400,
+    0
+   ],
+   "parameters": {
+    "operation": "write",
+    "options": {},
+    "fileName": "={{ $('Config').first().json.outbox_dir }}/{{ $('Decision router').first().json.result.case_id }}-result.json",
+    "dataPropertyName": "data"
+   }
+  },
+  {
+   "id": "result-to-binary6653",
+   "name": "Result to binary",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    2200,
+    0
+   ],
+   "parameters": {
+    "jsCode": "const payload = $('Decision router').first().json.result;\nconst name = (payload && payload.case_id ? payload.case_id : 'result') + '-result.json';\nconst buf = Buffer.from(JSON.stringify(payload, null, 1), 'utf8');\nconst bin = await this.helpers.prepareBinaryData(buf, name, 'application/json');\nreturn [{ json: { filename: name }, binary: { data: bin } }];"
+   }
+  },
+  {
+   "id": "exec-trigger",
+   "name": "When Executed by Another Workflow",
+   "type": "n8n-nodes-base.executeWorkflowTrigger",
+   "typeVersion": 1.2,
+   "position": [
+    -250,
+    0
+   ],
+   "parameters": {
+    "inputSource": "passthrough"
+   }
+  },
+  {
+   "id": "case-webhook",
+   "name": "Case webhook",
+   "type": "n8n-nodes-base.webhook",
+   "typeVersion": 2,
+   "position": [
+    -250,
+    200
+   ],
+   "parameters": {
+    "httpMethod": "POST",
+    "path": "claims-demo-case",
+    "responseMode": "lastNode",
+    "options": {}
+   },
+   "webhookId": "claims-demo-case"
+  },
+  {
+   "id": "normalize-input",
+   "name": "Normalize input",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -50,
+    100
+   ],
+   "parameters": {
+    "jsCode": "const b = ($json && $json.body) || {};\nconst out = {\n  input_file: b.input_file || $json.input_file || null,\n  model: b.model || $json.model || null\n};\nreturn [{ json: out }];"
+   }
+  },
+  {
+   "id": "read-orders",
+   "name": "Read orders",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    700,
+    200
+   ],
+   "parameters": {
+    "operation": "read",
+    "fileSelector": "={{ $('Config').first().json.orders_file }}",
+    "options": {}
+   }
+  },
+  {
+   "id": "order-lookup",
+   "name": "Order lookup",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    900,
+    200
+   ],
+   "parameters": {
+    "jsCode": "const orders = $('Extract orders').first().json.data.orders || [];\nconst c = $('Parse case').first().json.case;\nconst m = (c.body || '').match(/ORD-\\d{4}-\\d{5}/);\nconst order = m ? (orders.find(o => o.order_id === m[0]) || null) : null;\nreturn [{ json: { case: c, order: order, ord_ref: m ? m[0] : null,\n  thread_case_id: c.thread_case_id || null } }];"
+   }
+  },
+  {
+   "id": "save-claim-case",
+   "name": "Save claim case",
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1.1,
+   "position": [
+    2100,
+    200
+   ],
+   "parameters": {
+    "resource": "row",
+    "operation": "insert",
+    "dataTableId": {
+     "__rl": true,
+     "mode": "id",
+     "value": "5c1ec41e-5b0a-46cf-af27-3afd29a4945a"
+    },
+    "columns": {
+     "mappingMode": "defineBelow",
+     "value": {
+      "case_id": "={{ $json.result.case_id }}",
+      "status": "={{ $json.result.final_decision === 'HUMAN_REVIEW' ? 'WAITING_HUMAN' : 'DECIDED' }}",
+      "final_decision": "={{ $json.result.final_decision }}",
+      "ai_recommendation": "={{ $json.result.ai_recommendation }}",
+      "confidence": "={{ $json.result.confidence }}",
+      "gate_reason": "={{ $json.result.gate_reason }}",
+      "order_value_pln": "={{ $json.result.order_value_pln }}",
+      "model": "={{ $json.result.model }}",
+      "decided_at": "={{ $json.result.decided_at }}"
+     },
+     "matchingColumns": [
+      "case_id"
+     ],
+     "schema": [
+      {
+       "id": "case_id",
+       "displayName": "case_id",
+       "required": false,
+       "defaultMatch": true,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "status",
+       "displayName": "status",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "final_decision",
+       "displayName": "final_decision",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "ai_recommendation",
+       "displayName": "ai_recommendation",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "confidence",
+       "displayName": "confidence",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "number",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "gate_reason",
+       "displayName": "gate_reason",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "order_value_pln",
+       "displayName": "order_value_pln",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "number",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "model",
+       "displayName": "model",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      },
+      {
+       "id": "decided_at",
+       "displayName": "decided_at",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false,
+       "readOnly": false
+      }
+     ],
+     "attemptToConvertTypes": false,
+     "convertFieldsToString": false
+    },
+    "options": {}
+   }
+  },
+  {
+   "id": "task-to-binary",
+   "name": "Task to binary",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    2300,
+    300
+   ],
+   "parameters": {
+    "jsCode": "const r = $('Decision router').first().json.result;\nconst task = {\n  task: 'DECYZA CZLOWIEKA - reklamacja oczekuje na rozstrzygniecie',\n  case_id: r.case_id,\n  ai_recommendation: r.ai_recommendation,\n  confidence: r.confidence,\n  evidence: r.evidence,\n  missing_information: r.missing_information,\n  reasoning: r.reasoning,\n  order_value_pln: r.order_value_pln,\n  decided_at: r.decided_at,\n  mozliwe_decyzje: ['ACCEPT', 'REJECT', 'REQUEST_MORE_INFORMATION']\n};\nconst buf = Buffer.from(JSON.stringify(task, null, 1), 'utf8');\nconst bin = await this.helpers.prepareBinaryData(buf, r.case_id + '-task.json', 'application/json');\nreturn [{ json: { filename: r.case_id + '-task.json' }, binary: { data: bin } }];"
+   }
+  },
+  {
+   "id": "write-review-task",
+   "name": "Write review task",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    2500,
+    300
+   ],
+   "parameters": {
+    "operation": "write",
+    "fileName": "={{ $('Config').first().json.review_dir }}/{{ $('Task to binary').first().json.filename }}",
+    "dataPropertyName": "data",
+    "options": {}
+   }
+  },
+  {
+   "id": "if-human",
+   "name": "Is human review?",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2,
+   "position": [
+    2100,
+    0
+   ],
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "loose",
+      "version": 2
+     },
+     "combinator": "and",
+     "conditions": [
+      {
+       "id": "c1",
+       "leftValue": "={{ $('Decision router').first().json.result.final_decision }}",
+       "rightValue": "HUMAN_REVIEW",
+       "operator": {
+        "type": "string",
+        "operation": "equals"
+       }
+      }
+     ]
+    },
+    "looseTypeValidation": false,
+    "options": {}
+   }
+  },
+  {
+   "id": "has-thread",
+   "name": "Has thread?",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2,
+   "position": [
+    1000,
+    -250
+   ],
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "loose",
+      "version": 2
+     },
+     "combinator": "and",
+     "conditions": [
+      {
+       "id": "t1",
+       "leftValue": "={{ $json.thread_case_id || \"\" }}",
+       "rightValue": "",
+       "operator": {
+        "type": "string",
+        "operation": "notEquals"
+       }
+      }
+     ]
+    },
+    "looseTypeValidation": false,
+    "options": {}
+   }
+  },
+  {
+   "id": "read-prior-result",
+   "name": "Read prior result",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    1200,
+    -350
+   ],
+   "parameters": {
+    "operation": "read",
+    "fileSelector": "={{ $('Config').first().json.outbox_dir }}/{{ $json.thread_case_id }}-result.json",
+    "options": {}
+   }
+  },
+  {
+   "id": "parse-prior",
+   "name": "Parse prior",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1400,
+    -350
+   ],
+   "parameters": {
+    "jsCode": "const txt = Buffer.from($input.first().binary.data.data, 'base64').toString('utf8');\nlet r = null;\ntry {\n  const parsed = JSON.parse(txt);\n  r = Array.isArray(parsed) ? parsed[0].result : (parsed.result || parsed);\n} catch (e) {}\nreturn [{ json: { prior: r } }];"
+   }
+  },
+  {
+   "id": "assemble-context",
+   "name": "Assemble context",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1600,
+    -150
+   ],
+   "parameters": {
+    "jsCode": "const lk = $('Order lookup').first().json;\nlet prior = null;\nfor (const it of $input.all()) {\n  if (it.json && typeof it.json.prior !== 'undefined') prior = it.json.prior;\n}\nreturn [{ json: { case: lk.case, order: lk.order, ord_ref: lk.ord_ref,\n  thread_case_id: lk.thread_case_id || null, prior: prior } }];"
+   }
+  },
+  {
+   "id": "3c6caaed-a5d7-4fa1-80f0-833efc4ae573",
+   "name": "Extract case",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    500,
+    -120
+   ],
+   "parameters": {
+    "operation": "fromJson",
+    "options": {}
+   }
+  },
+  {
+   "id": "ee54156f-f52c-4e08-a121-f38af3cee695",
+   "name": "Extract orders",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    800,
+    80
+   ],
+   "parameters": {
+    "operation": "fromJson",
+    "options": {}
+   }
+  },
+  {
+   "id": "f7c8cec9-91aa-4345-9914-cc3e824ba917",
+   "name": "Extract policies",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    900,
+    -120
+   ],
+   "parameters": {
+    "operation": "fromJson",
+    "options": {}
+   }
+  },
+  {
+   "id": "9e6f3a21-0204-4210-9f9d-e77f4c4ebcd0",
+   "name": "Extract precedents",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    1100,
+    -120
+   ],
+   "parameters": {
+    "operation": "fromJson",
+    "options": {}
+   }
+  },
+  {
+   "id": "2c522975-d7d6-44c7-878b-8ae9000142fb",
+   "name": "Read embeddings",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    1250,
+    -250
+   ],
+   "parameters": {
+    "operation": "read",
+    "fileSelector": "={{ $('Config').first().json.embeddings_file }}",
+    "options": {}
+   }
+  },
+  {
+   "id": "f38fd8af-538b-498a-ad91-29355286af47",
+   "name": "Extract embeddings",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    1450,
+    -250
+   ],
+   "parameters": {
+    "operation": "fromJson",
+    "options": {}
+   }
+  },
+  {
+   "id": "5d2d7c35-e15f-4075-89ea-ce0f38cc99a5",
+   "name": "Prepare query",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1650,
+    -250
+   ],
+   "parameters": {
+    "jsCode": "const c = $('Assemble context').first().json.case;\nreturn [{ json: { query_text: (c.subject || '') + '\\n' + (c.body || '') } }];"
+   }
+  },
+  {
+   "id": "97acd1df-2163-43d5-a750-1986d24901ee",
+   "name": "Embed query",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    1850,
+    -250
+   ],
+   "parameters": {
+    "method": "POST",
+    "url": "={{ $('Config').first().json.ollama_url }}/api/embed",
+    "sendBody": true,
+    "specifyBody": "json",
+    "jsonBody": "={{ JSON.stringify({ model: $('Config').first().json.embed_model, input: $json.query_text }) }}",
+    "options": {
+     "timeout": 60000
+    }
+   }
+  },
+  {
+   "id": "93228cc1-857e-4942-9845-2a9af7c3acaa",
+   "name": "RAG retrieve",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    2050,
+    -250
+   ],
+   "parameters": {
+    "jsCode": "const cfg = $('Config').first().json;\nconst k = Number(cfg.rag_top_k || 6);\nconst embData = $('Extract embeddings').first().json.data;\nconst itemsAll = embData.items || [];\nconst resp = $input.first().json;\nconst qv = (resp.embeddings && resp.embeddings[0]) || null;\nif (!qv) throw new Error('Brak embeddingu zapytania');\nconst dot = (a, b) => a.reduce((s, x, i) => s + x * b[i], 0);\nconst nrm = a => Math.sqrt(a.reduce((s, x) => s + x * x, 0)) || 1;\nconst scored = itemsAll.map(it => {\n  const iv = it.vector || [];\n  const sim = dot(qv, iv) / (nrm(qv) * (nrm(iv) || 1));\n  return { id: it.id, type: it.type, text: it.text, score: Math.round(sim * 1000) / 1000 };\n});\nscored.sort((a, b) => b.score - a.score);\nconst selected = scored.slice(0, k);\nreturn [{ json: { selected, top_score: selected.length ? selected[0].score : null } }];"
+   }
+  }
+ ],
+ "connections": {
+  "Run demo": {
+   "main": [
+    [
+     {
+      "node": "Normalize input",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Config": {
+   "main": [
+    [
+     {
+      "node": "Read case file",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Read case file": {
+   "main": [
+    [
+     {
+      "node": "Extract case",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Parse case": {
+   "main": [
+    [
+     {
+      "node": "Read orders",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Read precedents": {
+   "main": [
+    [
+     {
+      "node": "Extract precedents",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Parse knowledge": {
+   "main": [
+    [
+     {
+      "node": "Build request",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Build request": {
+   "main": [
+    [
+     {
+      "node": "OpenRouter chat",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "OpenRouter chat": {
+   "main": [
+    [
+     {
+      "node": "Parse AI output",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Parse AI output": {
+   "main": [
+    [
+     {
+      "node": "Decision router",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Decision router": {
+   "main": [
+    [
+     {
+      "node": "Save claim case",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Result to binary": {
+   "main": [
+    [
+     {
+      "node": "Write result file",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "When Executed by Another Workflow": {
+   "main": [
+    [
+     {
+      "node": "Normalize input",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Case webhook": {
+   "main": [
+    [
+     {
+      "node": "Normalize input",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Normalize input": {
+   "main": [
+    [
+     {
+      "node": "Config",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Read orders": {
+   "main": [
+    [
+     {
+      "node": "Extract orders",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Order lookup": {
+   "main": [
+    [
+     {
+      "node": "Has thread?",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Save claim case": {
+   "main": [
+    [
+     {
+      "node": "Is human review?",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Is human review?": {
+   "main": [
+    [
+     {
+      "node": "Task to binary",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Result to binary",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Task to binary": {
+   "main": [
+    [
+     {
+      "node": "Write review task",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Write review task": {
+   "main": [
+    [
+     {
+      "node": "Result to binary",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Has thread?": {
+   "main": [
+    [
+     {
+      "node": "Read prior result",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Assemble context",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Read prior result": {
+   "main": [
+    [
+     {
+      "node": "Parse prior",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Parse prior": {
+   "main": [
+    [
+     {
+      "node": "Assemble context",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Assemble context": {
+   "main": [
+    [
+     {
+      "node": "Read embeddings",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Read policies": {
+   "main": [
+    [
+     {
+      "node": "Extract policies",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extract case": {
+   "main": [
+    [
+     {
+      "node": "Parse case",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extract orders": {
+   "main": [
+    [
+     {
+      "node": "Order lookup",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extract policies": {
+   "main": [
+    [
+     {
+      "node": "Read precedents",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extract precedents": {
+   "main": [
+    [
+     {
+      "node": "Parse knowledge",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Read embeddings": {
+   "main": [
+    [
+     {
+      "node": "Extract embeddings",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extract embeddings": {
+   "main": [
+    [
+     {
+      "node": "Prepare query",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Prepare query": {
+   "main": [
+    [
+     {
+      "node": "Embed query",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Embed query": {
+   "main": [
+    [
+     {
+      "node": "RAG retrieve",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "RAG retrieve": {
+   "main": [
+    [
+     {
+      "node": "Build request",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

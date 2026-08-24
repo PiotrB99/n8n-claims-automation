@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0019",
+  "group": "D",
+  "category": "LOST_PACKAGE",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10"],
+  "notes": "Klient twierdzi, że przesyłki nigdy nie otrzymał, ale sam przytacza status kuriera „doręczono, odebrał: DOM” — twierdzenie przeczy podanemu dowodowi, co wg POL-10 lit. b wymaga decyzji człowieka (możliwe nadużycie)."
+}

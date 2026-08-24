@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0037",
+  "group": "H",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-01", "POL-02", "POL-07"],
+  "notes": "Wielodowodowy ACCEPT: uszkodzenie kartonu udokumentowane protokołem kuriera i czterema zdjęciami (POL-01, POL-02), a dodatkowo opóźnienie 3 dni względem obietnicy daje kupon 10% (POL-07). Zgłoszenie 2 dni po doręczeniu; wartość 890 zł."
+}

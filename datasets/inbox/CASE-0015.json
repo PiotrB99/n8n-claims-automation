@@ -1,0 +1,13 @@
+{
+  "id": "CASE-0015",
+  "received_at": "2026-06-16T09:40:00+02:00",
+  "channel": "email",
+  "from_name": "Natalia Sikora",
+  "from_email": "natalia.sikora@example.com",
+  "subject": "Uszkodzony wazon – pytanie o termin",
+  "body": "Dzień dobry,\n\nchciałam zgłosić uszkodzenie w zamówieniu ORD-2026-10702 — ceramiczny wazon dotarł z odłamaną częścią rantu. Zdjęcia kartonu i samego wazonu dołączam.\n\nMam tylko jeden problem: nie pamiętam dokładnie, kiedy kurier dostarczył paczkę. Chyba we wtorek, a może w środę zeszłego tygodnia (to znaczy 9 albo 10 czerwca). Nie mam SMS-a z potwierdzeniem, telefon mi się zepsuł w między czasie.\n\nCzy w takiej sytuacji mogę liczyć na wymianę wazonu?\n\nPozdrawiam,\nNatalia Sikora",
+  "attachments": [
+    { "filename": "karton_wazon.jpg", "type": "image/jpeg", "note": "Karton z widocznym wgnieceniem na górze." },
+    { "filename": "wazon_rant.jpg", "type": "image/jpeg", "note": "Wazon z odłamanym fragmentem rantu." }
+  ]
+}

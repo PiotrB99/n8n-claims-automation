@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0011",
+  "received_at": "2026-06-10T11:20:00+02:00",
+  "channel": "email",
+  "from_name": "Sylwia Mazur",
+  "from_email": "sylwia.mazur@example.com",
+  "subject": "Paczka trochę pogięta – nie wiem co myśleć",
+  "body": "Witam,\n\nwczoraj przyszło moje zamówienie ORD-2026-10667 (blender kielichowy). Karton był trochę pogięty, to znaczy rogi takie przygniecione, ale nie wiem, może to nic. Blender chyba jest cały, ale uchwyt dzbanka jakiś luźny się wydaje, albo mi się tylko wydaje, nie umiem powiedzieć. Raz wygląda ok, raz jakby coś nie grało.\n\nDołączam jedno zdjęcie, ale wyszło nieostrym, przepraszam. Mogę spróbować zrobić lepsze, jak będzie potrzebne.\n\nPozdrawiam,\nSylwia Mazur",
+  "attachments": [
+    { "filename": "zdjecie1.jpg", "type": "image/jpeg", "note": "Nieostre zdjęcie blendera na stole — trudno ocenić, czy uchwyt jest uszkodzony; karton widoczny tylko fragmentem z krawędzi kadru." }
+  ]
+}

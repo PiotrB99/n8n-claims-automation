@@ -1,0 +1,13 @@
+{
+  "id": "CASE-0023",
+  "received_at": "2026-06-15T15:45:00+02:00",
+  "channel": "email",
+  "from_name": "Aleksandra Czarnecka",
+  "from_email": "ola.czarnecka@example.com",
+  "subject": "Reklamacja lampy – to prezent od mojego brata",
+  "body": "Dzień dobry,\n\n13 czerwca otrzymałam od brata w prezencie lampę podłogową zamówioną w Waszym sklepie. Niestety przy rozpakowaniu okazało się, że abażur jest rozerwany, a jedno ramię wygięte — zdjęcia dołączam (dwa).\n\nBrat kupił ją na swoje konto i podał mi numer zamówienia: ORD-2026-10853. On sam mieszka za granicą, więc zgłaszam reklamację ja, ale oczywiście ma jego zgodę — może zadzwonić do was i potwierdzić.\n\nCo musimy zrobić, żeby dostać nową lampę albo zwrot?\n\nPozdrawiam,\nAleksandra Czarnecka",
+  "attachments": [
+    { "filename": "abazur_rozryw.jpg", "type": "image/jpeg", "note": "Abażur lampy z długim rozdarciem tkaniny." },
+    { "filename": "ramie_wygiete.jpg", "type": "image/jpeg", "note": "Metalowe ramię lampy wygięte pod nienaturalnym kątem." }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0036",
+  "group": "H",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-01", "POL-02", "POL-05", "POL-07"],
+  "notes": "Jedno zgłoszenie uruchamia trzy reguły naraz: uszkodzenie kartonu (POL-01, POL-02 — 3 zdjęcia, 1 dzień po doręczeniu), brak kompletu montażowego (POL-05 — zdjęcie zawartości, wartość braku ~40 zł) i opóźnienie 3 dni (POL-07). Wszystkie warunki spełnione, wartość łącznie ~180 zł."
+}

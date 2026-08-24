@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0034",
+  "group": "G",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-01", "POL-02", "POL-06"],
+  "notes": "Przypadek brzegowy progu globalnego: wartość reklamowana to równo 2000 zł. POL-06 kieruje do człowieka dopiero wartości „powyżej 2000 zł”, więc 2000 zł zostaje na ścieżce automatycznej; POL-01 i POL-02 spełnione (3 dni, komplet zdjęć)."
+}

@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0026",
+  "received_at": "2026-06-17T09:15:00+02:00",
+  "channel": "email",
+  "from_name": "Ireneusz Bąk",
+  "from_email": "ireneusz.bak@example.net",
+  "subject": "Rozbity olej rzepakowy – ORD-2026-10901",
+  "body": "Dzień dobry,\n\nwczoraj doręczono mi zamówienie ORD-2026-10901, w którym był między innymi olej rzepakowy tłoczony na zimno w szklanej butelce. Kiedy otwierałem karton, cała podłoga była mokra — butelka musiała się rozbić w transporcie, bo pachniało olejem już przy paczce.\n\nZdjęcie zrobione po otwarciu dołączam. Proszę o rekompensatę za rozbity produkt.\n\nIreneusz Bąk",
+  "attachments": [
+    { "filename": "zamowienie_olej.jpg", "type": "image/jpeg", "note": "Karton otwarty od góry: butelka oleju stoi w środku W CAŁOŚCI, naklejka „kruche” widoczna, żadnych śladów rozlania ani stłuczenia." }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0019",
+  "received_at": "2026-06-23T22:05:00+02:00",
+  "channel": "email",
+  "from_name": "Paweł Stępień",
+  "from_email": "pawel.stepien@example.com",
+  "subject": "NIE DOSTAŁEM paczki – karta graficzna ORD-2026-10758",
+  "body": "Dzień dobry,\n\nzamawiałem kartę graficzną za 1899 zł (zamówienie ORD-2026-10758, przesyłka DPD5200119012334). Twierdzę, że paczki NIE DOSTAŁEM — ani w skrzynce, ani od nikogo w domu, nikt nic nie odbierał.\n\nJednak gdy sprawdzam śledzenie, system kuriera pokazuje „doręczono 17.06, godz. 14:32, odebrał: DOM”. Nie wiem, kto to odebrał, bo to nie ja. Chcę pełny zwrot pieniędzy albo tę kartę.\n\nProszę o szybkie rozpatrzenie.\n\nPaweł Stępień",
+  "attachments": [
+    { "filename": "dpd_status.png", "type": "image/png", "note": "Zrzut ekranu śledzenia DPD: „doręczono 2026-06-17 14:32, odebrał: DOM”." }
+  ]
+}

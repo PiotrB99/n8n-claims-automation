@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0014",
+  "received_at": "2026-06-18T19:30:00+02:00",
+  "channel": "email",
+  "from_name": "Damian Grabowski",
+  "from_email": "damian.grabowski@example.com",
+  "subject": "Szafa ORD-2026-10690 – chyba brakuje śrubek?",
+  "body": "Hej,\n\ndziś rano przyszła szafa z zamówienia ORD-2026-10690. Rozpakowałem płyty i wygląda mi na to, że brakuje woreczka ze śrubkami montażowymi... ale zaraz, jest jakiś jeden woreczek z kołkami do ściany i może tam są wszystkie? Nie otwierałem go jeszcze.\n\nW instrukcji widzę listę: śruby, kołki drewniane, kołki do ścian, klucz imbusowy. W pudełku widzę tylko jedną torebkę. Nie jestem pewien, zgłaszam czy nie?\n\nZdjęcie zawartości dołączam.\n\nDamian Grabowski",
+  "attachments": [
+    { "filename": "zawartosc.jpg", "type": "image/jpeg", "note": "Płyty meblowe i jedna zaplombowana torebka z okuciami — nie wiadomo, co dokładnie zawiera." }
+  ]
+}

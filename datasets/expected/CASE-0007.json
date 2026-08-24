@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0007",
+  "group": "B",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "REJECT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-02"],
+  "notes": "Zgłoszenie jest terminowe (1 dzień po doręczeniu), ale dołączono tylko jedno zdjęcie towaru — brak wymaganego zdjęcia opakowania zewnętrznego, co według POL-02 skutkuje odmową."
+}

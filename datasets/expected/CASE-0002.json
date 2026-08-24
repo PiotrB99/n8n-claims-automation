@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0002",
+  "group": "A",
+  "category": "WRONG_ITEM",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-04"],
+  "notes": "Zły towar zgłoszony 2 dni po doręczeniu (limit 14 dni), dołączone zdjęcie etykiety z kodem, wartość 129 zł mieści się w limicie 500 zł automatycznej akceptacji z POL-04."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0013",
+  "group": "C",
+  "category": "WRONG_ITEM",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10", "POL-04"],
+  "notes": "Klient sama nie potrafi stwierdzić, czy towar jest niezgodny (czarny vs granatowy), a jedyne zdjęcie etykiety jest nieczytelne — brak dowodu niezgodności wymaganego przez POL-04 oraz niejasność opisu wg POL-10 kierują sprawę do człowieka."
+}

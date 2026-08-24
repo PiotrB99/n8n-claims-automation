@@ -1,0 +1,12 @@
+{
+  "id": "CASE-0003",
+  "received_at": "2026-06-19T07:40:00+02:00",
+  "channel": "email",
+  "from_name": "Katarzyna Wiśniewska",
+  "from_email": "kasia.wisniewska@example.com",
+  "subject": "Brakujący element w zestawie – ORD-2026-10644",
+  "body": "Dzień dobry,\n\n18 czerwca o godzinie 11:05 otrzymałam SMS potwierdzający doręczenie zamówienia ORD-2026-10644 (lampa biurkowa z zestawem). Po otwarciu paczki okazało się, że w pudełku brakuje zasilacza sieciowego — jest sama lampa, instrukcja i zapasowa żarówka.\n\nDo wiadomości dołączam zdjęcie całej zawartości paczki rozłożonej na stole. Zasilacz ma według sklepu wartość 59 zł.\n\nProszę o dosyłkę brakującego elementu.\n\nZ poważaniem,\nKatarzyna Wiśniewska",
+  "attachments": [
+    { "filename": "zawartosc_paczki.jpg", "type": "image/jpeg", "note": "Cała zawartość paczki rozłożona na stole: lampa, instrukcja, żarówka — zasilacza nie ma." }
+  ]
+}

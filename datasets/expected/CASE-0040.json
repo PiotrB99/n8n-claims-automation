@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0040",
+  "group": "H",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-06", "POL-01", "POL-02", "POL-07"],
+  "notes": "Wielodowodowy HUMAN_REVIEW: komplet dowodów uszkodzenia (6 załączników, zgłoszenie 2 dni po doręczeniu — POL-01, POL-02) i opóźnienie 2 dni (POL-07), ale wartość 2350 zł przekracza próg POL-06, więc decyzję podejmuje człowiek niezależnie od poprawności formalnej."
+}

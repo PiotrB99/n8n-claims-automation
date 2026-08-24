@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0012",
+  "group": "C",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-10"],
+  "notes": "Treść jest samoprzeczna: opakowanie miało być nietknięte, a towar rozbito — taki opis nie pozwala ustalić faktów automatycznie i zgodnie z POL-10 lit. c wymaga decyzji człowieka."
+}

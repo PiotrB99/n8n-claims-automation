@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0022",
+  "group": "E",
+  "category": "WRONG_DELIVERY_PLACE",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-12"],
+  "notes": "Sytuacja „status doręczono, ale paczki nigdzie nie ma i sąsiad zaprzecza” (doręczenie w niewłaściwe miejsce) nie jest objęta żadną regułą bazy wiedzy — POL-03 dotyczy zaginięcia po planowanej dacie, a tu doręczenie odnotowano. Sprawa nieuregulowana → człowiek. MISSING_KNOWLEDGE"
+}

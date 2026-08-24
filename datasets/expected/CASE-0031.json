@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0031",
+  "group": "G",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-01", "POL-02"],
+  "notes": "Przypadek brzegowy terminu: doręczenie 8 czerwca o 13:15, zgłoszenie dokładnie w 7. dobie (15 czerwca, 13:15). POL-01 liczy dzień doręczenia jako zerowy i uznaje zgłoszenie złożone w 7. dniu za terminowe. Zdjęcia kompletne (2), kwota 220 zł."
+}

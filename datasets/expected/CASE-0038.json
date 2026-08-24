@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0038",
+  "group": "H",
+  "category": "WRONG_ITEM",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-04", "POL-05"],
+  "notes": "Dwa niezależne naruszenia w jednej przesyłce: zły kolor deski (POL-04 — zdjęcie etykiety z kodem, zgłoszenie 2 dni po doręczeniu) i brak obejmy kierownicy (POL-05 — zdjęcie zawartości, ~35 zł). Obie ścieżki automatyczne spełnione; wartość łącznie 240 zł."
+}

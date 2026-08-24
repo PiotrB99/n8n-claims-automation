@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0003",
+  "group": "A",
+  "category": "MISSING_ITEM",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-05"],
+  "notes": "Brak elementu zgłoszony ok. 21 h od potwierdzenia doręczenia (limit 48 h), dołączone zdjęcie zawartości paczki, wartość brakującego zasilacza 59 zł poniżej limitu 300 zł z POL-05."
+}

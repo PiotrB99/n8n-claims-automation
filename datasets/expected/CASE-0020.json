@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0020",
+  "group": "D",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-06", "POL-10"],
+  "notes": "Podwójna przyczyna: wartość 2600 zł przekracza próg POL-06, a wiadomość zawiera groźby zgłoszeń do UOKiK i prokuratury (POL-10 lit. d). Decyzja wyłącznie po stronie człowieka."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0025",
+  "group": "E",
+  "category": "EXCHANGE_REQUEST",
+  "expected_decision": "HUMAN_REVIEW",
+  "requires_human": true,
+  "expected_policy_refs": ["POL-12"],
+  "notes": "Dobrowolna wymiana towaru bez wady (inny kolor) nie jest opisana w żadnej regule — POL-04 dotyczy złego towaru z winy sklepu, a POL-11 zwrotu bez podstawy; procedury wymiany dobrowolnej brak w bazie → człowiek. MISSING_KNOWLEDGE"
+}

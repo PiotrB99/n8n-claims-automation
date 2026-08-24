@@ -1,0 +1,76 @@
+{
+  "policies": [
+    {
+      "id": "POL-01",
+      "title": "Termin zgłoszenia uszkodzenia przesyłki",
+      "content": "Uszkodzenie przesyłki (opakowania lub towaru) należy zgłosić najpóźniej do końca 7. dnia kalendarzowego od daty doręczenia. Dzień doręczenia liczy się jako dzień zerowy. Zgłoszenie złożone w 7. dniu jest terminowe; każde późniejsze podlega odmowie rozpatrzenia bez względu na inne okoliczności.",
+      "params": { "damaged_report_deadline_days": 7 }
+    },
+    {
+      "id": "POL-02",
+      "title": "Wymagane dowody przy uszkodzeniu",
+      "content": "Reklamacja uszkodzenia musi zawierać co najmniej 2 czytelne fotografie: (1) zdjęcie opakowania zewnętrznego ukazujące jego stan po doręczeniu oraz (2) zdjęcie uszkodzonego towaru. Mniejsza liczba zdjęć albo brak zdjęcia opakowania oznacza odmowę rozpatrzenia.",
+      "params": { "damaged_required_photos": 2 }
+    },
+    {
+      "id": "POL-03",
+      "title": "Zgłoszenie zagubionej przesyłki",
+      "content": "Zaginięcie przesyłki można zgłaszać najwcześniej po upływie 3 pełnych dni roboczych od planowanej daty doręczenia i najpóźniej 30 dni kalendarzowych od tej daty. Zgłoszenie złożone w tym oknie skutkuje uznaniem przesyłki za zagubioną: klient wybiera ponowną wysyłkę albo pełny zwrot płatności.",
+      "params": { "lost_min_business_days_after_eta": 3, "lost_max_calendar_days_after_eta": 30 }
+    },
+    {
+      "id": "POL-04",
+      "title": "Zły towar (inny niż zamówiony)",
+      "content": "Otrzymanie towaru niezgodnego z zamówieniem należy zgłosić w ciągu 14 dni kalendarzowych od doręczenia wraz ze zdjęciem etykiety produktu z widocznym kodem/EAN. Do wartości 500 zł włącznie decyzja zapada automatycznie na korzyść klienta (wymiana lub zwrot); powyżej tej kwoty decyzję podejmuje człowiek.",
+      "params": { "wrong_item_deadline_days": 14, "wrong_item_auto_accept_max_pln": 500 }
+    },
+    {
+      "id": "POL-05",
+      "title": "Brakujący element zamówienia",
+      "content": "Brak elementu zestawu należy zgłosić w ciągu 48 godzin od potwierdzenia doręczenia, dołączając zdjęcie zawartości paczki. Do wartości brakującego elementu 300 zł włącznie decyzja zapada automatycznie na korzyść klienta (dosyłka lub częściowy zwrot); powyżej tej kwoty decyzję podejmuje człowiek.",
+      "params": { "missing_item_deadline_hours": 48, "missing_item_auto_accept_max_pln": 300 }
+    },
+    {
+      "id": "POL-06",
+      "title": "Globalny próg kwotowy",
+      "content": "Jeżeli łączna wartość reklamowanych towarów przekracza 2000 zł, sprawa niezależnie od kategorii wymaga decyzji człowieka. Wartość równa 2000 zł lub niższa kwalifikuje się do ścieżki automatycznej, o ile spełnione są pozostałe warunki właściwe dla danej kategorii.",
+      "params": { "human_review_threshold_pln": 2000 }
+    },
+    {
+      "id": "POL-07",
+      "title": "Spóźniona dostawa",
+      "content": "Jeżeli dostawa nastąpiła co najmniej 2 dni kalendarzowe po obietnicy terminu, klientowi przysługuje kod rabatowy 10% na kolejne zakupy. Warunkiem jest zgłoszenie w ciągu 7 dni kalendarzowych od faktycznego doręczenia. Opóźnienie krótsze niż 2 dni nie generuje rekompensaty; spóźnienie nigdy nie skutkuje zwrotem kosztów wysyłki.",
+      "params": { "late_min_delay_days": 2, "late_claim_deadline_days": 7 }
+    },
+    {
+      "id": "POL-08",
+      "title": "Kategorie wyłączone z obsługi mailowej",
+      "content": "Reklamacje dotyczące towarów z kategorii Żywność oraz Kosmetyki nie są rozpatrywane w standardowym trybie mailowym — każde takie zgłoszenie jest kierowane do dedykowanego procesu jakościowego i wymaga decyzji człowieka.",
+      "params": { "excluded_categories": ["zywnosc", "kosmetyki"] }
+    },
+    {
+      "id": "POL-09",
+      "title": "Odwołania i rekwalifikacja sprawy",
+      "content": "Klient może odwołać się od wydanej decyzji w ciągu 14 dni kalendarzowych od jej otrzymania. Każde odwołanie rozpatruje wyłącznie pracownik, niezależnie od kwoty i kategorii; system nie wydaje w takich sprawach decyzji automatycznych.",
+      "params": { "appeal_deadline_days": 14, "appeal_decided_by": "human" }
+    },
+    {
+      "id": "POL-10",
+      "title": "Nadużycia, sprzeczności i eskalacje",
+      "content": "Sprawę kieruje się do decyzji człowieka, gdy: (a) klient złożył 5 lub więcej reklamacji w ciągu ostatnich 6 miesięcy; (b) treść wiadomości przeczy załączonym dowodom lub dowody przeczą sobie nawzajem; (c) opis stanu towaru jest niejasny albo samoprzeczący i nie pozwala ustalić faktów; (d) wiadomość zawiera groźby prawne, sądowe lub wyraźnie agresywny język.",
+      "params": { "abuse_claims_per_6_months": 5 }
+    },
+    {
+      "id": "POL-11",
+      "title": "Zwrot bez podstawy reklamacyjnej",
+      "content": "Prośba o zwrot pieniędzy, w której klient nie wskazuje wady towaru, niewykonania usługi ani zamiaru odstąpienia od umowy, podlega odmowie. W odpowiedzi informuje się klienta o prawie odstąpienia od umowy zawartej na odległość w terminie 14 dni kalendarzowych od doręczenia.",
+      "params": { "withdrawal_window_days": 14 }
+    },
+    {
+      "id": "POL-12",
+      "title": "Kompletność danych i sprawy nieuregulowane",
+      "content": "Zgłoszenie musi umożliwiać identyfikację zamówienia: brak numeru zamówienia (format ORD-RRRR-NNNNN) uniemożliwia automatyczną obsługę i kieruje sprawę do człowieka. Spraw nieuregulowanych niniejszym regulaminem nie wolno rozstrzygać automatycznie — każda taka sprawa wymaga decyzji człowieka.",
+      "params": { "require_order_number": true, "unregulated_case_decision": "HUMAN_REVIEW" }
+    }
+  ]
+}

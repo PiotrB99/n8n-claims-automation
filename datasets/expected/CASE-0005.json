@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0005",
+  "group": "A",
+  "category": "LATE_DELIVERY",
+  "expected_decision": "ACCEPT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-07"],
+  "notes": "Opóźnienie wyniosło 3 dni (≥ 2 wymagane przez POL-07), a zgłoszenie wpłynęło 3 dni po faktycznym doręczeniu, czyli w limicie 7 dni. Przysługuje kupon rabatowy 10%, bez zwrotu kosztów wysyłki."
+}

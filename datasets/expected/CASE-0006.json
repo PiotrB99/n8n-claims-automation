@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0006",
+  "group": "B",
+  "category": "DAMAGED_PACKAGE",
+  "expected_decision": "REJECT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-01"],
+  "notes": "Uszkodzenie zgłoszone 12 dni po doręczeniu (1 czerwca → 13 czerwca) — przekroczony termin 7 dni z POL-01. Komplet zdjęć nie zmienia oceny terminowości; argument o późnym rozpakowaniu regulamin nie uwzględnia."
+}

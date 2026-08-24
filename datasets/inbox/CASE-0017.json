@@ -1,0 +1,13 @@
+{
+  "id": "CASE-0017",
+  "received_at": "2026-06-12T17:25:00+02:00",
+  "channel": "email",
+  "from_name": "Izabela Wieczorek",
+  "from_email": "i.wieczorek@example.com",
+  "subject": "SKANDAL! Zepsute etui – koniec z Waszym sklepem",
+  "body": "Witam,\n\n11 czerwca dostałam etui na telefon z zamówienia ORD-2026-10557 (89 zł) i od razu widać, że jest porysowane po całej powierzchni, jakby ktoś nim szorował podłogę. To śmiech na całą Polskę — wysyłacie złom i jeszcze bierzecie za to pieniądze.\n\nZdjęcia dołączam (dwa). Oczekuję natychmiastowego zwrotu. Jak nie dostanę odpowiedzi w 24 godziny, to idę z tym do prawnika i do sądu konsumenckiego, a o Waszej „firmie” napiszę wszędzie, gdzie się da.\n\nPozdrawiam „najmocniej”,\nIzabela Wieczorek",
+  "attachments": [
+    { "filename": "etui_rysy1.jpg", "type": "image/jpeg", "note": "Etui na telefon z widocznymi rysami na powierzchni." },
+    { "filename": "etui_rysy2.jpg", "type": "image/jpeg", "note": "Drugie ujęcie: rysy pod innym kątem światła." }
+  ]
+}

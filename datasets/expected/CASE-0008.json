@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0008",
+  "group": "B",
+  "category": "LATE_DELIVERY",
+  "expected_decision": "REJECT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-07"],
+  "notes": "Opóźnienie wyniosło 1 dzień kalendarzowy — poniżej progu 2 dni wymaganych przez POL-07, więc rekompensata nie przysługuje. Żądanego zwrotu kosztów wysyłki polityka przewiduje w ogóle dla żadnego spóźnienia."
+}

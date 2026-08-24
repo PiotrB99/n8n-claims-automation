@@ -1,0 +1,17 @@
+{
+  "id": "CASE-0040",
+  "received_at": "2026-06-19T09:50:00+02:00",
+  "channel": "email",
+  "from_name": "Bożena Sadowska",
+  "from_email": "bozena.sadowska@example.com",
+  "subject": "Uszkodzony ekspres do kawy 2350 zł + spóźniona dostawa – ORD-2026-10990",
+  "body": "Dzień dobry,\n\nzamówienie ORD-2026-10990 (ekspres kolbowy, 2350 zł) miało dotrzeć 15 czerwca — kurier pojawił się dopiero 17 czerwca, dwa dni po terminie.\n\nPrzy odbiorze odmówiłam przyjęcia bez adnotacji: karton był rozdarty z trzech stron i mocno przygnieciony. Po otwarciu okazało się, że dźwignia dźwigarki jest wygięta, a na korpusie widać głębokie rysy. Kurier sporządził protokół szkody.\n\nDokumentacja w załączniku: cztery zdjęcia kartona, zdjęcie uszkodzeń ekspresu oraz protokół kuriera.\n\nProszę o zwrot pełnej kwoty albo wymianę urządzenia; do spóźnienia oczekuję oczywiście rekompensaty.\n\nZ poważaniem,\nBożena Sadowska",
+  "attachments": [
+    { "filename": "karton_1.jpg", "type": "image/jpeg", "note": "Karton ekspresu — rozdarcie z lewej strony." },
+    { "filename": "karton_2.jpg", "type": "image/jpeg", "note": "Rozdarcie z prawej strony kartona." },
+    { "filename": "karton_3.jpg", "type": "image/jpeg", "note": "Mocno przygnieciony górny narożnik." },
+    { "filename": "karton_4.jpg", "type": "image/jpeg", "note": "Widok dolnej części kartona z przetarciami." },
+    { "filename": "ekspres_uszkodzenia.jpg", "type": "image/jpeg", "note": "Wygięta dźwignia dźwigarki i głębokie rysy na korpusie." },
+    { "filename": "protokol_szkody_kurier.pdf", "type": "application/pdf", "note": "Protokół szkody kuriera z adnotacją o naruszonym opakowaniu." }
+  ]
+}

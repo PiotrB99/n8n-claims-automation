@@ -1,0 +1,9 @@
+{
+  "id": "CASE-0009",
+  "group": "B",
+  "category": "WRONG_ITEM",
+  "expected_decision": "REJECT",
+  "requires_human": false,
+  "expected_policy_refs": ["POL-04"],
+  "notes": "Zły towar zgłoszony 18 dni po doręczeniu (28 maja → 15 czerwca) — po terminie 14 dni z POL-04. Zdjęcie metki jest, ale termin jest nieodwracalnie przekroczony."
+}
