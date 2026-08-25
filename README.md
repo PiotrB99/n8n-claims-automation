@@ -11,31 +11,55 @@ Projekt pokazuje pełny cykl inżynierski: projekt domeny → dataset testowy tw
 izolowanym agentem → walking skeleton → warstwy (Claim Case, human review, follow-upy,
 RAG) → ewaluacja → eksperymenty → regresja.
 
+## Po co to badanie?
+
+Silnik czyta wiadomość klienta, sprawdza ją z regulaminem sklepu i podejmuje jedną
+z trzech decyzji: **zaakceptuj**, **odrzuć** albo **przekaż człowiekowi**. Samo
+„workflow działa" nie znaczy jednak nic — kluczowe pytanie brzmi: **czy decyzje są
+zgodne z regulaminem?** Dlatego powstały 40 przykładowych reklamacji z zadaną
+prawidłową odpowiedzią, a projekt mierzy, jak często silnik decyduje tak samo jak
+człowiek znający zasady.
+
+Trzy pytania badawcze:
+
+1. Czy AI podejmuje decyzje zgodne z regulaminem, gdy zna go w całości?
+2. Czy wystarczy podawać AI tylko dopasowane fragmenty regulaminu (technika RAG —
+   tak robi się w dużych firmach, gdzie cała dokumentacja nie mieści się w promptcie)?
+3. Czy podanie większej liczby fragmentów (6 → 10) poprawia wynik?
+
 ## Wyniki
 
-| Run | Konfiguracja | Harness | Decision accuracy |
-|---|---|---|---|
-| #1 | pełna baza wiedzy, przed naprawą datasetu | batch-eval | 92,5% |
-| #2 | + Order lookup (dane z systemu zamówień) | batch-eval | 95% |
-| #3 | finalny baseline: pełna baza wiedzy | batch-eval | **95%** (38/40, 0 TECHNICAL_FAIL) |
-| #4 | klasyczny RAG, top-6 | eval-native (n8n Evaluations) | 82,5% |
-| #5 | klasyczny RAG, top-10 | batch-eval | 82,5% |
-| #6 | klasyczny RAG, top-10 — pełny run po naprawie harnessu | batch-eval | **85%** (34/40, raport wygenerowany workflowem end-to-end) |
+| Co wiedziało AI przy decyzji | Wynik |
+|---|---|
+| Cały regulamin (12 zasad + 10 precedensów) | **95%** (38/40) |
+| Tylko 6 najbardziej pasujących fragmentów (RAG) | 82,5% (33/40) |
+| Tylko 10 najbardziej pasujących fragmentów (RAG) | 85% (34/40) |
 
 Artefakty runów: [`datasets/outbox/`](datasets/outbox/) (`eval-run-*.json`),
 dziennik zmian: [`datasets/CHANGES.md`](datasets/CHANGES.md).
 
-### Wnioski z eksperymentów
+### Wnioski
 
-- **RAG kosztuje ~10–12 p.p. accuracy wobec pełnej bazy wiedzy** (95% → 82,5–85%) przy bazie
-  tak małej, że mieści się w całości w oknie kontekstowym.
-- **Zwiększenie okna retrievalu z top-6 do top-10 nie zmieniło istotnie wyniku** (82,5% → 82,5%,
-  w powtórce 85%). Różnica ±2,5 p.p. między identycznymi konfiguracjami to wariancja modelu —
-  powtarzające się błędy dotyczą tych samych przypadków brzegowych (0018: HR→ACCEPT,
-  0034/0037: ACCEPT→HR), a nie braku reguł w promptcie.
-- Ewaluacja ujawniła też defekt datasetu (run #1): ground truth zakładał dane, których
-  klient nie podał. Naprawa była architektoniczna — mock systemu zamówień wzbogacający
-  sprawę przed rozumowaniem LLM — a nie łatanie oczekiwanych decyzji.
+1. **AI dobrze rozstrzyga reklamacje, gdy zna cały regulamin** — 95% zgodności
+   z odpowiedziami wzorcowymi. Pomyłki zdarzają się głównie w przypadkach
+   granicznych, gdzie nawet człowiek mógłby się wahać.
+
+2. **Podawanie samych fragmentów regulaminu (RAG) pogarsza jakość o ok. 10 punktów
+   procentowych.** Przy tym regulaminie nic to nie daje: skoro całość mieści się
+   w promptcie, wycinanie fragmentów może tylko zaszkodzić — system potrafi nie
+   dosłać reguły, która okazałaby się potrzebna.
+
+3. **Większa liczba fragmentów nie pomaga.** Top-6 i top-10 dają praktycznie ten
+   sam wynik, więc problemem nie jest „za mało kontekstu".
+
+4. **Powtarzające się pomyłki dotyczą zawsze tych samych kilku spraw graniczych**
+   — raz AI jest ostrożniejsze, raz mniej. To normalna zmienność modelu, dlatego
+   wnioski opieram na powtarzających się wzorcach, nie na pojedynczym wyniku.
+
+5. **Testy wychwyciły też błąd w samych danych wejściowych.** Pierwszy run pokazał,
+   że część reklamacji nie zawiera informacji potrzebnych do decyzji (np. ceny
+   towaru) — choć realnie klient by ich nie podał. Naprawa jak w prawdziwej firmie:
+   silnik uzupełnia dane z systemu zamówień, zamiast „poprawiać" oczekiwane odpowiedzi.
 
 Szczegółowa analiza: [`docs/EKSPERYMENTY.md`](docs/EKSPERYMENTY.md)
 ([English](docs/EKSPERYMENTY.en.md)).
@@ -119,11 +143,29 @@ Uwaga na breaking change n8n 2.x: Code node nie dostaje treści pliku w
 `binary.data.data` (tylko marker `filesystem-v2`) — odczyt plików idzie przez
 node Extract from File. Workflowy w tym repo są już po migracji.
 
-## Co dalej (roadmapa)
+## Dokąd to można rozwinąć
 
-- Doklejanie reguły fallback (POL-12) do promptu niezależnie od retrievalu
-- Regresja automatyczna: baseline + progi + uruchomienie po każdej zmianie promptu
-- Chunkless RAG (retriewal po ustrukturyzowanych polach zamiast fragmentów tekstu)
+**Eksperymenty następcze**
+
+- **Chunkless RAG** — dobór reguł po polach strukturalnych (kategoria reklamacji,
+  wartość zamówienia, termin) zamiast podobieństwa tekstu. Hipoteza: odbuduje jakość
+  klasycznego RAG-u do poziomu pełnej bazy i jest realna do wdrożenia produkcyjnego.
+- **Skalowanie badania** — regulamin wzorowany na realnych sklepach (~50 reguł)
+  + dataset 100+ przypadków generowany izolowanym agentem. Dopiero przy dużej bazie
+  porównanie „pełna baza vs RAG" jest uczciwe — wtedy pełny regulamin przestaje się
+  mieścić w promptcie i RAG ma szansę pokazać realne korzyści (koszt tokenów,
+  opóźnienie), a nie tylko spadek jakości.
+
+**Rozszerzenia silnika**
+
+- **Analiza zdjęć (multimodal)** — klient zgłasza uszkodzenie, ale nie dołączył
+  zdjęcia → automatyczna prośba o dowód zamiast pełnej ścieżki decyzyjnej;
+  zdjęcie obecne → weryfikacja, czy faktycznie pokazuje opisany defect.
+- **Ścieżka szybka dla powtarzalnych spraw** — klasyfikator wstępny: proste,
+  powtarzalne przypadki idą skróconą ścieżką bez pełnego rozumowania LLM-a;
+  nietypowe → pełna analiza.
+- **Automatyczna regresja** — baseline + progi PASS/WARNING/FAIL uruchamiane po
+  każdej zmianie promptu lub reguł, jak testy jednostkowe dla AI.
 
 ---
 

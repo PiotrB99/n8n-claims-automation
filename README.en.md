@@ -11,32 +11,55 @@ The project covers the full engineering cycle: domain design → test dataset
 authored by an isolated agent → walking skeleton → layered features (Claim
 Case history, human review, follow-ups, RAG) → evaluation → experiments.
 
+## What this study is about
+
+The engine reads a customer message, checks it against the store's policy and
+makes one of three decisions: **accept**, **reject**, or **escalate to a human**.
+"Workflow works" alone means little — the key question is: **are the decisions
+consistent with the policy?** That's why 40 sample complaints with known correct
+answers were created, and the project measures how often the engine decides the
+same way a human who knows the rules would.
+
+Three research questions:
+
+1. Does AI decide consistently with the policy when it sees the whole policy?
+2. Is it enough to show AI only matching policy fragments (the RAG technique —
+   what large organizations do when full documentation doesn't fit in a prompt)?
+3. Does showing more fragments (6 → 10) improve the result?
+
 ## Results
 
-| Run | Configuration | Harness | Decision accuracy |
-|---|---|---|---|
-| #1 | full knowledge base, before dataset fix | batch-eval | 92.5% |
-| #2 | + order lookup (enrichment from order system) | batch-eval | 95% |
-| #3 | final baseline: full knowledge base | batch-eval | **95%** (38/40, 0 TECHNICAL_FAIL) |
-| #4 | classical RAG, top-6 | n8n native Evaluations | 82.5% |
-| #5 | classical RAG, top-10 | batch-eval | 82.5% |
-| #6 | classical RAG, top-10 — full run after harness fixes | batch-eval | **85%** (34/40, report generated end-to-end by the workflow) |
+| What the AI knew when deciding | Result |
+|---|---|
+| Full policy (12 rules + 10 precedents) | **95%** (38/40) |
+| Only 6 most similar fragments (RAG) | 82.5% (33/40) |
+| Only 10 most similar fragments (RAG) | 85% (34/40) |
 
 Run artifacts: [`datasets/outbox/`](datasets/outbox/) (`eval-run-*.json`),
 change log: [`datasets/CHANGES.md`](datasets/CHANGES.md) (Polish).
 
-### Experiment takeaways
+### Takeaways
 
-- **Classical RAG costs ~10–12 p.p. of accuracy vs the full knowledge base**
-  (95% → 82.5–85%) — on a knowledge base small enough to fit entirely in the
-  context window.
-- **Widening retrieval from top-6 to top-10 did not meaningfully change the
-  result** (82.5% → 82.5%, 85% on repeat). The ±2.5 p.p. spread between identical
-  configurations is model variance — recurring mistakes affect the same borderline
-  cases (0018: HR→ACCEPT, 0034/0037: ACCEPT→HR), not missing rules in the prompt.
-- Evaluation also surfaced a dataset defect (run #1): ground truth assumed facts
-  the customer never provided. The fix was architectural — an order-system mock
-  enriching each case before LLM reasoning — not patching expected decisions.
+1. **AI handles complaints well when it sees the whole policy** — 95% agreement
+   with ground truth. Mistakes happen mainly in borderline cases where even a
+   human might hesitate.
+
+2. **Showing only policy fragments (RAG) costs ~10 percentage points.** With
+   this policy size it brings no benefit: since everything fits in the prompt,
+   cutting fragments can only hurt — a needed rule may not make the cut.
+
+3. **More fragments don't help.** Top-6 and top-10 give practically the same
+   result, so "too little context" is not the problem.
+
+4. **Recurring mistakes always concern the same few borderline cases** — the
+   model oscillates. This is normal model variance, so conclusions are drawn
+   from recurring patterns, not single numbers.
+
+5. **The tests also caught a defect in the input data itself.** The first run
+   showed some complaints lacked facts needed for a decision (e.g. product
+   price) — which a real customer wouldn't provide anyway. Fixed like a real
+   company would: the engine enriches data from the order system instead of
+   "fixing" expected answers.
 
 Detailed analysis: [`docs/EKSPERYMENTY.en.md`](docs/EKSPERYMENTY.en.md)
 ([polska wersja](docs/EKSPERYMENTY.md)).
@@ -120,11 +143,28 @@ Note an n8n 2.x breaking change: Code nodes no longer receive file content in
 `binary.data.data` (only a `filesystem-v2` marker) — file reads go through the
 Extract from File node. The workflows in this repo are already migrated.
 
-## Roadmap
+## Where this can go next
 
-- Always-append fallback policy (POL-12) regardless of retrieval results
-- Automated regression: baseline + thresholds on every prompt change
-- Chunkless RAG (retrieval over structured fields instead of text chunks)
+**Follow-up experiments**
+
+- **Chunkless RAG** — selecting rules by structured fields (complaint category,
+  order value, deadline) instead of text similarity. Hypothesis: restores RAG
+  quality to full-context level and is realistically deployable in production.
+- **Scaling the study** — a policy modeled on real stores (~50 rules) plus a
+  100+ case dataset authored by an isolated agent. Only with a large knowledge
+  base does the "full policy vs RAG" comparison become fair — the full policy
+  stops fitting in a prompt, and RAG gets a chance to show real benefits
+  (token cost, latency) instead of just a quality drop.
+
+**Engine extensions**
+
+- **Photo analysis (multimodal)** — customer reports damage without attaching
+  a photo → automatic evidence request instead of the full decision path;
+  photo attached → verify it actually shows the described defect.
+- **Fast path for repetitive cases** — a pre-classifier: simple, repetitive
+  cases take a shortcut without full LLM reasoning; unusual ones → full analysis.
+- **Automated regression** — baseline + PASS/WARNING/FAIL thresholds run on
+  every prompt or rule change, like unit tests for AI.
 
 ---
 
