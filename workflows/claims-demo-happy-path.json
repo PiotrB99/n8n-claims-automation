@@ -759,7 +759,10 @@
     "options": {
      "timeout": 60000
     }
-   }
+   },
+   "retryOnFail": true,
+   "maxTries": 3,
+   "waitBetweenTries": 5000
   },
   {
    "id": "93228cc1-857e-4942-9845-2a9af7c3acaa",
@@ -772,7 +775,10 @@
    ],
    "parameters": {
     "jsCode": "const cfg = $('Config').first().json;\nconst k = Number(cfg.rag_top_k || 6);\nconst embData = $('Extract embeddings').first().json.data;\nconst itemsAll = embData.items || [];\nconst resp = $input.first().json;\nconst qv = (resp.embeddings && resp.embeddings[0]) || null;\nif (!qv) throw new Error('Brak embeddingu zapytania');\nconst dot = (a, b) => a.reduce((s, x, i) => s + x * b[i], 0);\nconst nrm = a => Math.sqrt(a.reduce((s, x) => s + x * x, 0)) || 1;\nconst scored = itemsAll.map(it => {\n  const iv = it.vector || [];\n  const sim = dot(qv, iv) / (nrm(qv) * (nrm(iv) || 1));\n  return { id: it.id, type: it.type, text: it.text, score: Math.round(sim * 1000) / 1000 };\n});\nscored.sort((a, b) => b.score - a.score);\nconst selected = scored.slice(0, k);\nreturn [{ json: { selected, top_score: selected.length ? selected[0].score : null } }];"
-   }
+   },
+   "retryOnFail": true,
+   "maxTries": 3,
+   "waitBetweenTries": 3000
   }
  ],
  "connections": {
