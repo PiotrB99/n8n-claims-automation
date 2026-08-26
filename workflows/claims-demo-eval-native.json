@@ -1,15 +1,5 @@
 {
  "name": "claims-demo-eval-native",
- "id": "bO6br9QIwBHD7yqa",
- "active": false,
- "settings": {
-  "executionOrder": "v1",
-  "timezone": "Europe/Warsaw",
-  "saveManualExecutions": true,
-  "callerPolicy": "workflowsFromSameOwner",
-  "availableInMCP": false,
-  "binaryMode": "separate"
- },
  "nodes": [
   {
    "parameters": {
@@ -88,26 +78,26 @@
      "mode": "id",
      "value": "859293e8-c7ac-4a04-9ab0-3f08d4ca9b80"
     },
-     "outputs": {
-      "values": [
-       {
-        "outputName": "got_decision",
-        "outputValue": "={{ $json.got_decision }}"
-       },
-       {
-        "outputName": "decision_ok",
-        "outputValue": "={{ $json.decision_ok }}"
-       },
-       {
-        "outputName": "confidence",
-        "outputValue": "={{ $json.confidence }}"
-       },
-       {
-        "outputName": "gate_reason",
-        "outputValue": "={{ $json.gate_reason }}"
-       }
-      ]
-     }
+    "outputs": {
+     "values": [
+      {
+       "outputName": "got_decision",
+       "outputValue": "={{ $json.got_decision }}"
+      },
+      {
+       "outputName": "decision_ok",
+       "outputValue": "={{ $json.decision_ok }}"
+      },
+      {
+       "outputName": "confidence",
+       "outputValue": "={{ $json.confidence }}"
+      },
+      {
+       "outputName": "gate_reason",
+       "outputValue": "={{ $json.gate_reason }}"
+      }
+     ]
+    }
    },
    "id": "eval-out",
    "name": "Evaluation",
@@ -189,5 +179,13 @@
     ]
    ]
   }
+ },
+ "settings": {
+  "executionOrder": "v1",
+  "timezone": "Europe/Warsaw",
+  "saveManualExecutions": true,
+  "callerPolicy": "workflowsFromSameOwner",
+  "availableInMCP": false,
+  "binaryMode": "separate"
  }
 }

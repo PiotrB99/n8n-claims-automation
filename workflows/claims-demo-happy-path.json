@@ -1,14 +1,5 @@
 {
  "name": "claims-demo-happy-path",
- "id": "OWs5lIJXjYxBuLwg",
- "active": true,
- "settings": {
-  "executionOrder": "v1",
-  "timezone": "Europe/Warsaw",
-  "saveManualExecutions": true,
-  "callerPolicy": "workflowsFromSameOwner",
-  "availableInMCP": false
- },
  "nodes": [
   {
    "id": "trigger",
@@ -45,13 +36,13 @@
       {
        "id": "a2",
        "name": "policies_file",
-       "value": "/home/node/claims/knowledge/policies.json",
+       "value": "/home/node/claims/knowledge/policies-v2.json",
        "type": "string"
       },
       {
        "id": "a3",
        "name": "precedents_file",
-       "value": "/home/node/claims/knowledge/precedent-cases.json",
+       "value": "/home/node/claims/knowledge/precedent-cases-v2.json",
        "type": "string"
       },
       {
@@ -99,7 +90,7 @@
       {
        "id": "a11",
        "name": "embeddings_file",
-       "value": "/home/node/claims/knowledge/embeddings.json",
+       "value": "/home/node/claims/knowledge/embeddings-v2.json",
        "type": "string"
       },
       {
@@ -205,7 +196,7 @@
     0
    ],
    "parameters": {
-    "jsCode": "const cfg = $('Config').first().json;\nconst ragSel = $('RAG retrieve').first().json.selected;\nconst lk = $('Assemble context').first().json;\nconst c = lk.case;\nconst system = [\n  'Jestes analitykiem reklamacji w firmie e-commerce.',\n  'Oceniasz wiadomosc klienta WYLACZNIE na podstawie ponizszego regulaminu i precedensow.',\n  'Odpowiedz wylacznie jednym obiektem JSON o polach:',\n  '{\"recommendation\":\"ACCEPT|REJECT|HUMAN_REVIEW\",\"confidence\":<0-1>,\"evidence\":[\"POL-XX\"],\"missing_information\":[],\"reasoning\":\"uzasadnienie po polsku\"}',\n  'ACCEPT lub REJECT tylko przy wystarczajacych dowodach i duzej pewnosci; w przeciwnym razie HUMAN_REVIEW.',\n  'Jesli wartosc badz termin jest dokladnie rowny progowi z regulaminu, prog obowiazuje (rownosc spelnia warunek typu \"do X wlacznie\") - sama rownosc nie jest powodem do HUMAN_REVIEW.',\n  'Jesli sprawa zawiera wiecej niz jedno roszczenie, ocen kazde osobno wedlug regulaminu; jesli wszystkie spelniaja kryteria sciezki automatycznej, decyzja dla calej sprawy tez jest automatyczna.',\n  'Jesli fakty sa ustalone i regula jest jednoznaczna, decyduj automatycznie - nie deleguj do czlowieka.',\n  'Jesli opis sytuacji jest wewnetrznie sprzeczny, niejasny albo wymaga interpretacji wykraczajacej poza regulamin - HUMAN_REVIEW.',\n  'Zwroc uwage na reguly o naduzyciu i sytuacjach niejednoznacznych (POL-10): jesli opis klienta lub zalaczone dowody sa ze soba wewnetrznie sprzeczne (np. opakowanie nienaruszone, a towar zniszczony), faktow nie da sie ustalic - HUMAN_REVIEW.',\n  'Nie powoluj sie na reguly spoza regulaminu - jesli regulamin nie obejmuje sytuacji, daj HUMAN_REVIEW i opisz brak w missing_information.',\n  '',\n  'WYBRANE FRAGMENTY BAZY WIEDZY (retrieval, top-' + ragSel.length + '):',\n  JSON.stringify(ragSel.map(s => ({ id: s.id, typ: s.type, trafnosc: s.score, tresc: s.text })))\n].join('\\n');\nlet user = 'Wiadomosc klienta (JSON):\\n' + JSON.stringify(c) +\n  '\\n\\nDANE Z SYSTEMU ZAMOWIEN (wiarygodne, nadpisuja dane od klienta):\\n' + JSON.stringify(lk.order);\nreturn [{ json: { body: { model: cfg.model, temperature: cfg.temperature, max_tokens: 4000, response_format: { type: 'json_object' }, messages: [ { role: 'system', content: system }, { role: 'user', content: user } ] } } }];\nif (lk.prior) {\n  user += '\\n\\nHISTORIA SPRAWY (poprzednie rozstrzygniecia - ta wiadomosc jest zazwyczaj odwo┼éaniem lub dopelneniem):\\n' + JSON.stringify(lk.prior);\n}"
+    "jsCode": "const cfg = $('Config').first().json;\nconst ragSel = $('RAG retrieve').first().json.selected;\nconst lk = $('Assemble context').first().json;\nconst c = lk.case;\nconst system = [\n  'Jestes analitykiem reklamacji w firmie e-commerce.',\n  'Oceniasz wiadomosc klienta WYLACZNIE na podstawie ponizszego regulaminu i precedensow.',\n  'Odpowiedz wylacznie jednym obiektem JSON o polach:',\n  '{\"recommendation\":\"ACCEPT|REJECT|HUMAN_REVIEW\",\"confidence\":<0-1>,\"evidence\":[\"POL-XX\"],\"missing_information\":[],\"reasoning\":\"uzasadnienie po polsku\"}',\n  'ACCEPT lub REJECT tylko przy wystarczajacych dowodach i duzej pewnosci; w przeciwnym razie HUMAN_REVIEW.',\n  'Jesli wartosc badz termin jest dokladnie rowny progowi z regulaminu, prog obowiazuje (rownosc spelnia warunek typu \"do X wlacznie\") - sama rownosc nie jest powodem do HUMAN_REVIEW.',\n  'Jesli sprawa zawiera wiecej niz jedno roszczenie, ocen kazde osobno wedlug regulaminu; jesli wszystkie spelniaja kryteria sciezki automatycznej, decyzja dla calej sprawy tez jest automatyczna.',\n  'Jesli fakty sa ustalone i regula jest jednoznaczna, decyduj automatycznie - nie deleguj do czlowieka.',\n  'Jesli opis sytuacji jest wewnetrznie sprzeczny, niejasny albo wymaga interpretacji wykraczajacej poza regulamin - HUMAN_REVIEW.',\n  'Zwroc uwage na reguly o naduzyciu i sytuacjach niejednoznacznych (POL-10): jesli opis klienta lub zalaczone dowody sa ze soba wewnetrznie sprzeczne (np. opakowanie nienaruszone, a towar zniszczony), faktow nie da sie ustalic - HUMAN_REVIEW.',\n  'Nie powoluj sie na reguly spoza regulaminu - jesli regulamin nie obejmuje sytuacji, daj HUMAN_REVIEW i opisz brak w missing_information.',\n  '',\n  'WYBRANE FRAGMENTY BAZY WIEDZY (retrieval, top-' + ragSel.length + '):',\n  JSON.stringify(ragSel.map(s => ({ id: s.id, typ: s.type, trafnosc: s.score, tresc: s.text })))\n].join('\\n');\nlet user = 'Wiadomosc klienta (JSON):\\n' + JSON.stringify(c) +\n  '\\n\\nDANE Z SYSTEMU ZAMOWIEN (wiarygodne, nadpisuja dane od klienta):\\n' + JSON.stringify(lk.order);\nreturn [{ json: { body: { model: cfg.model, temperature: cfg.temperature, max_tokens: 4000, response_format: { type: 'json_object' }, messages: [ { role: 'system', content: system }, { role: 'user', content: user } ] } } }];\nif (lk.prior) {\n  user += '\\n\\nHISTORIA SPRAWY (poprzednie rozstrzygniecia - ta wiadomosc jest zazwyczaj odwołaniem lub dopelneniem):\\n' + JSON.stringify(lk.prior);\n}"
    }
   },
   {
@@ -249,7 +240,7 @@
     0
    ],
    "parameters": {
-    "jsCode": "const item = $input.first().json;\nconst raw = (item.choices && item.choices[0] && item.choices[0].message && item.choices[0].message.content) || '';\nlet parsed = null;\ntry { parsed = JSON.parse(String(raw)); } catch (e) {}\nif (!parsed) {\n  const matches = String(raw).match(/\\{[^{}]*\\}/g) || [];\n  for (const cand of matches.reverse()) {\n    try { parsed = JSON.parse(cand); break; } catch (e) {}\n  }\n}\nif (!parsed || !parsed.recommendation) {\n  return [{ json: { ok: false, error: 'invalid structured output', raw: String(raw).slice(0, 500) } }];\n}\nconst conf = Number(parsed.confidence);\nparsed.confidence = Number.isFinite(conf) ? conf : 0;\nif (!Array.isArray(parsed.evidence)) parsed.evidence = [];\nif (!Array.isArray(parsed.missing_information)) parsed.missing_information = [];\nconst cfg = $('Config').first().json;\nreturn [{ json: { ok: true, ai: parsed, threshold: cfg.confidence_threshold } }];"
+    "jsCode": "const item = $input.first().json;\nconst raw = (item.choices && item.choices[0] && item.choices[0].message && item.choices[0].message.content) || '';\nlet parsed = null;\ntry { parsed = JSON.parse(String(raw)); } catch (e) {}\nif (!parsed) {\n  const matches = String(raw).match(/\\{[^{}]*\\}/g) || [];\n  for (const cand of matches.reverse()) {\n    try { parsed = JSON.parse(cand); break; } catch (e) {}\n  }\n}\nif (!parsed || !parsed.recommendation) {\n  return [{ json: { ok: false, error: 'invalid structured output', raw: String(raw).slice(0, 500) } }];\n}\nconst conf = Number(parsed.confidence);\nparsed.confidence = Number.isFinite(conf) ? conf : 0;\nif (!Array.isArray(parsed.evidence)) parsed.evidence = [];\nif (!Array.isArray(parsed.missing_information)) parsed.missing_information = [];\nconst cfg = $('Config').first().json;\nreturn [{ json: { ok: true, ai: parsed, threshold: cfg.confidence_threshold, usage: item.usage || null } }];"
    }
   },
   {
@@ -262,7 +253,7 @@
     0
    ],
    "parameters": {
-    "jsCode": "const cfg = $('Config').first().json;\nconst caseData = $('Parse case').first().json.case;\nconst ord = $('Assemble context').first().json.order;\nconst orderValue = ord ? ord.order_value_pln : null;\nconst r = $input.first().json;\nconst base = {\n  case_id: caseData.id,\n  ai_recommendation: r.ai ? r.ai.recommendation : null,\n  confidence: r.ai ? r.ai.confidence : null,\n  evidence: r.ai ? r.ai.evidence : [],\n  missing_information: r.ai ? r.ai.missing_information : [],\n  reasoning: r.ai ? r.ai.reasoning : null\n};\nlet final, why;\nif (!r.ok) { final = 'TECHNICAL_FAIL'; why = r.error; }\nelse if (orderValue !== null && orderValue > 2000) { final = 'HUMAN_REVIEW'; why = 'wartosc zamowienia ' + orderValue + ' zl ponad prog globalny 2000 zl (POL-06) - bramka determinystyczna'; }\nelse if (!['ACCEPT', 'REJECT', 'HUMAN_REVIEW'].includes(r.ai.recommendation)) { final = 'HUMAN_REVIEW'; why = 'AI zwrocilo nieznany typ rekomendacji'; }\nelse if (r.ai.recommendation === 'HUMAN_REVIEW') { final = 'HUMAN_REVIEW'; why = 'rekomendacja AI: HUMAN_REVIEW'; }\nelse if (r.ai.confidence < r.threshold) { final = 'HUMAN_REVIEW'; why = 'confidence ' + r.ai.confidence + ' < prog ' + r.threshold; }\nelse if (!r.ai.evidence.length) { final = 'HUMAN_REVIEW'; why = 'brak dowodow (evidence)'; }\nelse if (r.ai.missing_information.length) { final = 'HUMAN_REVIEW'; why = 'AI zglosilo brakujace informacje'; }\nelse { final = r.ai.recommendation; why = 'wystarczajace dowody i confidence >= prog'; }\nbase.order_value_pln = orderValue;\nbase.final_decision = final;\nif (!r.ok) base.raw_snippet = String(r.raw || '').slice(0, 500);\nbase.gate_reason = why;\nbase.model = cfg.model;\nbase.decided_at = new Date().toISOString();\nreturn [{ json: { result: base } }];"
+    "jsCode": "const cfg = $('Config').first().json;\nconst caseData = $('Parse case').first().json.case;\nconst ord = $('Assemble context').first().json.order;\nconst orderValue = ord ? ord.order_value_pln : null;\nconst r = $input.first().json;\nconst base = {\n  case_id: caseData.id,\n  ai_recommendation: r.ai ? r.ai.recommendation : null,\n  confidence: r.ai ? r.ai.confidence : null,\n  evidence: r.ai ? r.ai.evidence : [],\n  missing_information: r.ai ? r.ai.missing_information : [],\n  reasoning: r.ai ? r.ai.reasoning : null\n};\nlet final, why;\nif (!r.ok) { final = 'TECHNICAL_FAIL'; why = r.error; }\nelse if (orderValue !== null && orderValue > 2000) { final = 'HUMAN_REVIEW'; why = 'wartosc zamowienia ' + orderValue + ' zl ponad prog globalny 2000 zl (POL-06) - bramka determinystyczna'; }\nelse if (!['ACCEPT', 'REJECT', 'HUMAN_REVIEW'].includes(r.ai.recommendation)) { final = 'HUMAN_REVIEW'; why = 'AI zwrocilo nieznany typ rekomendacji'; }\nelse if (r.ai.recommendation === 'HUMAN_REVIEW') { final = 'HUMAN_REVIEW'; why = 'rekomendacja AI: HUMAN_REVIEW'; }\nelse if (r.ai.confidence < r.threshold) { final = 'HUMAN_REVIEW'; why = 'confidence ' + r.ai.confidence + ' < prog ' + r.threshold; }\nelse if (!r.ai.evidence.length) { final = 'HUMAN_REVIEW'; why = 'brak dowodow (evidence)'; }\nelse if (r.ai.missing_information.length) { final = 'HUMAN_REVIEW'; why = 'AI zglosilo brakujace informacje'; }\nelse { final = r.ai.recommendation; why = 'wystarczajace dowody i confidence >= prog'; }\nbase.order_value_pln = orderValue;\nbase.final_decision = final;\nif (!r.ok) base.raw_snippet = String(r.raw || '').slice(0, 500);\nbase.gate_reason = why;\nbase.model = cfg.model;\nbase.usage = r.usage || null;\nbase.decided_at = new Date().toISOString();\nreturn [{ json: { result: base } }];"
    }
   },
   {
@@ -1170,5 +1161,12 @@
     ]
    ]
   }
+ },
+ "settings": {
+  "executionOrder": "v1",
+  "timezone": "Europe/Warsaw",
+  "saveManualExecutions": true,
+  "callerPolicy": "workflowsFromSameOwner",
+  "availableInMCP": false
  }
 }

@@ -1,14 +1,5 @@
 {
  "name": "claims-demo-batch-eval",
- "id": "lKqhsrBuY7cajZUq",
- "active": true,
- "settings": {
-  "executionOrder": "v1",
-  "timezone": "Europe/Warsaw",
-  "saveManualExecutions": true,
-  "callerPolicy": "workflowsFromSameOwner",
-  "availableInMCP": false
- },
  "nodes": [
   {
    "id": "run",
@@ -57,6 +48,18 @@
        "id": "e4",
        "name": "run_started_at",
        "value": "={{ $json.body?.run_started_at || new Date().toISOString() }}",
+       "type": "string"
+      },
+      {
+       "id": "e5",
+       "name": "target_workflow_id",
+       "value": "={{ $json.body?.target_workflow_id || 'OWs5lIJXjYxBuLwg' }}",
+       "type": "string"
+      },
+      {
+       "id": "e6",
+       "name": "variant",
+       "value": "={{ $json.body?.variant || 'rag-top10' }}",
        "type": "string"
       }
      ]
@@ -130,7 +133,7 @@
     200
    ],
    "parameters": {
-    "jsCode": "const cfg = $('Eval config').first().json;\nconst item = $input.first();\nlet p = (item.binary && item.binary.data && item.binary.data.fileName) || '';\nif (!p.includes('/')) p = cfg.inbox_dir + '/' + p;\nconst m = p.match(/CASE-\\d{4}/);\nif (!m) throw new Error('Nie znaleziono CASE-XXXX w sciezce: ' + p);\nreturn [{ json: { input_file: p, case_id: m[0] } }];"
+    "jsCode": "const cfg = $('Eval config').first().json;\nconst item = $input.first();\nlet p = (item.binary && item.binary.data && item.binary.data.fileName) || '';\nif (!p.includes('/')) p = cfg.inbox_dir + '/' + p;\nconst m = p.match(/CASE-\\d{4}/);\nif (!m) throw new Error('Nie znaleziono CASE-XXXX w sciezce: ' + p);\nreturn [{ json: { input_file: p, case_id: m[0], started_at_ms: Date.now() } }];"
    }
   },
   {
@@ -146,7 +149,7 @@
     "source": "database",
     "workflowId": {
      "__rl": true,
-     "value": "OWs5lIJXjYxBuLwg",
+     "value": "={{ $('Eval config').first().json.target_workflow_id }}",
      "mode": "id"
     },
     "options": {}
@@ -194,7 +197,7 @@
     0
    ],
    "parameters": {
-    "jsCode": "const runStart = $('Eval config').first().json.run_started_at;\nconst expRows = $('Build expected map').first().json.rows;\nconst resRows = $('Parse results').first().json.rows;\nconst expMap = Object.fromEntries(expRows.map(r => [r.id, r]));\nconst fresh = {};\nlet stale = 0;\nfor (const r of resRows) {\n  if (r.decided_at && new Date(r.decided_at).getTime() < new Date(runStart).getTime()) { stale += 1; continue; }\n  fresh[r.case_id] = r;\n}\nconst out = [];\nfor (const e of expRows) {\n  const r = fresh[e.id];\n  if (!r) {\n    out.push({ case_id: e.id, group: e.group, category: e.category,\n      expected: e.expected_decision, got: 'MISSING', decision_ok: false,\n      human_path_ok: (e.expected_decision === 'HUMAN_REVIEW') === e.requires_human,\n      confidence: null, gate_reason: 'brak swiezego wyniku (stale/brak pliku)',\n      evidence_count: 0, policy_refs_ok: false });\n    continue;\n  }\n  const decision_ok = r.final_decision === e.expected_decision;\n  const human_ok = r.final_decision === 'TECHNICAL_FAIL' ? false :\n    ((r.final_decision === 'HUMAN_REVIEW') === e.requires_human);\n  out.push({\n    case_id: r.case_id, group: e.group, category: e.category,\n    expected: e.expected_decision, got: r.final_decision,\n    decision_ok, human_path_ok: human_ok,\n    confidence: r.confidence, gate_reason: r.gate_reason,\n    evidence_count: Array.isArray(r.evidence) ? r.evidence.length : 0,\n    policy_refs_ok: Array.isArray(e.expected_policy_refs) && e.expected_policy_refs.length > 0 &&\n      Array.isArray(r.evidence) && e.expected_policy_refs.some(p => r.evidence.includes(p))\n  });\n}\nout.sort((a, b) => a.case_id.localeCompare(b.case_id));\nreturn [{ json: { rows: out, total: out.length, stale_results: stale } }];"
+    "jsCode": "const runStart = $('Eval config').first().json.run_started_at;\nconst expRows = $('Build expected map').first().json.rows;\nconst resRows = $('Parse results').first().json.rows;\nconst expMap = Object.fromEntries(expRows.map(r => [r.id, r]));\nconst fresh = {};\nlet stale = 0;\nfor (const r of resRows) {\n  if (r.decided_at && new Date(r.decided_at).getTime() < new Date(runStart).getTime()) { stale += 1; continue; }\n  fresh[r.case_id] = r;\n}\n\n// --- timingi (tylko swieze: started po starcie runu)\nconst runStartMs = new Date($('Eval config').first().json.run_started_at).getTime();\nconst timingRows = [];\ntry {\n  for (const item of $('Extract timings').all()) {\n    const t = item.json.data || item.json;\n    if (t && t.case_id && typeof t.latency_ms === 'number' &&\n        typeof t.started_at_ms === 'number' && t.started_at_ms >= runStartMs) {\n      timingRows.push(t);\n    }\n  }\n} catch (e) {}\nconst timingMap = Object.fromEntries(timingRows.map(t => [t.case_id, t.latency_ms]));\n\nconst out = [];\nfor (const e of expRows) {\n  const r = fresh[e.id];\n  if (!r) {\n    out.push({ case_id: e.id, group: e.group, category: e.category,\n      expected: e.expected_decision, got: 'MISSING', decision_ok: false,\n      human_path_ok: (e.expected_decision === 'HUMAN_REVIEW') === e.requires_human,\n      confidence: null, gate_reason: 'brak swiezego wyniku (stale/brak pliku)',\n      evidence_count: 0, policy_refs_ok: false, latency_ms: timingMap[e.id] !== undefined ? timingMap[e.id] : null });\n    continue;\n  }\n  const decision_ok = r.final_decision === e.expected_decision;\n  const human_ok = r.final_decision === 'TECHNICAL_FAIL' ? false :\n    ((r.final_decision === 'HUMAN_REVIEW') === e.requires_human);\n  out.push({\n    case_id: r.case_id, group: e.group, category: e.category,\n    expected: e.expected_decision, got: r.final_decision,\n    decision_ok, human_path_ok: human_ok,\n    confidence: r.confidence, gate_reason: r.gate_reason,\n    latency_ms: timingMap[e.id] !== undefined ? timingMap[e.id] : null,\n    evidence_count: Array.isArray(r.evidence) ? r.evidence.length : 0,\n    policy_refs_ok: Array.isArray(e.expected_policy_refs) && e.expected_policy_refs.length > 0 &&\n      Array.isArray(r.evidence) && e.expected_policy_refs.some(p => r.evidence.includes(p))\n  });\n}\nout.sort((a, b) => a.case_id.localeCompare(b.case_id));\nreturn [{ json: { rows: out, total: out.length, stale_results: stale } }];"
    }
   },
   {
@@ -207,7 +210,7 @@
     0
    ],
    "parameters": {
-    "jsCode": "const meta = $input.first().json;\nconst rows = meta.rows;\nconst total = rows.length;\nconst okCount = rows.filter(r => r.decision_ok).length;\nconst humanOkCount = rows.filter(r => r.human_path_ok).length;\nconst groups = {};\nfor (const r of rows) {\n  if (!groups[r.group]) groups[r.group] = { total: 0, ok: 0 };\n  groups[r.group].total += 1;\n  if (r.decision_ok) groups[r.group].ok += 1;\n}\nconst mismatches = rows.filter(r => !r.decision_ok).map(r => ({\n  case_id: r.case_id, group: r.group, category: r.category,\n  expected: r.expected, got: r.got, confidence: r.confidence,\n  gate_reason: r.gate_reason\n}));\nconst round1 = x => Math.round(x * 10) / 10;\nreturn [{ json: { report: {\n  generated_at: new Date().toISOString(),\n  total_cases: total,\n  decision_accuracy: round1((okCount / total) * 100),\n  human_path_accuracy: round1((humanOkCount / total) * 100),\n  stale_results: meta.stale_results || 0,\n  per_group: groups,\n  mismatches,\n  notes: {\n    decision_ok_definition: 'final_decision == expected_decision',\n    human_path_definition: '(HUMAN_REVIEW == requires_human)',\n    stale_definition: 'wynik z pliku starszy niz start runu'\n  }\n} } }];"
+    "jsCode": "const meta = $input.first().json;\nconst rows = meta.rows;\nconst total = rows.length;\nconst okCount = rows.filter(r => r.decision_ok).length;\nconst humanOkCount = rows.filter(r => r.human_path_ok).length;\nconst groups = {};\nfor (const r of rows) {\n  if (!groups[r.group]) groups[r.group] = { total: 0, ok: 0 };\n  groups[r.group].total += 1;\n  if (r.decision_ok) groups[r.group].ok += 1;\n}\nconst mismatches = rows.filter(r => !r.decision_ok).map(r => ({\n  case_id: r.case_id, group: r.group, category: r.category,\n  expected: r.expected, got: r.got, confidence: r.confidence,\n  gate_reason: r.gate_reason\n}));\nconst latencies = rows.map(r => r.latency_ms).filter(x => typeof x === 'number');\nlatencies.sort((a, b) => a - b);\nconst pct = p => latencies.length ? latencies[Math.min(latencies.length - 1, Math.floor(p * latencies.length))] : null;\nconst tok = rows.reduce((acc, r) => {\n  if (r.usage && Number.isFinite(r.usage.prompt_tokens)) {\n    acc.cases += 1;\n    acc.prompt_tokens += r.usage.prompt_tokens || 0;\n    acc.completion_tokens += r.usage.completion_tokens || 0;\n    acc.total_tokens += r.usage.total_tokens || ((r.usage.prompt_tokens || 0) + (r.usage.completion_tokens || 0));\n  }\n  return acc;\n}, { cases: 0, prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 });\nconst round1 = x => Math.round(x * 10) / 10;\nconst cfg = $('Eval config').first().json;\nreturn [{ json: { report: {\n  generated_at: new Date().toISOString(),\n  variant: cfg.variant,\n  target_workflow_id: cfg.target_workflow_id,\n  total_cases: total,\n  decision_accuracy: round1((okCount / total) * 100),\n  human_path_accuracy: round1((humanOkCount / total) * 100),\n  stale_results: meta.stale_results || 0,\n  latency_ms: latencies.length ? { avg: Math.round(latencies.reduce((a, b) => a + b, 0) / latencies.length), p50: pct(0.5), p95: pct(0.95), max: latencies[latencies.length - 1], samples: latencies.length } : null,\n  tokens: tok,\n  per_group: groups,\n  mismatches,\n  notes: {\n    decision_ok_definition: 'final_decision == expected_decision',\n    human_path_definition: '(HUMAN_REVIEW == requires_human)',\n    stale_definition: 'wynik z pliku starszy niz start runu',\n    latency_definition: 'czas executeWorkflow per sprawa (z retryami), mierzony przez harness'\n  }\n} } }];"
    }
   },
   {
@@ -235,7 +238,7 @@
    "parameters": {
     "operation": "write",
     "options": {},
-    "fileName": "={{ $('Eval config').first().json.outbox_dir }}/eval-report.json",
+    "fileName": "={{ $('Eval config').first().json.outbox_dir }}/eval-report-{{ $('Eval config').first().json.variant }}.json",
     "dataPropertyName": "data"
    }
   },
@@ -376,6 +379,77 @@
      "combinator": "and"
     }
    }
+  },
+  {
+   "id": "read-timings",
+   "name": "Read timing files",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    1750,
+    -180
+   ],
+   "parameters": {
+    "operation": "read",
+    "options": {},
+    "fileSelector": "={{ $('Eval config').first().json.outbox_dir }}/CASE-*-timing.json"
+   }
+  },
+  {
+   "id": "extract-timings",
+   "name": "Extract timings",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    1950,
+    -180
+   ],
+   "parameters": {
+    "operation": "fromJson",
+    "options": {}
+   }
+  },
+  {
+   "id": "timing-to-binary",
+   "name": "Timing to binary",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1700,
+    420
+   ],
+   "parameters": {
+    "jsCode": "const src = $('Prepare input').first().json;\nconst payload = {\n  case_id: src.case_id,\n  started_at_ms: src.started_at_ms,\n  ended_at_ms: Date.now(),\n  latency_ms: Date.now() - src.started_at_ms,\n  variant: $('Eval config').first().json.variant\n};\nconst name = src.case_id + '-timing.json';\nconst buf = Buffer.from(JSON.stringify(payload), 'utf8');\nconst bin = await this.helpers.prepareBinaryData(buf, name, 'application/json');\nreturn [{ json: { filename: name }, binary: { data: bin } }];"
+   }
+  },
+  {
+   "id": "write-timing",
+   "name": "Write timing",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    1900,
+    420
+   ],
+   "parameters": {
+    "operation": "write",
+    "options": {},
+    "fileName": "={{ $('Eval config').first().json.outbox_dir }}/{{ $('Prepare input').first().json.case_id }}-timing.json",
+    "dataPropertyName": "data"
+   }
+  },
+  {
+   "id": "case-to-run",
+   "name": "Case to run",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1750,
+    420
+   ],
+   "parameters": {
+    "jsCode": "const src = $('Prepare input').first().json;\nif (!src.input_file) throw new Error('Brak input_file w Prepare input');\nreturn [{ json: { input_file: src.input_file, case_id: src.case_id } }];"
+   }
   }
  ],
  "connections": {
@@ -427,7 +501,7 @@
    "main": [
     [
      {
-      "node": "Read result files",
+      "node": "Read timing files",
       "type": "main",
       "index": 0
      }
@@ -445,7 +519,7 @@
    "main": [
     [
      {
-      "node": "Strip feedback",
+      "node": "Timing to binary",
       "type": "main",
       "index": 0
      }
@@ -617,6 +691,61 @@
     ],
     [
      {
+      "node": "Case to run",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Read timing files": {
+   "main": [
+    [
+     {
+      "node": "Extract timings",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extract timings": {
+   "main": [
+    [
+     {
+      "node": "Read result files",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Timing to binary": {
+   "main": [
+    [
+     {
+      "node": "Write timing",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Write timing": {
+   "main": [
+    [
+     {
+      "node": "Strip feedback",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Case to run": {
+   "main": [
+    [
+     {
       "node": "Run happy path",
       "type": "main",
       "index": 0
@@ -624,5 +753,12 @@
     ]
    ]
   }
+ },
+ "settings": {
+  "executionOrder": "v1",
+  "timezone": "Europe/Warsaw",
+  "saveManualExecutions": true,
+  "callerPolicy": "workflowsFromSameOwner",
+  "availableInMCP": false
  }
 }

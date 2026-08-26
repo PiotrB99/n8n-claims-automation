@@ -1,14 +1,5 @@
 {
  "name": "claims-demo-report",
- "id": "SQLrd9Lp74409R0A",
- "active": false,
- "settings": {
-  "executionOrder": "v1",
-  "timezone": "Europe/Warsaw",
-  "saveManualExecutions": true,
-  "callerPolicy": "workflowsFromSameOwner",
-  "availableInMCP": false
- },
  "nodes": [
   {
    "id": "trig",
@@ -371,5 +362,12 @@
     ]
    ]
   }
+ },
+ "settings": {
+  "executionOrder": "v1",
+  "timezone": "Europe/Warsaw",
+  "saveManualExecutions": true,
+  "callerPolicy": "workflowsFromSameOwner",
+  "availableInMCP": false
  }
 }

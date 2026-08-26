@@ -1,14 +1,5 @@
 {
  "name": "claims-demo-human-decision",
- "id": "63xoEEqfc8YiujgN",
- "active": false,
- "settings": {
-  "executionOrder": "v1",
-  "timezone": "Europe/Warsaw",
-  "saveManualExecutions": true,
-  "callerPolicy": "workflowsFromSameOwner",
-  "availableInMCP": false
- },
  "nodes": [
   {
    "id": "wh",
@@ -217,5 +208,12 @@
     ]
    ]
   }
+ },
+ "settings": {
+  "executionOrder": "v1",
+  "timezone": "Europe/Warsaw",
+  "saveManualExecutions": true,
+  "callerPolicy": "workflowsFromSameOwner",
+  "availableInMCP": false
  }
 }
